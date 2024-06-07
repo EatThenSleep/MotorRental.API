@@ -1,0 +1,6 @@
+@MotorRental.Infrastructure.Presentation_HostAddress = http://localhost:5043
+
+GET {{MotorRental.Infrastructure.Presentation_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
