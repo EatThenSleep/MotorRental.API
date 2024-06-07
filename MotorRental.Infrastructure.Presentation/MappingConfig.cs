@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MotorRental.Entities;
-using MotorRental.Infrastructure.Presentation.Models;
+using MotorRental.Infrastructure.Presentation.Models.DTO;
 
 namespace MotorRental.Infrastructure.Presentation
 {
@@ -9,6 +9,7 @@ namespace MotorRental.Infrastructure.Presentation
         public MappingConfig()
         {
             CreateMap<Motorbike, MotorCreateDTO>().ReverseMap();
+            CreateMap<Motorbike, MotorDTO>().ReverseMap();
         }  
     }
 }

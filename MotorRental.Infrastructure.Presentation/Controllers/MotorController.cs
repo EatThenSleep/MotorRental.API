@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using MotorRental.Application;
 using MotorRental.Entities;
 using MotorRental.Infrastructure.Presentation.Models;
+using MotorRental.Infrastructure.Presentation.Models.DTO;
+using System.Net;
 
 namespace MotorRental.Infrastructure.Presentation.Controllers
 {
@@ -13,53 +15,44 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
     {
         private readonly IMotorService _motorService;
         private readonly IMapper _mapper;
+        private ApiResponse _response;
 
         public MotorController(IMotorService motorService, IMapper mapper)
         {
             _motorService = motorService;
             _mapper = mapper;
+            _response = new();
         }
 
         [HttpPost("AddMotor")]
-        public async Task<IActionResult> AddMotorBike([FromBody] MotorCreateDTO request)
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ApiResponse> AddMotorBike([FromBody] MotorCreateDTO request)
         {
             // convert DTO to Domain
-            var model = new Motorbike()
-            {
-                Name = request.Name,
-                Type = request.Type,
-                Speed = request.Speed,
-                Capacity = request.Capacity,
-                Color = request.Color,
-                YearOfManufacture = request.YearOfManufacture,
-                MadeIn = request.MadeIn,
-                status = request.status,
-                Description = request.Description,
-                PriceDay = request.PriceDay,
-                PriceWeek = request.PriceWeek,
-                PriceMonth = request.PriceMonth,
-                CreatedAt = DateTime.Now,
-                Company = new Company()
-                {
-                    Name = request.CompanyName
-                },
-                User = new User
-                {
-                    Id = request.UserId,
-                }
-            };
+            var model = _mapper.Map<Motorbike>(request);
+
             // call Service
-            var result = await _motorService.Add(model);
+            var resultDomain = await _motorService.Add(model);
 
-            if(result == null)
+            if(resultDomain == null)
             {
-                return NotFound();
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccess = false;
+                _response.Result = resultDomain;
+                _response.ErrorMessages.Add("Địt mẹ mày, try agian");
             }
-
-            // Convert Domain to DTO
-
+            else
+            {
+                // Convert Domain to DTO
+                var response = _mapper.Map<MotorDTO>(resultDomain);
+                _response.StatusCode = HttpStatusCode.Created;
+                _response.Result = response;
+            }
+            
             // Return APi Response
-            return Ok();
+            return _response;
         }
     }
 }

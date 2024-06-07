@@ -14,16 +14,11 @@ namespace MotorRental.Infrastructure.Data.Repository
     public class MotorRepository : IMotorRepository
     {
         private readonly ApplicationDbContext _db;
-        private readonly ICompanyRepository _companyRepository;
-        private readonly IUserRepository _userRepository;
+    
 
-        public MotorRepository(ApplicationDbContext db,
-            ICompanyRepository companyRepository,
-            IUserRepository userRepository)
+        public MotorRepository(ApplicationDbContext db)
         {
             _db = db;
-            _companyRepository = companyRepository;
-            _userRepository = userRepository;
         }
         public async Task<Motorbike> Add(Motorbike motorbike)
         {
