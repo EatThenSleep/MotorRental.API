@@ -6,7 +6,7 @@ namespace MotorRental.Infrastructure.Presentation.Models.DTO
     {
         [Required(ErrorMessage = "Mù à thằng lồn")]
         [MinLength(3, ErrorMessage = "Địt mẹ mày, nhập cho đàng hoàng vào!")]
-        [MaxLength(8, ErrorMessage = "Bố mày là nhà văn à, viết cho gọn vào!")]
+        [MaxLength(20, ErrorMessage = "Bố mày là nhà văn à, viết cho gọn vào!")]
         public string Name { get; set; } = string.Empty;
         [Required]
         [Range(1, 3, ErrorMessage = "Mày đùa tao à. Một lần nữa pay acc")]
@@ -31,6 +31,12 @@ namespace MotorRental.Infrastructure.Presentation.Models.DTO
         [Required]
         [Range(5, 100)]
         public int PriceMonth { get; set; }
+        public string MotorbikeAvatar { get; set; } = string.Empty;
+        [Required]
+        [MinLength(9)]
+        [MaxLength(13)]
+        public string LicensePlate { get; set; } = string.Empty;
+
 
         public string CompanyName { get; set; } = string.Empty;
         public Guid UserId { get; set; }

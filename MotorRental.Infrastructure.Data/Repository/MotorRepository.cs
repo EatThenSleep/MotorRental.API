@@ -22,24 +22,24 @@ namespace MotorRental.Infrastructure.Data.Repository
         }
         public async Task<Motorbike> Add(Motorbike motorbike)
         {
-            // process company
-            var existingCompany = await _db.Companies.AsNoTracking().FirstOrDefaultAsync(u => u.Name.ToLower() == motorbike.Company.Name.ToLower());
-            motorbike.Company = existingCompany != null ? existingCompany : motorbike.Company;
-
-            if (existingCompany == null)
-            {
-                Company obj = new Company() { Name = motorbike.Company.Name};
-                var objCreated = await _db.Companies.AddAsync(obj);
-                _db.SaveChanges();
-                motorbike.Company = obj;
-            }
-           
             // process user
             var existingUser = await _db.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == motorbike.User.Id);
             motorbike.User = existingUser;
             if (existingUser == null)
             {
                 return null;
+            }
+
+            // process company
+            var existingCompany = await _db.Companies.AsNoTracking().FirstOrDefaultAsync(u => u.Name.ToLower() == motorbike.Company.Name.ToLower());
+            motorbike.Company = existingCompany != null ? existingCompany : motorbike.Company;
+
+            if (existingCompany == null)
+            {
+                Company obj = new Company() { Name = motorbike.Company.Name };
+                var objCreated = await _db.Companies.AddAsync(obj);
+                _db.SaveChanges();
+                motorbike.Company = obj;
             }
 
 
@@ -50,6 +50,9 @@ namespace MotorRental.Infrastructure.Data.Repository
 
             await _db.Motorbikes.AddAsync(motorbike);
             await _db.SaveChangesAsync();
+
+            motorbike.User.Motorbikes = [];
+            motorbike.Company.Motorbikes = [];
 
             return motorbike;
         }
