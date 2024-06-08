@@ -10,5 +10,6 @@ namespace MotorRental.Application
     public interface IMotorService
     {
         Task<Motorbike> Add(Motorbike obj);
+        Task<Motorbike> Update(Motorbike obj);
     }
 }

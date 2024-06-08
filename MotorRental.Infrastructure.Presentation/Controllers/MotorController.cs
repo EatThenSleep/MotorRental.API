@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MotorRental.Application;
 using MotorRental.Entities;
+using MotorRental.Infrastructure.Presentation.Helper;
 using MotorRental.Infrastructure.Presentation.Models;
 using MotorRental.Infrastructure.Presentation.Models.DTO;
 using System.Net;
@@ -28,8 +29,9 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ApiResponse> AddMotorBike([FromBody] MotorCreateDTO request)
+        public async Task<ApiResponse> AddMotorBike([FromForm] MotorCreateDTO request)
         {
+            
             // convert DTO to Domain
             var model = _mapper.Map<Motorbike>(request);
 
@@ -45,6 +47,15 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             }
             else
             {
+                // process file image
+                    // save image to server
+                var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.Value}{HttpContext.Request.PathBase.Value}";
+                var stringUrl = request.Image.SaveImage(resultDomain.Id.ToString(), baseUrl);
+
+                // update result with ImageURL
+                resultDomain.MotorbikeAvatar = stringUrl;
+                resultDomain = await _motorService.Update(resultDomain);
+
                 // Convert Domain to DTO
                 var response = _mapper.Map<MotorDTO>(resultDomain);
                 _response.StatusCode = HttpStatusCode.Created;

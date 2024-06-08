@@ -31,12 +31,12 @@ namespace MotorRental.Infrastructure.Presentation.Models.DTO
         [Required]
         [Range(5, 100)]
         public int PriceMonth { get; set; }
-        public string MotorbikeAvatar { get; set; } = string.Empty;
         [Required]
         [MinLength(9)]
         [MaxLength(13)]
         public string LicensePlate { get; set; } = string.Empty;
-
+        [Required]
+        public IFormFile? Image { get; set; }
 
         public string CompanyName { get; set; } = string.Empty;
         public Guid UserId { get; set; }

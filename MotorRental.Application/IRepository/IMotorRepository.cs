@@ -10,5 +10,6 @@ namespace MotorRental.Application.IRepository
     public interface IMotorRepository
     {
         Task<Motorbike> Add(Motorbike motorbike);
+        Task<Motorbike?> UpdateAsync(Motorbike motorbike);
     }
 }

@@ -51,10 +51,23 @@ namespace MotorRental.Infrastructure.Data.Repository
             await _db.Motorbikes.AddAsync(motorbike);
             await _db.SaveChangesAsync();
 
+            //motorbike.User.Motorbikes = [];
+            //motorbike.Company.Motorbikes = [];
+
+            return motorbike;
+        }
+
+        public async Task<Motorbike?> UpdateAsync(Motorbike motorbike)
+        {
+           
+            _db.Entry(motorbike).CurrentValues.SetValues(motorbike);
+            await _db.SaveChangesAsync();
+
             motorbike.User.Motorbikes = [];
             motorbike.Company.Motorbikes = [];
 
             return motorbike;
+            
         }
     }
 }

@@ -45,6 +45,7 @@ namespace MotorRental.Infrastructure.Presentation
                 app.UseSwaggerUI();
             }
 
+            app.UseStaticFiles();
             app.UseHttpsRedirection();
 
             app.UseAuthorization();

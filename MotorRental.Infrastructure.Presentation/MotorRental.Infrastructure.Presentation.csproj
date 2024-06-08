@@ -23,4 +23,8 @@
     <ProjectReference Include="..\MotorRental.Infrastructure.Data\MotorRental.Infrastructure.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\ProductImages\" />
+  </ItemGroup>
+
 </Project>
