@@ -1,0 +1,152 @@
+.profile-card{
+	.title{
+		position:relative;
+		span{
+			display:inline-block;
+			text-transform:uppercase;
+			background:$white;
+			position:relative;
+			z-index:1;	
+			padding-right:30px;
+		}
+		&:after{
+			width:100%;
+			height:1px;
+			background:#E7E7E7;
+			position:absolute;
+			top:50%;
+			transform:translatey(-50%);
+			left:0;
+			content:"";
+		}
+	}
+	.form-group{	
+		margin-bottom: 30px;
+		label{
+			font-weight:500;
+		}
+		.input-icon{
+			.form-control{
+				padding-left: 70px;
+				z-index:0;
+				@include respond('phone-land') {
+					padding-left: 50px;
+				}
+			}
+		}
+		.input-group-prepend{
+			position: absolute;
+			top: 50%;
+			left: 10px;
+			z-index: 1;
+			transform: translatey(-50%);
+			.input-group-text{
+				background:transparent;
+				i{
+					font-size:30px;
+					color:var(--primary);
+					@include respond('phone-land') {
+						font-size:20px;
+					}
+				}
+			}
+			@include respond ('phone-land'){
+				left:0;
+			}
+		}
+		.bootstrap-select.form-control{
+			padding:0;
+			button{
+				padding: 10px 20px;
+				height: 70px;
+				font-size: 18px;
+				line-height: 45px;
+				background:#FBFBFB;
+				border-color:#C2C2C2!important;
+				color:$black;
+				border-radius:$radius;
+				@include respond('phone-land') {
+					height: 45px;
+					font-size: 14px;
+					padding: 0 10px;
+				}
+			}
+			.dropdown-toggle:after{
+				color:var(--primary);
+				font-size:20px;
+				@include respond ('phone'){
+					font-size:20px;
+				}
+			}
+		}
+		.form-control{
+			height: 70px;
+			font-size: 18px;
+			padding: 0 20px;
+			border-color:#C2C2C2;
+			background:#FBFBFB;
+			color:$black;
+			border-radius:$radius;
+			&::placeholder{
+				color:#BBBBBB;
+			}
+			@include respond('phone-land') {
+				height: 45px;
+				font-size: 14px;
+			}
+		}
+		textarea.form-control{
+			height: unset!important;
+			border: 1px solid;
+			border-color:#C2C2C2;
+			border-radius:$radius;
+			color:rgba($black,0.7);
+			background:#FBFBFB;
+			border-width: 1px!important;
+			font-size: 16px!important;
+			padding: 15px 20px!important;
+		}
+		
+	}
+}
+.progress-icon{
+	height:62px;
+	width:62px;
+	display:block;
+	font-weight:600;
+	border-radius:$radius;
+	line-height:62px;
+	text-align:center;
+	background:var(--rgba-primary-1);
+	color:var(--primary);
+	@include respond ('phone'){
+		height:50px;
+		width:50px;
+		line-height:50px;
+	}
+}
+.skill-progress{
+	overflow: visible;
+	.progress-bar{
+		position:relative;
+		border-radius: 10px;
+		overflow: visible;
+		&:after{
+			content:"";
+			position:absolute;
+			height:26px;
+			width:26px;
+			top:50%;
+			transform:translatey(-50%);
+			right:0;
+			border-radius:5px;
+			background:var(--primary);
+		}
+		@include respond ('phone'){
+			&:after{
+				height: 20px;
+				width: 20px;
+			}
+		}
+	}
+}	
