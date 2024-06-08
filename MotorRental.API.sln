@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34616.47
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorRental.Infrastructure.Presentation", "MotorRental.Infrastructure.Presentation\MotorRental.Infrastructure.Presentation.csproj", "{D13B7986-C762-4DBD-B9A1-C3740760312E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MotorRental.Infrastructure.Presentation", "MotorRental.Infrastructure.Presentation\MotorRental.Infrastructure.Presentation.csproj", "{D13B7986-C762-4DBD-B9A1-C3740760312E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorRental.Infrastructure.Data", "MotorRental.Infrastructure.Data\MotorRental.Infrastructure.Data.csproj", "{6B13CED0-A97F-4F50-AF9F-5C64EACFF48B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MotorRental.Infrastructure.Data", "MotorRental.Infrastructure.Data\MotorRental.Infrastructure.Data.csproj", "{6B13CED0-A97F-4F50-AF9F-5C64EACFF48B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorRental.Entities", "MotorRental.Entities\MotorRental.Entities.csproj", "{890B6345-F37C-4ECF-AF73-76C1E4617E63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MotorRental.Entities", "MotorRental.Entities\MotorRental.Entities.csproj", "{890B6345-F37C-4ECF-AF73-76C1E4617E63}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorRental.Utilities", "MotorRental.Utilities\MotorRental.Utilities.csproj", "{0A008D93-905F-443C-B50C-2F8ABA3EFFFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MotorRental.Utilities", "MotorRental.Utilities\MotorRental.Utilities.csproj", "{0A008D93-905F-443C-B50C-2F8ABA3EFFFD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorRental.Application", "MotorRental.Application\MotorRental.Application.csproj", "{900BC9D6-0E6F-430B-8E70-11C8667F5BFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MotorRental.Application", "MotorRental.Application\MotorRental.Application.csproj", "{900BC9D6-0E6F-430B-8E70-11C8667F5BFE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorRental.Consuming", "MotorRental.Consuming\MotorRental.Consuming.csproj", "{BB02AA07-9751-4835-8BF1-1F229E300F9A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{900BC9D6-0E6F-430B-8E70-11C8667F5BFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{900BC9D6-0E6F-430B-8E70-11C8667F5BFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{900BC9D6-0E6F-430B-8E70-11C8667F5BFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB02AA07-9751-4835-8BF1-1F229E300F9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB02AA07-9751-4835-8BF1-1F229E300F9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB02AA07-9751-4835-8BF1-1F229E300F9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB02AA07-9751-4835-8BF1-1F229E300F9A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
