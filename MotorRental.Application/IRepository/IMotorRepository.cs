@@ -10,7 +10,7 @@ namespace MotorRental.Application.IRepository
     public interface IMotorRepository
     {
         Task<Motorbike> Add(Motorbike motorbike, Guid userId);
-        Task<Motorbike?> UpdateAsync(Motorbike motorbike);
+        Task<Motorbike?> UpdateAsync(Motorbike motorbike, bool afterSuccess = true);
         Task<IEnumerable<Motorbike>> GetAllAsync(Guid? userId = null);
         Task<Motorbike> GetByIdAsync(Guid Id);
     }

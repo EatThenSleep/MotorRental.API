@@ -109,6 +109,10 @@ namespace MotorRental.Infrastructure.Data.Repository
                                     PriceMonth = a.PriceMonth,
                                     LicensePlate = a.LicensePlate,
                                     MotorbikeAvatar = a.MotorbikeAvatar,
+                                    Capacity = a.Capacity,
+                                    MadeIn = a.MadeIn,
+                                    Speed = a.Speed,
+                                    YearOfManufacture = a.YearOfManufacture,
                                     Company = new Company { Id = b.Id, Name = b.Name },
                                     User = new User { Id = a.User.Id, Name = a.User.Name },
                                 })
@@ -117,14 +121,40 @@ namespace MotorRental.Infrastructure.Data.Repository
             return motorbike;
         }
 
-        public async Task<Motorbike?> UpdateAsync(Motorbike motorbike)
+        public async Task<Motorbike?> UpdateAsync(Motorbike motorbike, bool afterSuccess = true)
         {
-           
-            _db.Entry(motorbike).CurrentValues.SetValues(motorbike);
-            await _db.SaveChangesAsync();
+            if (!afterSuccess)
+            {
+                var existingMotor = await _db.Motorbikes.FirstOrDefaultAsync(u => u.Id == motorbike.Id);
 
-            motorbike.User.Motorbikes = [];
-            motorbike.Company.Motorbikes = [];
+                existingMotor.Name = motorbike.Name;
+                existingMotor.status = motorbike.status;
+                existingMotor.Description = motorbike.Description;
+                existingMotor.PriceDay = motorbike.PriceDay;
+                existingMotor.PriceWeek = motorbike.PriceWeek;
+                existingMotor.PriceMonth = motorbike.PriceMonth;
+                existingMotor.LicensePlate = motorbike.LicensePlate;
+                existingMotor.MotorbikeAvatar = motorbike.MotorbikeAvatar ?? "";
+                existingMotor.UpdatedAt = DateTime.Now;
+
+                _db.Entry(existingMotor).CurrentValues.SetValues(existingMotor);
+                    await _db.SaveChangesAsync();
+
+                motorbike = existingMotor;
+            }
+            else
+            {
+                _db.Entry(motorbike).CurrentValues.SetValues(motorbike);
+                await _db.SaveChangesAsync();
+
+                if (motorbike.User != null && motorbike.Company != null)
+                {
+                    motorbike.User.Motorbikes = [];
+                    motorbike.Company.Motorbikes = [];
+                }
+            }
+
+            
 
             return motorbike;
             

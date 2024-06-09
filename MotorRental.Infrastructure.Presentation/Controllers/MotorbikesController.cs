@@ -110,12 +110,43 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<ApiResponse>> UpdateMotorbike([FromRoute] Guid id, [FromForm] MotorUpdateDTO request)
         {
+            if (request == null || id != request.Id)
+            {
+                return BadRequest();
+            }
+
             // convert DTO to domain
             var model = _mapper.Map<Motorbike>(request);
 
             // call service update(motorId, userId from Authen)
+            var resultDomain = await _motorService.Update(model, afterSuccess: false);
 
-            return Ok();
+            // process image
+            if (resultDomain == null)
+            {
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccess = false;
+                _response.Result = resultDomain;
+                _response.ErrorMessages.Add("Địt mẹ mày, try agian");
+            }
+            else
+            {
+                // process file image
+                // save image to server
+                var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.Value}{HttpContext.Request.PathBase.Value}";
+                var stringUrl = request.Image.SaveImage(resultDomain.Id.ToString(), baseUrl);
+
+                // update result with ImageURL
+                resultDomain.MotorbikeAvatar = stringUrl;
+                resultDomain = await _motorService.Update(resultDomain);
+
+                // Convert Domain to DTO
+                var response = _mapper.Map<MotorDTO>(resultDomain);
+                _response.StatusCode = HttpStatusCode.Created;
+                _response.Result = response;
+            }
+
+            return _response;
         }
     }
 }

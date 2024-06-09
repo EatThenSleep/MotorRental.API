@@ -24,9 +24,10 @@ namespace MotorRental.Application
             return res;
         }
 
-        public async Task<Motorbike> Update(Motorbike obj)
+        public async Task<Motorbike> Update(Motorbike obj, bool afterSuccess = true)
         {
-            var res = await _motorRepository.UpdateAsync(obj);
+
+            var res = await _motorRepository.UpdateAsync(obj, afterSuccess);
 
             return res;
         }
