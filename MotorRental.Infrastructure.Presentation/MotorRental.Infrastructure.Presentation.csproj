@@ -18,9 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MotorRental.Application\MotorRental.Application.csproj" />
+    <ProjectReference Include="..\MotorRental.Application\MotorRental.UseCase.csproj" />
     <ProjectReference Include="..\MotorRental.Entities\MotorRental.Entities.csproj" />
-    <ProjectReference Include="..\MotorRental.Infrastructure.Data\MotorRental.Infrastructure.Data.csproj" />
+    <ProjectReference Include="..\MotorRental.Infrastructure.Data\MotorRental.Infrastructure.SqlServer.csproj" />
   </ItemGroup>
 
   <ItemGroup>

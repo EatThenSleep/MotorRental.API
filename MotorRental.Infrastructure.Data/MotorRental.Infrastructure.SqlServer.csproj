@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MotorRental.Application\MotorRental.Application.csproj" />
+    <ProjectReference Include="..\MotorRental.Application\MotorRental.UseCase.csproj" />
     <ProjectReference Include="..\MotorRental.Entities\MotorRental.Entities.csproj" />
   </ItemGroup>
 
