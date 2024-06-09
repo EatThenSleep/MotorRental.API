@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MotorRental.Utilities", "Mo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MotorRental.Application", "MotorRental.Application\MotorRental.Application.csproj", "{900BC9D6-0E6F-430B-8E70-11C8667F5BFE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorRental.Consuming", "MotorRental.Consuming\MotorRental.Consuming.csproj", "{BB02AA07-9751-4835-8BF1-1F229E300F9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MotorRental.Consuming", "MotorRental.Consuming\MotorRental.Consuming.csproj", "{BB02AA07-9751-4835-8BF1-1F229E300F9A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
