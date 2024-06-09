@@ -1,0 +1,62 @@
+
+
+//sidebar right
+[direction="rtl"] {
+    .sidebar-right {
+        left: -32rem;
+        right: auto;
+		box-shadow: 2px 3px 10px 0px rgba(119, 119, 119, 0.1);
+			
+        &.show {
+            left: 0rem;
+            right: auto;
+        }
+
+        .sidebar-right-trigger {
+            left: 100%;
+            right: auto;
+			border-radius: 0 50px 50px 0;
+			box-shadow: 5px 3px 5px 0px rgba(119, 119, 119, 0.15);
+			span{
+				margin-right: 0;
+				margin-left: 15px;
+				&.text{
+					margin-left:0;
+				}
+			}
+        }
+    }
+	.sidebar-right .sidebar-close-trigger{
+		left: -48px;
+		right: auto;
+	}
+	.bootstrap-select .dropdown-toggle .filter-option{
+		text-align:right;
+	}
+	
+	
+	
+	.dz-demo-panel {
+		right: auto;
+		left: 0;
+		-webkit-transform: translate(-100%,0);
+		-ms-transform: translate(-100%,0);
+		transform: translate(-100%,0);
+		&.show{
+			transform: translate(0px, 0px);
+			left: 0px;
+			right: auto;
+		}
+		.dz-demo-trigger {
+			right: auto;
+			left: 100%;
+			border-radius: 0 50px 50px 0;
+			svg {
+				margin-right: 0;
+				margin-left: 15px;
+			}
+		}
+	}
+}
+
+

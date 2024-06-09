@@ -1,0 +1,49 @@
+html[dir="rtl"] {
+    
+    //footer
+    [direction="rtl"] {
+        .footer{
+            padding-right: 21.563rem;
+            padding-left: 0;
+			.copyright{
+				border-radius: 0 0 50px 0;
+			}
+			@include respond ('laptop'){
+				padding-right:17rem;
+			}
+            @include media-breakpoint-down(sm) {
+                padding-right: 0;
+            }
+        }
+
+        &[data-sidebar-style="overlay"] {
+            .footer {
+                padding-right: 0;
+            }
+        }
+
+        .menu-toggle {
+            .footer {
+                padding-right: 3.75rem;
+            }
+        }
+
+        &[data-container="boxed"] {
+            .footer {
+                padding-right: 0;
+            }
+        }
+
+        &[data-sidebar-style="mini"]:not([data-layout="horizontal"]) {
+            .footer {
+                padding-right: 5rem;
+            }
+        }
+
+        &[data-sidebar-style="compact"]:not([data-layout="horizontal"]) {
+            .footer {
+                padding-right: 9.375rem;
+            }
+        }
+    }
+}
