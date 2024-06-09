@@ -20,10 +20,10 @@ namespace MotorRental.Infrastructure.Data.Repository
         {
             _db = db;
         }
-        public async Task<Motorbike> Add(Motorbike motorbike)
+        public async Task<Motorbike> Add(Motorbike motorbike, Guid userId)
         {
             // process user
-            var existingUser = await _db.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == motorbike.User.Id);
+            var existingUser = await _db.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == userId);
             motorbike.User = existingUser;
             if (existingUser == null)
             {
@@ -108,6 +108,7 @@ namespace MotorRental.Infrastructure.Data.Repository
                                     PriceWeek = a.PriceWeek,
                                     PriceMonth = a.PriceMonth,
                                     LicensePlate = a.LicensePlate,
+                                    MotorbikeAvatar = a.MotorbikeAvatar,
                                     Company = new Company { Id = b.Id, Name = b.Name },
                                     User = new User { Id = a.User.Id, Name = a.User.Name },
                                 })

@@ -9,7 +9,7 @@ namespace MotorRental.Application
 {
     public interface IMotorService
     {
-        Task<Motorbike> Add(Motorbike obj);
+        Task<Motorbike> Add(Motorbike obj, Guid userId);
         Task<Motorbike> Update(Motorbike obj);
         Task<IEnumerable<Motorbike>> GetAll(Guid? userId = null);
         Task<Motorbike> GetById(Guid Id);

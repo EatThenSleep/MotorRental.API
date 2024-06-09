@@ -12,13 +12,13 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MotorController : ControllerBase
+    public class MotorbikesController : ControllerBase
     {
         private readonly IMotorService _motorService;
         private readonly IMapper _mapper;
         private ApiResponse _response;
 
-        public MotorController(IMotorService motorService, IMapper mapper)
+        public MotorbikesController(IMotorService motorService, IMapper mapper)
         {
             _motorService = motorService;
             _mapper = mapper;
@@ -35,8 +35,8 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             // convert DTO to Domain
             var model = _mapper.Map<Motorbike>(request);
 
-            // call Service
-            var resultDomain = await _motorService.Add(model);
+            // call Service add (model, userId from authen
+            var resultDomain = await _motorService.Add(model, new Guid("9BA8E10A-05CF-4C10-1A88-08DC882F3FCB"));
 
             if(resultDomain == null)
             {
@@ -103,6 +103,19 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             }
 
             return _response;
+        }
+
+        [HttpPut("{id:Guid}", Name = "UpdateMotorbike")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<ApiResponse>> UpdateMotorbike([FromRoute] Guid id, [FromForm] MotorUpdateDTO request)
+        {
+            // convert DTO to domain
+            var model = _mapper.Map<Motorbike>(request);
+
+            // call service update(motorId, userId from Authen)
+
+            return Ok();
         }
     }
 }
