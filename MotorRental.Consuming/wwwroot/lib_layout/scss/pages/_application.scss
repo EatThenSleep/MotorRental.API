@@ -1,0 +1,23 @@
+.contact-icon {
+    height: 50px;
+    width: 50px;
+    min-width: 50px;
+    background:var(--rgba-primary-1);
+    color: var(--primary);
+    font-size: 20px;
+    border-radius: $radius;
+    line-height: 50px;
+	@include transitionMedium;	
+    text-align: center;
+	&:hover{
+		color:$white;
+		background:var(--primary);
+	}
+	@include respond ('laptop'){
+		height: 40px;
+		width: 40px;
+		min-width: 40px;
+		line-height:42px;
+		font-size:25px;
+	}
+}

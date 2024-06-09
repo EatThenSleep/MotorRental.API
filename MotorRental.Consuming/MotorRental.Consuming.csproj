@@ -6,4 +6,15 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="wwwroot\lib_template\**" />
+    <Content Remove="wwwroot\lib_template\**" />
+    <EmbeddedResource Remove="wwwroot\lib_template\**" />
+    <None Remove="wwwroot\lib_template\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\lib_layout\" />
+  </ItemGroup>
+
 </Project>

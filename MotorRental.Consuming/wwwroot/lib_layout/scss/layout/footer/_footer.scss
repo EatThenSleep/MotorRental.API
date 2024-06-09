@@ -1,0 +1,25 @@
+
+
+
+.footer {
+    padding-left: 21.563rem;
+    background-color: transparent;
+    @include respond('laptop'){
+		padding-left: 17rem;
+	}
+    .copyright {
+        padding: 0.9375rem;
+		
+        p {
+            text-align: center;
+            margin: 0;
+        }
+
+        a{
+            color: var(--primary);
+        }
+		
+    }
+}
+
+

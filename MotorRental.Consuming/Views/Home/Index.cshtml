@@ -2,7 +2,346 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container-fluid">
+    <div class="page-titles">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="javascript:void(0)">App</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <a href="javascript:void(0)">Profile</a>
+            </li>
+        </ol>
+    </div>
+    <!-- row -->
+    <div class="row mb-3">
+        <div class="col-12">
+            <button type="button" class="btn btn-light">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="16"
+                     height="16"
+                     fill="currentColor"
+                     class="bi bi-arrow-left"
+                     viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                          d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8" />
+                </svg>
+            </button>
+            <button type="button" class="btn btn-light">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="16"
+                     height="16"
+                     fill="currentColor"
+                     class="bi bi-arrow-down-short"
+                     viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                          d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4" />
+                </svg>
+            </button>
+
+            <button type="button" class="btn btn-light">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="16"
+                     height="16"
+                     fill="currentColor"
+                     class="bi bi-plus-circle-fill"
+                     viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
+                </svg>
+                Thêm
+            </button>
+            <button type="button" class="btn btn-light">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="16"
+                     height="16"
+                     fill="currentColor"
+                     class="bi bi-floppy2-fill"
+                     viewBox="0 0 16 16">
+                    <path d="M12 2h-2v3h2z" />
+                    <path d="M1.5 0A1.5 1.5 0 0 0 0 1.5v13A1.5 1.5 0 0 0 1.5 16h13a1.5 1.5 0 0 0 1.5-1.5V2.914a1.5 1.5 0 0 0-.44-1.06L14.147.439A1.5 1.5 0 0 0 13.086 0zM4 6a1 1 0 0 1-1-1V1h10v4a1 1 0 0 1-1 1zM3 9h10a1 1 0 0 1 1 1v5H2v-5a1 1 0 0 1 1-1" />
+                </svg>
+            </button>
+            <button type="button" class="btn btn-light">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="16"
+                     height="16"
+                     fill="currentColor"
+                     class="bi bi-x-circle-fill"
+                     viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z" />
+                </svg>
+                Đóng
+            </button>
+            <button type="button" class="btn btn-light">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="16"
+                     height="16"
+                     fill="currentColor"
+                     class="bi bi-trash3"
+                     viewBox="0 0 16 16">
+                    <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5" />
+                </svg>
+                Xoá
+            </button>
+            <button type="button" class="btn btn-light">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="16"
+                     height="16"
+                     fill="currentColor"
+                     class="bi bi-bootstrap-reboot"
+                     viewBox="0 0 16 16">
+                    <path d="M1.161 8a6.84 6.84 0 1 0 6.842-6.84.58.58 0 1 1 0-1.16 8 8 0 1 1-6.556 3.412l-.663-.577a.58.58 0 0 1 .227-.997l2.52-.69a.58.58 0 0 1 .728.633l-.332 2.592a.58.58 0 0 1-.956.364l-.643-.56A6.8 6.8 0 0 0 1.16 8z" />
+                    <path d="M6.641 11.671V8.843h1.57l1.498 2.828h1.314L9.377 8.665c.897-.3 1.427-1.106 1.427-2.1 0-1.37-.943-2.246-2.456-2.246H5.5v7.352zm0-3.75V5.277h1.57c.881 0 1.416.499 1.416 1.32 0 .84-.504 1.324-1.386 1.324z" />
+                </svg>
+            </button>
+            <button type="button" class="btn btn-light">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="16"
+                     height="16"
+                     fill="currentColor"
+                     class="bi bi-download"
+                     viewBox="0 0 16 16">
+                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
+                    <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z" />
+                </svg>
+                Tải file mẫu
+            </button>
+            <button type="button" class="btn btn-light">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="16"
+                     height="16"
+                     fill="currentColor"
+                     class="bi bi-currency-dollar"
+                     viewBox="0 0 16 16">
+                    <path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73z" />
+                </svg>
+                Đặt giá thuê
+            </button>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-body">
+                <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="car-tab" data-bs-toggle="tab" data-bs-target="#car" type="button" role="tab" aria-controls="car" aria-selected="true">
+                            Xe
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="details-tab" data-bs-toggle="tab" data-bs-target="#details" type="button" role="tab" aria-controls="details" aria-selected="false">
+                            Chi tiết
+                        </button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="car" role="tabpanel" aria-labelledby="car-tab">
+                        <form class="row g-3">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="carType" class="form-label">Loại xe*</label>
+                                    <div class="d-flex ">
+                                        <input type="text" class="form-control" id="carType" />
+                                        <button type="button" class="btn btn-light me-2" style="height: 40px; background-color: white; border-radius: unset">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                 width="16"
+                                                 height="16"
+                                                 fill="currentColor"
+                                                 class="bi bi-arrow-down-short"
+                                                 viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd"
+                                                      d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4" />
+                                            </svg>
+
+                                        </button>
+                                    </div>
+
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="carModel" class="form-label">Đời xe*</label>
+                                    <input type="text" class="form-control" id="carModel" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="licensePlate" class="form-label">Biển số*</label>
+                                    <input type="text" class="form-control" id="licensePlate" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="color" class="form-label">Màu sơn</label>
+                                    <div class="d-flex">
+                                        <input type="text" class="form-control" id="color" />
+                                        <button type="button" class="btn btn-light me-2" style="height: 40px; background-color: white; border-radius: unset">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                 width="16"
+                                                 height="16"
+                                                 fill="currentColor"
+                                                 class="bi bi-arrow-down-short"
+                                                 viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd"
+                                                      d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4" />
+                                            </svg>
+
+                                        </button>
+                                    </div>
+
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="manufacturer" class="form-label">Sản xuất</label>
+                                    <div class="d-flex">
+                                        <input type="text" class="form-control" id="manufacturer" />
+                                        <button type="button" class="btn btn-light me-2" style="height: 40px; background-color: white; border-radius: unset">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                 width="16"
+                                                 height="16"
+                                                 fill="currentColor"
+                                                 class="bi bi-arrow-down-short"
+                                                 viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd"
+                                                      d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4" />
+                                            </svg>
+
+                                        </button>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="ownerName" class="form-label">Tên chủ xe</label>
+                                    <input type="text" class="form-control" id="ownerName" />
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label for="hourlyRate" class="form-label">Giá thuê giờ</label>
+                                    <input type="text" class="form-control" id="hourlyRate" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="dailyRate" class="form-label">Giá thuê ngày</label>
+                                    <input type="text" class="form-control" id="dailyRate" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="monthlyRate" class="form-label">Giá thuê tháng</label>
+                                    <input type="text" class="form-control" id="monthlyRate" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="available">Còn dùng</label>
+                                    <input class="me-2" type="checkbox" id="available" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="status" class="form-label">Trạng thái</label>
+                                    <select class="form-select" id="status">
+                                        <option selected>Khả dụng</option>
+                                        <option value="1">Không khả dụng</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="description" class="form-label">Diễn giải</label>
+                                    <textarea class="form-control" rows="3" id="description"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Ảnh đại diện</label>
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/2019_Toyota_Corolla_Icon_Tech_VVT-i_Hybrid_1.8.jpg/1200px-2019_Toyota_Corolla_Icon_Tech_VVT-i_Hybrid_1.8.jpg" class="custom-img img-thumbnail" id="profilePicture" />
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="details" role="tabpanel" aria-labelledby="details-tab">
+                        <!-- Add content for the 'Details' tab here -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <ul class="nav nav-tabs mb-3" id="myTab2" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="modal-tab" data-bs-toggle="tab" data-bs-target="#modal" type="button" role="tab" aria-controls="modal" aria-selected="true">
+                    Hình xe
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="maint-tab" data-bs-toggle="tab" data-bs-target="#maint" type="button" role="tab" aria-controls="maint" aria-selected="false">
+                    Bảo dưỡng
+                </button>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent2">
+            <div class="tab-pane fade show active" id="modal" role="tabpanel" aria-labelledby="modal-tab">
+                <div class="row mb-3">
+                    <div class="col-md-12 d-flex justify-content-start">
+                        <button type="button" class="btn btn-light me-2">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 width="16"
+                                 height="16"
+                                 fill="currentColor"
+                                 class="bi bi-plus-circle-fill"
+                                 viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
+                            </svg>
+                            Thêm
+                        </button>
+                        <button type="button" class="btn btn-light me-2">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 width="16"
+                                 height="16"
+                                 fill="currentColor"
+                                 class="bi bi-trash3"
+                                 viewBox="0 0 16 16">
+                                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5" />
+                            </svg>
+                            Xoá
+                        </button>
+                        <button type="button" class="btn btn-light me-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filetype-xls" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M14 4.5V14a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5zM6.472 15.29a1.2 1.2 0 0 1-.111-.449h.765a.58.58 0 0 0 .254.384q.106.073.25.114.143.041.319.041.246 0 .413-.07a.56.56 0 0 0 .255-.193.5.5 0 0 0 .085-.29.39.39 0 0 0-.153-.326q-.152-.12-.462-.193l-.619-.143a1.7 1.7 0 0 1-.539-.214 1 1 0 0 1-.351-.367 1.1 1.1 0 0 1-.123-.524q0-.366.19-.639.19-.272.527-.422.338-.15.777-.149.457 0 .78.152.324.153.5.41.18.255.2.566h-.75a.56.56 0 0 0-.12-.258.6.6 0 0 0-.247-.181.9.9 0 0 0-.369-.068q-.325 0-.513.152a.47.47 0 0 0-.184.384q0 .18.143.3a1 1 0 0 0 .405.175l.62.143q.326.075.566.211a1 1 0 0 1 .375.358q.135.222.135.56 0 .37-.188.656a1.2 1.2 0 0 1-.539.439q-.351.158-.858.158-.381 0-.665-.09a1.4 1.4 0 0 1-.478-.252 1.1 1.1 0 0 1-.29-.375m-2.945-3.358h-.893L1.81 13.37h-.036l-.832-1.438h-.93l1.227 1.983L0 15.931h.861l.853-1.415h.035l.85 1.415h.908L2.253 13.94zm2.727 3.325H4.557v-3.325h-.79v4h2.487z" />
+                            </svg>
+                        </button>
+                        <button type="button" class="btn btn-light me-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                            </svg>
+                        </button>
+                        <input type="text" class="form-control" style="width: 200px" placeholder="Gõ nội dung tìm kiếm" />
+                        <button type="button" class="btn btn-light">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text-fill" viewBox="0 0 16 16">
+                                <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M4.5 9a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1zM4 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m.5 2.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 0 1z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col"><input type="checkbox"></th>
+                                <th scope="col" style="font-size: 14px;">Mô tả</th>
+                                <th scope="col" style="font-size: 14px;">Hình ảnh</th>
+                                <th scope="col" style="font-size: 14px;">Diễn giải</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                </td>
+                                <td></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="maint" role="tabpanel" aria-labelledby="maint-tab">
+                <!-- Add content for the 'Maintenance' tab here -->
+
+            </div>
+            <div style="background-color:beige" class="d-flex justify-content-center">
+
+                <!-- Data display here -->
+            </div>
+        </div>
+    </div>
 </div>

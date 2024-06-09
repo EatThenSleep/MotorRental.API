@@ -1,0 +1,118 @@
+@media (min-width: 992px) {
+    [data-container="boxed"] {
+        #main-wrapper {
+            max-width: 1199px;
+            margin: 0 auto;
+
+            @at-root [direction="rtl"]#{&} {
+                text-align: right;
+            }
+        }
+		.search-area{
+			width:60px;
+			overflow: hidden;
+			border-radius: 3rem;
+			@include transitionMedium;
+			.form-control{
+				max-width:0;
+				margin-right: -24px;
+				z-index: -1;
+				@include transitionMedium;
+			}
+			.input-group-text{
+				padding-right: 6px;
+				z-index: 1;
+			}
+			&.open{
+				overflow:visible;
+				.form-control{
+					position: absolute;
+					max-width: 250px;
+					width: 250px;
+					z-index: 1;
+					right: 60px;
+				}
+			}
+		}
+    }
+}
+
+    
+    
+@include custommq($min: 1350px) {
+    [data-layout="vertical"][data-sidebar-style="overlay"][data-container="boxed"][data-header-position="fixed"] {
+        .header {
+            width: 1199px;
+        }
+    }
+}
+
+@include custommq($min: 1200px, $max: 1349px) {
+    [data-layout="vertical"][data-sidebar-style="overlay"][data-container="boxed"][data-header-position="fixed"] {
+        .header {
+            width: 1199px;
+        }
+    }
+}
+
+
+[data-header-position="fixed"][data-layout="horizontal"][data-container="boxed"] {
+    .deznav {
+        max-width: 1199px;
+    }
+} //ok
+
+[data-layout="horizontal"][data-container="boxed"][data-header-position="fixed"] {
+    .header {
+        width: 1199px;
+    }
+}
+
+[data-layout="horizontal"][data-container="boxed"][data-header-position="fixed"][data-sidebar-style="mini"] {
+    .header {
+        width: 1199px;
+    }
+}
+
+
+[data-container="boxed"] {
+    .metismenu.fixed {
+        left: auto;
+        max-width: 1199px;
+    }
+
+    .page-titles {
+        margin-bottom: 3rem;
+        padding: 15px 15px;
+    }
+
+    .content-body .container-fluid {
+        padding: 0.9375rem 0.9375rem 0 0.9375rem;
+    }
+}
+
+[data-container="boxed"][data-layout="vertical"] {
+    .page-titles {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+[data-layout="vertical"][data-container="boxed"][data-sidebar-position="fixed"][data-header-position="static"][data-sidebar-style="overlay"] {
+    .nav-header {
+        position: absolute;
+    }
+
+    .menu-toggle {
+        .deznav {
+            position: absolute;
+        }
+    }
+}
+
+[data-container="boxed"][data-sidebar-position="fixed"][data-layout="horizontal"] {
+    .deznav.fixed {
+        left: auto;
+        max-width: 1199px;
+    }
+}
