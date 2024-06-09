@@ -57,6 +57,45 @@ namespace MotorRental.Infrastructure.Data.Repository
             return motorbike;
         }
 
+        public async Task<IEnumerable<Motorbike>> GetAllAsync(Guid? userId = null)
+        {
+            var motorbikes = _db.Motorbikes.AsQueryable();
+
+            if(userId != null)
+            {
+                motorbikes = motorbikes.Where(a => a.User.Id == userId);
+            }
+
+
+            motorbikes = motorbikes
+                        .Join(_db.Companies.AsNoTracking(),
+                                a => a.Company.Id,
+                                b => b.Id,
+                                (a, b) => new Motorbike
+                                {
+                                    Id = a.Id,
+                                    Name = a.Name,
+                                    Type = a.Type,
+                                    Color = a.Color,
+                                    status = a.status,
+                                    PriceDay = a.PriceDay,
+                                    PriceWeek = a.PriceWeek,
+                                    PriceMonth = a.PriceMonth,
+                                    LicensePlate = a.LicensePlate,
+                                    Company = new Company { Id = b.Id, Name = b.Name },
+                                });
+           
+
+            var res = await motorbikes.ToListAsync();
+
+            return res;
+        }
+
+        public Task<Motorbike> GetByIdAsync(Guid Id)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<Motorbike?> UpdateAsync(Motorbike motorbike)
         {
            

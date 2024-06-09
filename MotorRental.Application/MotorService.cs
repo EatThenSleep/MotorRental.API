@@ -30,5 +30,19 @@ namespace MotorRental.Application
 
             return res;
         }
+
+        public async Task<IEnumerable<Motorbike>> GetAll(Guid? userId = null)
+        {
+            var res = await _motorRepository.GetAllAsync(userId);
+
+            return res;
+        }
+
+        public async Task<Motorbike> GetById(Guid Id)
+        {
+            var res = await _motorRepository.GetByIdAsync(Id);
+
+            return res;
+        }
     }
 }

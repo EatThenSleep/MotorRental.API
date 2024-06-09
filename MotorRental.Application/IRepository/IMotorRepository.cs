@@ -11,5 +11,7 @@ namespace MotorRental.Application.IRepository
     {
         Task<Motorbike> Add(Motorbike motorbike);
         Task<Motorbike?> UpdateAsync(Motorbike motorbike);
+        Task<IEnumerable<Motorbike>> GetAllAsync(Guid? userId = null);
+        Task<Motorbike> GetByIdAsync(Guid Id);
     }
 }

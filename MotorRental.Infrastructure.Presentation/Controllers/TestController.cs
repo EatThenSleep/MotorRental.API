@@ -19,7 +19,7 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
         [HttpGet("test")]
         public async Task<IActionResult> CreateUser()
         {
-            await _userRepository.Add(new User() { Name = "COng vien"});
+            await _userRepository.Add(new User() { Name = "Mai Phuong"});
             return Ok();
         }
     }
