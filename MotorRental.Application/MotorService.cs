@@ -42,6 +42,8 @@ namespace MotorRental.Application
         {
             var res = await _motorRepository.GetByIdAsync(Id);
 
+
+
             return res;
         }
     }

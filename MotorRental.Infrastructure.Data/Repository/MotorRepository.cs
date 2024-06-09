@@ -91,9 +91,29 @@ namespace MotorRental.Infrastructure.Data.Repository
             return res;
         }
 
-        public Task<Motorbike> GetByIdAsync(Guid Id)
+        public async Task<Motorbike> GetByIdAsync(Guid Id)
         {
-            throw new NotImplementedException();
+            var motorbike = await _db.Motorbikes.AsNoTracking()
+                            .Join(_db.Companies.AsNoTracking(),
+                                a => a.Company.Id,
+                                b => b.Id,
+                                (a, b) => new Motorbike
+                                {
+                                    Id = a.Id,
+                                    Name = a.Name,
+                                    Type = a.Type,
+                                    Color = a.Color,
+                                    status = a.status,
+                                    PriceDay = a.PriceDay,
+                                    PriceWeek = a.PriceWeek,
+                                    PriceMonth = a.PriceMonth,
+                                    LicensePlate = a.LicensePlate,
+                                    Company = new Company { Id = b.Id, Name = b.Name },
+                                    User = new User { Id = a.User.Id, Name = a.User.Name },
+                                })
+                            .FirstOrDefaultAsync(u => u.Id == Id);
+
+            return motorbike;
         }
 
         public async Task<Motorbike?> UpdateAsync(Motorbike motorbike)

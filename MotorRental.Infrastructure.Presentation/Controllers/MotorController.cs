@@ -86,8 +86,22 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
 
         [HttpGet]
         [Route("{id:Guid}")]
-        public async Task<ApiResponse> GetMotorBikeById()
+        public async Task<ApiResponse> GetMotorBikeById([FromRoute] Guid id)
         {
+            var motorbike = await _motorService.GetById(id);
+
+            if(motorbike == null)
+            {
+                _response.IsSuccess = false;
+                _response.StatusCode = HttpStatusCode.NotFound;
+                _response.ErrorMessages.Add("Nhập cc gì vậy thằng mặt lồn");
+            }
+            else
+            {
+                _response.StatusCode =HttpStatusCode.OK;
+                _response.Result = _mapper.Map<MotorDTO>(motorbike);
+            }
+
             return _response;
         }
     }

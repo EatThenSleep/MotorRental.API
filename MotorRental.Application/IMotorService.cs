@@ -12,6 +12,6 @@ namespace MotorRental.Application
         Task<Motorbike> Add(Motorbike obj);
         Task<Motorbike> Update(Motorbike obj);
         Task<IEnumerable<Motorbike>> GetAll(Guid? userId = null);
-        Task<IEnumerable<Motorbike>> GetById(Guid Id);
+        Task<Motorbike> GetById(Guid Id);
     }
 }
