@@ -1,0 +1,310 @@
+:root{
+	--nav-headbg: #fff;
+	--sidebar-bg: #fff;
+	--headerbg: #fff;
+}
+
+//background for nav header
+@each $name, $color in $theme_backgrounds {
+	[data-nav-headerbg="#{$name}"][data-theme-version="dark"],
+    [data-nav-headerbg="#{$name}"] {
+        @if $name != "color_1"  {
+			--nav-headbg: #{$color};
+			
+			.svg-logo-path{
+				fill:$white;
+			}
+			.svg-logo-text-path{
+				fill:$white;
+			}
+			.svg-logo-path-text{
+				fill:$color;
+			}
+		}
+	}
+}
+//background for nav header
+@each $name, $color in $theme_backgrounds {
+	[data-sidebarbg="#{$name}"][data-theme-version="dark"],
+    [data-sidebarbg="#{$name}"] {
+        @if $name != "color_1"  {
+			--sidebar-bg: #{$color};
+			
+			
+			.deznav {
+				.metismenu{
+					a{
+						color:rgba($white,0.8);
+					}
+					li{
+						ul{
+							a{
+								&:hover,
+								&:focus,
+								&.mm-active {
+									color:$white;
+								}
+							}
+						}
+					}
+					&>li{
+						&>a{
+							color:rgba($white,0.85);
+							i{
+								color:rgba($white,0.85);
+							}
+						}
+						&.mm-active{
+							&>a{
+								background:rgba($white,0.15);
+								color:$white;
+								i{
+									color:$color!important;
+								}
+							}
+						}
+					}
+					.has-arrow:after{
+						border-color: rgba($white,0.85) transparent transparent rgba($white,0.85);
+					}					
+				} 
+				.header-profile > a.nav-link{
+					border-color:rgba($white,0.3);
+					.header-info{
+						span{
+							color:$white;
+						}
+						small{
+							color:rgba($white,0.8);
+						}
+					} 
+				}
+				.copyright{
+					color:$white;
+				}
+			}
+			.menu-toggle .deznav .metismenu > li.mm-active > a i {
+				color: $white !important;
+			}
+			
+			&[data-sidebar-style="mini"]{
+				.deznav{
+					.metismenu{
+						li{
+							&>ul{
+								 background-color: lighten($color: $color, $amount: 10%);
+							}
+						}
+						&>li{
+							&.mm-active,
+							&:hover{
+								&>a{
+									background:$white;
+									i{
+										color:$color;
+									}
+								}
+							} 
+						}
+					} 
+				} 
+			}
+			&[data-sidebar-style="compact"]{
+				.deznav{
+					.metismenu{
+						li{
+							a:before{
+								background:$white;
+							}
+							&.mm-active,
+							&:hover{
+								&>a{
+									background: -moz-linear-gradient(left,  lighten($color: $color, $amount: 10%) 0%, $color 100%); 
+									background: -webkit-linear-gradient(left,  lighten($color: $color, $amount: 10%) 0%, $color 100%); 
+									background: linear-gradient(to right,  lighten($color: $color, $amount: 10%) 0%, $color 100%); 
+								}
+							}
+						}
+						&>li{
+							&.mm-active,
+							&:hover{
+								&>a{
+									background: lighten($color: $color, $amount: 10%);
+									i{
+										color:$white!important;
+									}
+								}
+							} 
+						}
+					} 
+				} 
+				
+			}
+			&[data-sidebar-style="modern"]{
+				.deznav{
+					.metismenu{
+						li{
+							&>ul{
+								 background-color: lighten($color: $color, $amount: 10%);
+							}
+						}
+						&>li{
+							&.mm-active,
+							&:hover{
+								&>a{
+									background: lighten($color: $color, $amount: 10%);
+									i{
+										color:$white!important;
+									}
+								}
+							} 
+						}
+					} 
+				} 
+			}
+			&[data-sidebar-style="overlay"]{
+				.deznav{
+					.metismenu{
+						&>li{
+							&>a:before{
+								background:$white;
+							}
+							&.mm-active{
+								&>a{
+									background: $color;
+									i{
+										color:$white!important;
+									}
+								}
+							} 
+						}
+					} 
+				} 
+			}
+			&[data-sidebar-style="icon-hover"]{
+				.deznav{
+					.metismenu{
+						&>li{
+							&.mm-active,
+							&:hover{
+								&>a{
+									background: lighten($color: $color, $amount: 10%);
+									color:$white;
+									i{
+										color:$white!important;
+									}
+								}
+							} 
+						}
+					} 
+				} 
+			}
+			&[data-layout="horizontal"]{
+				.deznav .metismenu > li.mm-active > a i {
+					color: $white !important;
+				}
+				.deznav{
+					.metismenu{
+						li{
+							&>ul{
+								background: lighten($color: $color, $amount: 10%);
+							}
+						}
+					}
+				}
+				&[data-sidebar-style="mini"]{
+					.deznav .metismenu > li.mm-active > a i {
+						color: $color !important;
+					}
+				}
+			}
+			&[data-theme-version="dark"]{
+				&[data-sidebar-style="compact"]{
+					.deznav{
+						.metismenu{
+							&>li{
+								&:hover,
+								&.mm-active{
+									&>a{
+										background: lighten($color: $color, $amount: 10%);
+									}
+								}							
+							}
+						} 
+					} 
+				}
+				&[data-sidebar-style="overlay"]{
+					.menu-toggle .deznav .metismenu li > ul{
+						background: lighten($color: $color, $amount: 10%);
+					}
+				}
+			}
+			&[data-sidebar-style="full"][data-layout="vertical"]{
+				.menu-toggle .deznav .metismenu > li.mm-active > a{
+					background-color: lighten($color: $color, $amount: 10%);
+				}
+			}
+			&[data-sidebar-style="full"][data-layout="vertical"]{
+				.menu-toggle .deznav .metismenu li > ul{
+					background: lighten($color: $color, $amount: 10%);
+				}
+			}
+		}
+	}
+}
+
+//background for nav header
+@each $name, $color in $theme_backgrounds {
+	[data-headerbg="#{$name}"][data-theme-version="dark"],
+    [data-headerbg="#{$name}"] {
+        @if $name != "color_1"  {
+			--headerbg: #{$color};
+			
+			.hamburger .line{
+				background:$white;
+			}
+			&[data-layout="vertical"]{
+				.menu-toggle .nav-header .nav-control .hamburger .line{
+					background-color:$white;
+				}
+			}
+			.header-left{
+				.dashboard_bar{
+					color:$white;
+				}
+			} 
+			.header-right{
+				.header-profile{
+					&>a.nav-link .header-info{
+						border:0;
+						.text-black {
+							color: #fff !important;
+						}
+						p{
+							color:rgba($white,0.7);
+						}
+					}
+				}
+				.nav-link{
+					svg path{
+						fill:$white;
+					}
+					.badge{
+						box-shadow: 0px 0px 3px 1px rgb(255, 255, 255);
+					}
+				}
+			} 
+			.header-right .notification_dropdown .nav-link i{
+				color:$white;
+			}
+			.search-area{
+				.form-control{
+					background:$white;
+				}
+				.input-group-text{
+					background:$white;
+				}
+			} 
+		}
+	}
+}
