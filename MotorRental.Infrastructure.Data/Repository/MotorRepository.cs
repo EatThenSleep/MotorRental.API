@@ -97,6 +97,7 @@ namespace MotorRental.Infrastructure.Data.Repository
                                     PriceWeek = a.PriceWeek,
                                     PriceMonth = a.PriceMonth,
                                     LicensePlate = a.LicensePlate,
+                                    MotorbikeAvatar = a.MotorbikeAvatar,
                                     Company = new Company { Id = b.Id, Name = b.Name },
                                 });
            

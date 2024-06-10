@@ -15,5 +15,16 @@ namespace MotorRental.Utilities
         public const int Status_Enable = 1;
         public const int Status_Busy = 2;
         public const int Status_Maintaint = 3;
+
+        public enum ApiType
+        {
+            GET, POST, PUT, DELETE
+        }
+
+        public enum ContentType
+        {
+            Json,
+            MultipartFormData
+        }
     }
 }

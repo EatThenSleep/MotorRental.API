@@ -1,0 +1,49 @@
+﻿
+<div class="container-fluid">
+    <div class="page-titles">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="javascript:void(0)">Table</a></li>
+            <li class="breadcrumb-item active"><a href="javascript:void(0)">Datatable</a></li>
+        </ol>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Motorbike Datatable</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="myTable" class="table table-bordered table-striped" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Color</th>
+                                    <th>Status</th>
+                                    <th>Price</th>
+                                    <th>License Plate</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                "ajax": { url: 'https://localhost:7225/api/Motorbikes' },
+            });
+        });
+    </script>
+}
