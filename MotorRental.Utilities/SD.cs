@@ -16,6 +16,12 @@ namespace MotorRental.Utilities
         public const int Status_Busy = 2;
         public const int Status_Maintaint = 3;
 
+        public static readonly string[] RoleForUser = ["Owner", "Visitor"];
+
+        public static readonly string VISTOR = "Visitor";
+        public static readonly string ADMIN = "Admin";
+        public static readonly string OWNER = "Owner";
+
         public enum ApiType
         {
             GET, POST, PUT, DELETE

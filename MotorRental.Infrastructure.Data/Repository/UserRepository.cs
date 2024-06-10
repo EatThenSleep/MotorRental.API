@@ -21,10 +21,16 @@ namespace MotorRental.Infrastructure.Data.Repository
             return user;
         }
 
-        public async Task<User?> GetById(Guid UserId)
+        public async Task<User> FindByEmail(string email)
+        {
+            var existingUser = await _db.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Email.ToLower() == email.ToLower());
+            return existingUser;
+        }
+
+        public async Task<User?> GetById(string UserId)
         {
             return await _db.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Id == UserId);
         }
-
+        
     }
 }

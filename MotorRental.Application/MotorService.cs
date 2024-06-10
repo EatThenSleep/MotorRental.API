@@ -17,7 +17,7 @@ namespace MotorRental.Application
             _motorRepository = motorRepository;
         }
 
-        public async Task<Motorbike> Add(Motorbike obj, Guid userId)
+        public async Task<Motorbike> Add(Motorbike obj, string userId)
         {
             var res = await _motorRepository.Add(obj, userId);
 
@@ -32,7 +32,7 @@ namespace MotorRental.Application
             return res;
         }
 
-        public async Task<IEnumerable<Motorbike>> GetAll(Guid? userId = null)
+        public async Task<IEnumerable<Motorbike>> GetAll(string? userId = null)
         {
             var res = await _motorRepository.GetAllAsync(userId);
 

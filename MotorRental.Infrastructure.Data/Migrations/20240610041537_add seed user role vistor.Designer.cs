@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MotorRental.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using MotorRental.Infrastructure.Data;
 namespace MotorRental.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240610041537_add seed user role vistor")]
+    partial class addseeduserrolevistor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,22 +54,8 @@ namespace MotorRental.Infrastructure.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3d3d69df-3ed5-4067-a2aa-6e2a65b13a10",
-                            ConcurrencyStamp = "3d3d69df-3ed5-4067-a2aa-6e2a65b13a10",
-                            Name = "Admin",
-                            NormalizedName = "admin"
-                        },
-                        new
-                        {
-                            Id = "301dc331-909a-4766-a360-c62f4f3780a8",
-                            ConcurrencyStamp = "301dc331-909a-4766-a360-c62f4f3780a8",
-                            Name = "Owner",
-                            NormalizedName = "owner"
-                        },
-                        new
-                        {
-                            Id = "89a9aa03-6e32-4e2c-b68e-f900b74504d3",
-                            ConcurrencyStamp = "89a9aa03-6e32-4e2c-b68e-f900b74504d3",
+                            Id = "14047e48-70af-45b0-a548-50e214bcdaba",
+                            ConcurrencyStamp = "14047e48-70af-45b0-a548-50e214bcdaba",
                             Name = "Visitor",
                             NormalizedName = "visitor"
                         });
@@ -161,18 +150,8 @@ namespace MotorRental.Infrastructure.Data.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "a829d08d-8810-46f8-a03d-f3d89b4dfdd8",
-                            RoleId = "3d3d69df-3ed5-4067-a2aa-6e2a65b13a10"
-                        },
-                        new
-                        {
-                            UserId = "3cf092c8-08f8-406a-bd95-fedf4336036e",
-                            RoleId = "301dc331-909a-4766-a360-c62f4f3780a8"
-                        },
-                        new
-                        {
-                            UserId = "020544df-1e91-49ff-8815-eedd9139c16e",
-                            RoleId = "89a9aa03-6e32-4e2c-b68e-f900b74504d3"
+                            UserId = "2d5df123-4595-4307-9a1e-6d1f67fb7182",
+                            RoleId = "14047e48-70af-45b0-a548-50e214bcdaba"
                         });
                 });
 
@@ -371,69 +350,25 @@ namespace MotorRental.Infrastructure.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a829d08d-8810-46f8-a03d-f3d89b4dfdd8",
+                            Id = "2d5df123-4595-4307-9a1e-6d1f67fb7182",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5c5c1a6b-51a0-4d3a-b15c-06377bb84123",
+                            ConcurrencyStamp = "ff425c7a-9de2-4332-bf84-656215a81fb7",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "admin@gmail.com",
+                            Email = "nickdehoc0504@gmail.com",
                             EmailConfirmed = false,
                             IdentityImageBack = "",
                             IdentityImagePre = "",
                             IdentityNumber = "",
                             LockoutEnabled = false,
-                            Name = "Admin 1",
-                            NormalizedEmail = "ADMIN@GMAIL.COM",
-                            NormalizedUserName = "ADMIN 1",
-                            PasswordHash = "AQAAAAIAAYagAAAAEB8RXeG4DrZIHKBWY8aBjUtah76mY83EJo98i2wMr6IsMTFfaqbOMc86sYoHwgEvJw==",
+                            Name = "Huỳnh Văn Giảng",
+                            NormalizedEmail = "NICKDEHOC0504@GMAIL.COM",
+                            NormalizedUserName = "HUYNH VAN GIANG",
+                            PasswordHash = "AQAAAAIAAYagAAAAEH3RZjVQao4jYQX6fCX3VGH6ld3yV+nJRBbyuhv5Pkct0C5rzu/a/2INFEKqMIiXSA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2114db81-db1f-4a89-81e1-c113653801a2",
+                            SecurityStamp = "65b249c3-4ee5-47c9-9408-4d165e613aed",
                             TwoFactorEnabled = false,
                             UrlAvatar = "",
-                            UserName = "admin@gmail.com"
-                        },
-                        new
-                        {
-                            Id = "3cf092c8-08f8-406a-bd95-fedf4336036e",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "d272589e-5807-4ca4-9e9b-7f8fc9bdac2e",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "owner@gmail.com",
-                            EmailConfirmed = false,
-                            IdentityImageBack = "",
-                            IdentityImagePre = "",
-                            IdentityNumber = "",
-                            LockoutEnabled = false,
-                            Name = "Owner 1",
-                            NormalizedEmail = "OWNER@GMAIL.COM",
-                            NormalizedUserName = "OWNER 1",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEylzCz2AHd+MjXVsSmO0CWbUBeMIeZHGsnoWSKOLUzetXWFSyYbci02IWpkL8hn/A==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "031cbf8e-801a-4425-8b74-316ea3f61151",
-                            TwoFactorEnabled = false,
-                            UrlAvatar = "",
-                            UserName = "owner@gmail.com"
-                        },
-                        new
-                        {
-                            Id = "020544df-1e91-49ff-8815-eedd9139c16e",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "70c46436-9f70-4c27-9173-1b511fa49f28",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "visitor@gmail.com",
-                            EmailConfirmed = false,
-                            IdentityImageBack = "",
-                            IdentityImagePre = "",
-                            IdentityNumber = "",
-                            LockoutEnabled = false,
-                            Name = "Visitor 1",
-                            NormalizedEmail = "VISITOR@GMAIL.COM",
-                            NormalizedUserName = "VISITOR 1",
-                            PasswordHash = "AQAAAAIAAYagAAAAEP53s/PI5RkGzcBRlqDtXI5vC4LivQO7XfnpOfiDVVXoHKo+YZ/WNicU/ndAAOvDJg==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "c9f38ea4-8c23-46b8-b567-fe89985b0787",
-                            TwoFactorEnabled = false,
-                            UrlAvatar = "",
-                            UserName = "visitor@gmail.com"
+                            UserName = "nickdehoc0504@gmail.com"
                         });
                 });
 

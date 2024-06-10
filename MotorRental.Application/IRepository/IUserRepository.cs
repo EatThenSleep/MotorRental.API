@@ -10,6 +10,7 @@ namespace MotorRental.Application.IRepository
     public interface IUserRepository
     {
         Task<User> Add(User user);
-        Task<User> GetById(Guid UserId);
+        Task<User> GetById(string UserId);
+        Task<User> FindByEmail(string email);
     }
 }

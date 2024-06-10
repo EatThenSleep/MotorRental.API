@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace MotorRental.Entities
 {
-    public class User
+    public class User : IdentityUser
     {
-        public Guid Id { get; set; }
         [Required]
         public string Name { get; set; } = string.Empty;
         public string? UrlAvatar { get; set; } = string.Empty;

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Azure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MotorRental.Application;
 using MotorRental.Entities;
@@ -36,7 +37,7 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             var model = _mapper.Map<Motorbike>(request);
 
             // call Service add (model, userId from authen
-            var resultDomain = await _motorService.Add(model, new Guid("9BA8E10A-05CF-4C10-1A88-08DC882F3FCB"));
+            var resultDomain = await _motorService.Add(model, "9BA8E10A-05CF-4C10-1A88-08DC882F3FCB");
 
             if(resultDomain == null)
             {
@@ -66,6 +67,7 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             return _response;
         }
 
+        [Authorize]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

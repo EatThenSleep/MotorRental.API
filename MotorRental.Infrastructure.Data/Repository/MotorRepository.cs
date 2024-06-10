@@ -20,7 +20,7 @@ namespace MotorRental.Infrastructure.Data.Repository
         {
             _db = db;
         }
-        public async Task<Motorbike> Add(Motorbike motorbike, Guid userId)
+        public async Task<Motorbike> Add(Motorbike motorbike, string userId)
         {
             // process user
             var existingUser = await _db.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == userId);
@@ -72,7 +72,7 @@ namespace MotorRental.Infrastructure.Data.Repository
             return existingMotor;
         }
 
-        public async Task<IEnumerable<Motorbike>> GetAllAsync(Guid? userId = null)
+        public async Task<IEnumerable<Motorbike>> GetAllAsync(string? userId = null)
         {
             var motorbikes = _db.Motorbikes.AsQueryable();
 
