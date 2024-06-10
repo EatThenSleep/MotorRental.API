@@ -45,5 +45,12 @@ namespace MotorRental.Application
 
             return res;
         }
+
+        public async Task<Motorbike> DeleteMotorbike(Guid Id)
+        {
+            var res = await _motorRepository.DeleteByIdAsync(Id);
+
+            return res;
+        }
     }
 }

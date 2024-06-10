@@ -57,6 +57,21 @@ namespace MotorRental.Infrastructure.Data.Repository
             return motorbike;
         }
 
+        public async Task<Motorbike> DeleteByIdAsync(Guid Id)
+        {
+            var existingMotor = _db.Motorbikes.FirstOrDefault(u => u.Id == Id);
+
+            if(existingMotor == null)
+            {
+                return null;
+            }
+
+            _db.Motorbikes.Remove(existingMotor);
+            await _db.SaveChangesAsync();
+
+            return existingMotor;
+        }
+
         public async Task<IEnumerable<Motorbike>> GetAllAsync(Guid? userId = null)
         {
             var motorbikes = _db.Motorbikes.AsQueryable();

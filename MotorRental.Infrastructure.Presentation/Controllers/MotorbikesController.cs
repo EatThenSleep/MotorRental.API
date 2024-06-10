@@ -148,5 +148,34 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
 
             return _response;
         }
+
+        [HttpDelete("{id:Guid}", Name = "DeleteVilla")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<ApiResponse>> DeleteMotorbike([FromRoute] Guid id)
+        {
+            // call delete from service
+            var resultDomain = await _motorService.DeleteMotorbike(id);
+
+            if (resultDomain == null)
+            {
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccess = false;
+                _response.Result = resultDomain;
+                _response.ErrorMessages.Add("Địt mẹ mày, try agian");
+            }
+            else
+            {
+                FormFileExt.DeleteImage(resultDomain.Id, resultDomain.MotorbikeAvatar);
+
+                _response.StatusCode = HttpStatusCode.NoContent;
+            }
+
+            return _response;
+        }
+
     }
 }

@@ -23,8 +23,4 @@
     <ProjectReference Include="..\MotorRental.Infrastructure.Data\MotorRental.Infrastructure.SqlServer.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\ProductImages\" />
-  </ItemGroup>
-
 </Project>
