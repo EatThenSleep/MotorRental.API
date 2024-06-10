@@ -4,10 +4,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MotorRental.Application;
 using MotorRental.Entities;
+using MotorRental.Infrastructure.Presentation.Extension;
 using MotorRental.Infrastructure.Presentation.Helper;
 using MotorRental.Infrastructure.Presentation.Models;
 using MotorRental.Infrastructure.Presentation.Models.DTO;
 using System.Net;
+using System.Security.Claims;
 
 namespace MotorRental.Infrastructure.Presentation.Controllers
 {
@@ -37,7 +39,7 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             var model = _mapper.Map<Motorbike>(request);
 
             // call Service add (model, userId from authen
-            var resultDomain = await _motorService.Add(model, "9BA8E10A-05CF-4C10-1A88-08DC882F3FCB");
+            var resultDomain = await _motorService.Add(model, "3cf092c8-08f8-406a-bd95-fedf4336036e");
 
             if(resultDomain == null)
             {
@@ -67,17 +69,33 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             return _response;
         }
 
-        [Authorize]
-        [HttpGet]
+        [HttpGet("GetALlMotorbikes")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ApiResponse> GetAllMotorBikes()
         {
-            // get userId from claim (will code)
-            // https://trello.com/c/Tx7kEOGF/14-get-claims-from-a-webapi-controller-jwt-token
-
             // get from service
             var resultDomain = await _motorService.GetAll();
+
+            // convert Domain to DTO
+            _response.StatusCode = HttpStatusCode.OK;
+            _response.Result = _mapper.Map<IEnumerable<MotorDTO>>(resultDomain);
+
+            return _response;
+        }
+
+        [Authorize(Roles = "Owner")]
+        [HttpGet("GetALlMotorbikesOfOwner")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ApiResponse> GetAllMotorBikesOfOwner()
+        {
+            // get userId from claim (will code)
+            // https://trello.com/c/Tx7kEOGF/14-get-claims-from-a-webapi-controller-jwt-token
+            var userId = HttpContext.GetUserId();
+
+            // get from service
+            var resultDomain = await _motorService.GetAll(userId: userId);
 
             // convert Domain to DTO
             _response.StatusCode = HttpStatusCode.OK;
