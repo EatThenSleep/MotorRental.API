@@ -57,6 +57,13 @@ namespace MotorRental.Infrastructure.Data.Repository
             return motorbike;
         }
 
+        public async Task<Motorbike> CheckOfOwner(Guid Id, string userId)
+        {
+            var existingMotor = await _db.Motorbikes.FirstOrDefaultAsync(u => u.Id == Id
+                                        && u.User.Id == userId);
+            return existingMotor;
+        }
+
         public async Task<Motorbike> DeleteByIdAsync(Guid Id)
         {
             var existingMotor = _db.Motorbikes.FirstOrDefault(u => u.Id == Id);

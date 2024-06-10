@@ -24,8 +24,12 @@ namespace MotorRental.Application
             return res;
         }
 
-        public async Task<Motorbike> Update(Motorbike obj, bool afterSuccess = true)
+        public async Task<Motorbike> Update(Motorbike obj, bool afterSuccess = true, string? userId = null)
         {
+            if(userId != null)
+            {
+                return  await _motorRepository.CheckOfOwner(obj.Id, userId);
+            }
 
             var res = await _motorRepository.UpdateAsync(obj, afterSuccess);
 
@@ -46,8 +50,11 @@ namespace MotorRental.Application
             return res;
         }
 
-        public async Task<Motorbike> DeleteMotorbike(Guid Id)
+        public async Task<Motorbike> DeleteMotorbike(Guid Id, string userId)
         {
+            var checker = await _motorRepository.CheckOfOwner(Id, userId);
+            if (checker == null) return null;
+
             var res = await _motorRepository.DeleteByIdAsync(Id);
 
             return res;

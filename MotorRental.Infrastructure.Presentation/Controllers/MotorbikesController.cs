@@ -28,18 +28,57 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             _response = new();
         }
 
+        [HttpGet("GetALlMotorbikes")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ApiResponse> GetAllMotorBikes()
+        {
+            // get from service
+            var resultDomain = await _motorService.GetAll();
+
+            // convert Domain to DTO
+            _response.StatusCode = HttpStatusCode.OK;
+            _response.Result = _mapper.Map<IEnumerable<MotorDTO>>(resultDomain);
+
+            return _response;
+        }
+
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<ApiResponse> GetMotorBikeById([FromRoute] Guid id)
+        {
+            var motorbike = await _motorService.GetById(id);
+
+            if (motorbike == null)
+            {
+                _response.IsSuccess = false;
+                _response.StatusCode = HttpStatusCode.NotFound;
+                _response.ErrorMessages.Add("Nhập cc gì vậy thằng mặt lồn");
+            }
+            else
+            {
+                _response.StatusCode = HttpStatusCode.OK;
+                _response.Result = _mapper.Map<MotorDTO>(motorbike);
+            }
+
+            return _response;
+        }
+
+        [Authorize(Roles = "Owner")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ApiResponse> AddMotorBike([FromForm] MotorCreateDTO request)
         {
-            
+            // get userId
+            var userId = HttpContext.GetUserId();
+
             // convert DTO to Domain
             var model = _mapper.Map<Motorbike>(request);
 
             // call Service add (model, userId from authen
-            var resultDomain = await _motorService.Add(model, "3cf092c8-08f8-406a-bd95-fedf4336036e");
+            var resultDomain = await _motorService.Add(model, userId);
 
             if(resultDomain == null)
             {
@@ -69,20 +108,7 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             return _response;
         }
 
-        [HttpGet("GetALlMotorbikes")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ApiResponse> GetAllMotorBikes()
-        {
-            // get from service
-            var resultDomain = await _motorService.GetAll();
-
-            // convert Domain to DTO
-            _response.StatusCode = HttpStatusCode.OK;
-            _response.Result = _mapper.Map<IEnumerable<MotorDTO>>(resultDomain);
-
-            return _response;
-        }
+        
 
         [Authorize(Roles = "Owner")]
         [HttpGet("GetALlMotorbikesOfOwner")]
@@ -104,27 +130,8 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             return _response;
         }
 
-        [HttpGet]
-        [Route("{id:Guid}")]
-        public async Task<ApiResponse> GetMotorBikeById([FromRoute] Guid id)
-        {
-            var motorbike = await _motorService.GetById(id);
 
-            if(motorbike == null)
-            {
-                _response.IsSuccess = false;
-                _response.StatusCode = HttpStatusCode.NotFound;
-                _response.ErrorMessages.Add("Nhập cc gì vậy thằng mặt lồn");
-            }
-            else
-            {
-                _response.StatusCode =HttpStatusCode.OK;
-                _response.Result = _mapper.Map<MotorDTO>(motorbike);
-            }
-
-            return _response;
-        }
-
+        [Authorize(Roles = "Owner")]
         [HttpPut("{id:Guid}", Name = "UpdateMotorbike")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -135,11 +142,14 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
                 return BadRequest();
             }
 
+            // get userId from claim (will code)
+            var userId = HttpContext.GetUserId();
+
             // convert DTO to domain
             var model = _mapper.Map<Motorbike>(request);
 
             // call service update(motorId, userId from Authen)
-            var resultDomain = await _motorService.Update(model, afterSuccess: false);
+            var resultDomain = await _motorService.Update(model, afterSuccess: false, userId: userId);
 
             // process image
             if (resultDomain == null)
@@ -151,14 +161,17 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             }
             else
             {
-                // process file image
-                // save image to server
-                var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.Value}{HttpContext.Request.PathBase.Value}";
-                var stringUrl = request.Image.SaveImage(resultDomain.Id.ToString(), baseUrl);
+                if(request.Image != null)
+                {
+                    // process file image
+                    // save image to server
+                    var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.Value}{HttpContext.Request.PathBase.Value}";
+                    var stringUrl = request.Image.SaveImage(resultDomain.Id.ToString(), baseUrl);
 
-                // update result with ImageURL
-                resultDomain.MotorbikeAvatar = stringUrl;
-                resultDomain = await _motorService.Update(resultDomain);
+                    // update result with ImageURL
+                    resultDomain.MotorbikeAvatar = stringUrl;
+                    resultDomain = await _motorService.Update(resultDomain);
+                }
 
                 // Convert Domain to DTO
                 var response = _mapper.Map<MotorDTO>(resultDomain);
@@ -169,6 +182,7 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             return _response;
         }
 
+        [Authorize(Roles = "Owner")]
         [HttpDelete("{id:Guid}", Name = "DeleteVilla")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -177,15 +191,18 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<ApiResponse>> DeleteMotorbike([FromRoute] Guid id)
         {
+            // get userId from claim (will code)
+            var userId = HttpContext.GetUserId();
+
             // call delete from service
-            var resultDomain = await _motorService.DeleteMotorbike(id);
+            var resultDomain = await _motorService.DeleteMotorbike(id, userId);
 
             if (resultDomain == null)
             {
                 _response.StatusCode = HttpStatusCode.BadRequest;
                 _response.IsSuccess = false;
                 _response.Result = resultDomain;
-                _response.ErrorMessages.Add("Địt mẹ mày, try agian");
+                _response.ErrorMessages.Add("Địt mẹ mày, đừng có làm thế");
             }
             else
             {

@@ -10,9 +10,9 @@ namespace MotorRental.Application
     public interface IMotorService
     {
         Task<Motorbike> Add(Motorbike obj, string userId);
-        Task<Motorbike> Update(Motorbike obj, bool afterSuccess = true);
+        Task<Motorbike> Update(Motorbike obj, bool afterSuccess = true, string? userId = null);
         Task<IEnumerable<Motorbike>> GetAll(string? userId = null);
         Task<Motorbike> GetById(Guid Id);
-        Task<Motorbike> DeleteMotorbike(Guid Id);
+        Task<Motorbike> DeleteMotorbike(Guid Id, string userId);
     }
 }

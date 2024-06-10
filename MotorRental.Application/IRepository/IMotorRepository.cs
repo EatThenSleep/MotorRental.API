@@ -13,6 +13,7 @@ namespace MotorRental.Application.IRepository
         Task<Motorbike?> UpdateAsync(Motorbike motorbike, bool afterSuccess = true);
         Task<IEnumerable<Motorbike>> GetAllAsync(string? userId = null);
         Task<Motorbike> GetByIdAsync(Guid Id);
+        Task<Motorbike> CheckOfOwner(Guid Id, string userId);
         Task<Motorbike> DeleteByIdAsync(Guid Id);
     }
 }
