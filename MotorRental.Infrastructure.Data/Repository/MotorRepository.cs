@@ -190,14 +190,15 @@ namespace MotorRental.Infrastructure.Data.Repository
             return motorbike;
         }
 
-        public object GetStatus(Guid Id, string UserId)
+        public int GetStatus(Guid Id, string UserId)
         {
             var res =  _db.Motorbikes
                             .AsNoTracking()
                             .Where(v => v.Id == Id && v.User.Id == UserId)
                             .Select(u => new { u.Id, u.status })
                             .FirstOrDefault();
-            return  res.status == SD.Status_Enable ? res : null;
+            if (res == null) return 0;
+            return  res.status == SD.Status_Enable ? SD.Status_Enable : 0;
         }
 
         public async Task<Motorbike?> UpdateAsync(Motorbike motorbike, bool afterSuccess = true)
@@ -238,5 +239,7 @@ namespace MotorRental.Infrastructure.Data.Repository
             return motorbike;
             
         }
+
+        
     }
 }

@@ -50,9 +50,9 @@ namespace MotorRental.UseCase
             return TransactionResult.Success;
         }
 
-        private bool CheckMotorbikeFree(object existingMobike)
+        private bool CheckMotorbikeFree(int existingMobike)
         {
-            return existingMobike is not null;
+            return existingMobike == SD.Status_Enable;
         }
 
         private bool CheckIformationInvalid(User existingUser)
