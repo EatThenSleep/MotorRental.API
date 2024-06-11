@@ -12,10 +12,12 @@ namespace MotorRental.Entities
     {
         public Guid Id { get; set; }
 
-        [Required]
-        [ForeignKey("User")]
-        public string UserId { get; set; } = string.Empty;
-        public User User { get; set; }
+        [ForeignKey("Customer")]
+        public string CustomerId { get; set; } = string.Empty;
+        public User Customer { get; set; }
+        [ForeignKey("Owner")]
+        public string OwnerId { get; set; } = string.Empty;
+        public User Owner { get; set; }
 
         [Required]
         [ForeignKey("Motorbike")]

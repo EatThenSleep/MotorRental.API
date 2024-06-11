@@ -17,6 +17,8 @@ namespace MotorRental.Infrastructure.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<Motorbike> Motorbikes { get; set; }
+        public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<Surcharge> Surcharges { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

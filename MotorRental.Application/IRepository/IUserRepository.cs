@@ -11,6 +11,7 @@ namespace MotorRental.Application.IRepository
     {
         Task<User> Add(User user);
         Task<User> GetById(string UserId);
+        User? GetByIdNoAsync(string UserId);
         Task<User> FindByEmail(string email);
     }
 }

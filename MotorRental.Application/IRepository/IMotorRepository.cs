@@ -18,5 +18,6 @@ namespace MotorRental.UseCase.IRepository
         Task<Motorbike> GetByIdAsync(Guid Id);
         Task<Motorbike> CheckOfOwner(Guid Id, string userId);
         Task<Motorbike> DeleteByIdAsync(Guid Id);
+        object GetStatus(Guid Idm, string UserId);
     }
 }

@@ -11,6 +11,7 @@ namespace MotorRental.Infrastructure.Presentation
             CreateMap<Motorbike, MotorCreateDTO>().ReverseMap();
             CreateMap<Motorbike, MotorDTO>().ReverseMap();
             CreateMap<Motorbike, MotorUpdateDTO>().ReverseMap();
+            CreateMap<Appointment, AppoinmentDTO>().ReverseMap();
         }  
     }
 }

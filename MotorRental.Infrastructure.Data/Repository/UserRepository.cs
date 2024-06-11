@@ -21,6 +21,7 @@ namespace MotorRental.Infrastructure.Data.Repository
             return user;
         }
 
+
         public async Task<User> FindByEmail(string email)
         {
             var existingUser = await _db.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Email.ToLower() == email.ToLower());
@@ -30,6 +31,11 @@ namespace MotorRental.Infrastructure.Data.Repository
         public async Task<User?> GetById(string UserId)
         {
             return await _db.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Id == UserId);
+        }
+
+        public User? GetByIdNoAsync(string UserId)
+        {
+            return _db.Users.AsNoTracking().FirstOrDefault(x => x.Id == UserId);
         }
         
     }

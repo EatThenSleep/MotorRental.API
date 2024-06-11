@@ -4,6 +4,7 @@ using MotorRental.Entities;
 using MotorRental.MotorRental.UseCase;
 using MotorRental.UseCase;
 using MotorRental.UseCase.IRepository;
+using MotorRental.Utilities;
 using System.Linq;
 
 namespace MotorRental.Infrastructure.Data.Repository
@@ -187,6 +188,16 @@ namespace MotorRental.Infrastructure.Data.Repository
                             .FirstOrDefaultAsync(u => u.Id == Id);
 
             return motorbike;
+        }
+
+        public object GetStatus(Guid Id, string UserId)
+        {
+            var res =  _db.Motorbikes
+                            .AsNoTracking()
+                            .Where(v => v.Id == Id && v.User.Id == UserId)
+                            .Select(u => new { u.Id, u.status })
+                            .FirstOrDefault();
+            return  res.status == SD.Status_Enable ? res : null;
         }
 
         public async Task<Motorbike?> UpdateAsync(Motorbike motorbike, bool afterSuccess = true)

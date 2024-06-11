@@ -10,6 +10,7 @@ using MotorRental.Entities;
 using MotorRental.Infrastructure.Data;
 using MotorRental.Infrastructure.Data.IRepository;
 using MotorRental.Infrastructure.Data.Repository;
+using MotorRental.Infrastructure.SqlServer.Repository;
 using MotorRental.UseCase;
 using MotorRental.UseCase.IRepository;
 
@@ -43,6 +44,8 @@ namespace MotorRental.Infrastructure.Presentation
             builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+            builder.Services.AddScoped<IAppointmentService, AppointmentService>();
 
             builder.Services.AddIdentityCore<User>()
                         .AddRoles<IdentityRole>()
