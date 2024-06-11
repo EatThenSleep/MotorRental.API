@@ -8,13 +8,13 @@ namespace MotorRental.Utilities
 {
     public static class SD
     {
-        public const int Xe_So = 1;
-        public const int Xe_Tay_Ga = 2;
-        public const int Xe_Tay_Con = 3;
+        public static int Xe_So = 1;
+        public static int Xe_Tay_Ga = 2;
+        public static int Xe_Tay_Con = 3;
 
-        public const int Status_Enable = 1;
-        public const int Status_Busy = 2;
-        public const int Status_Maintaint = 3;
+        public static int Status_Enable = 1;
+        public static int Status_Busy = 2;
+        public static int Status_Maintaint = 3;
 
         public static readonly string[] RoleForUser = ["Owner", "Visitor"];
 

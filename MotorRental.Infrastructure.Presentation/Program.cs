@@ -11,6 +11,7 @@ using MotorRental.Infrastructure.Data;
 using MotorRental.Infrastructure.Data.IRepository;
 using MotorRental.Infrastructure.Data.Repository;
 using MotorRental.UseCase;
+using MotorRental.UseCase.IRepository;
 
 namespace MotorRental.Infrastructure.Presentation
 {

@@ -17,6 +17,7 @@ namespace MotorRental.Infrastructure.Presentation.Models.DTO
         public string Description { get; set; } = string.Empty;
         public int PriceDay { get; set; }
         public int PriceWeek { get; set; }
+        public int PriceMonth { get; set; }
         public string MotorbikeAvatar { get; set; } = string.Empty;
         public string LicensePlate { get; set; } = string.Empty;
         public Company Company { get; set; }

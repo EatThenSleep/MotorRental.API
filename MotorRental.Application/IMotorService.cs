@@ -1,4 +1,6 @@
 ﻿using MotorRental.Entities;
+using MotorRental.MotorRental.UseCase;
+using MotorRental.UseCase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +13,9 @@ namespace MotorRental.Application
     {
         Task<Motorbike> Add(Motorbike obj, string userId);
         Task<Motorbike> Update(Motorbike obj, bool afterSuccess = true, string? userId = null);
-        Task<IEnumerable<Motorbike>> GetAll(string? userId = null);
+        Task<IEnumerable<Motorbike>> GetAll(MotorbikeFindCreterias creterias,
+                                                        MotorbikeSortBy sortBy = MotorbikeSortBy.NameAscending,
+                                                        string? userId = null);
         Task<Motorbike> GetById(Guid Id);
         Task<Motorbike> DeleteMotorbike(Guid Id, string userId);
     }

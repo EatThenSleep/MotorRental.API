@@ -1,13 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MotorRental.Application.IRepository;
 using MotorRental.Entities;
-using MotorRental.Infrastructure.Data.IRepository;
-using System;
-using System.Collections.Generic;
+using MotorRental.MotorRental.UseCase;
+using MotorRental.UseCase;
+using MotorRental.UseCase.IRepository;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace MotorRental.Infrastructure.Data.Repository
 {
@@ -79,13 +76,39 @@ namespace MotorRental.Infrastructure.Data.Repository
             return existingMotor;
         }
 
-        public async Task<IEnumerable<Motorbike>> GetAllAsync(string? userId = null)
+        public async Task<IEnumerable<Motorbike>> GetAllAsync(MotorbikeFindCreterias creterias,
+                                                        MotorbikeSortBy sortBy = MotorbikeSortBy.NameAscending,
+                                                        string? userId = null)
         {
             var motorbikes = _db.Motorbikes.AsQueryable();
 
             if(userId != null)
             {
                 motorbikes = motorbikes.Where(a => a.User.Id == userId);
+            }
+
+            if(creterias.FilterStatus > 0)
+            {
+                motorbikes = motorbikes.Where(a => a.status == creterias.FilterStatus);
+            }
+
+            if (creterias.FilterType > 0)
+            {
+                motorbikes = motorbikes.Where(a => a.Type == creterias.FilterType);
+            }
+
+            if (!string.IsNullOrEmpty(creterias.Name))
+            {
+                motorbikes = motorbikes.Where(a => a.Name
+                                        .ToLower()
+                                        .Contains(creterias.Name.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(creterias.LicensePlate))
+            {
+                motorbikes = motorbikes.Where(a => a.LicensePlate
+                                        .ToLower()
+                                        .Contains(creterias.LicensePlate.ToLower()));
             }
 
 
@@ -107,7 +130,29 @@ namespace MotorRental.Infrastructure.Data.Repository
                                     MotorbikeAvatar = a.MotorbikeAvatar,
                                     Company = new Company { Id = b.Id, Name = b.Name },
                                 });
-           
+            if(sortBy == MotorbikeSortBy.NameDescending)
+            {
+                motorbikes = motorbikes.OrderByDescending(motorbikes => motorbikes.Name);
+            }
+            else if(sortBy == MotorbikeSortBy.PriceAscending)
+            {
+                motorbikes = motorbikes.OrderBy(motorbikes => motorbikes.PriceDay +
+                                                                motorbikes.PriceWeek +
+                                                                motorbikes.PriceMonth);
+            }
+            else if (sortBy == MotorbikeSortBy.PriceDescending)
+            {
+                motorbikes = motorbikes.OrderByDescending(motorbikes => motorbikes.PriceDay +
+                                                                motorbikes.PriceWeek +
+                                                                motorbikes.PriceMonth);
+            }
+            else
+            {
+                motorbikes = motorbikes.OrderBy(motorbikes => motorbikes.Name);
+            }
+
+            motorbikes = motorbikes.Skip(creterias.Skip).Take(creterias.Take);
+
 
             var res = await motorbikes.ToListAsync();
 

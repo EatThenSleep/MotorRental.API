@@ -8,6 +8,8 @@ using MotorRental.Infrastructure.Presentation.Extension;
 using MotorRental.Infrastructure.Presentation.Helper;
 using MotorRental.Infrastructure.Presentation.Models;
 using MotorRental.Infrastructure.Presentation.Models.DTO;
+using MotorRental.MotorRental.UseCase;
+using MotorRental.UseCase;
 using System.Net;
 using System.Security.Claims;
 
@@ -31,10 +33,11 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
         [HttpGet("GetALlMotorbikes")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ApiResponse> GetAllMotorBikes()
+        public async Task<ApiResponse> GetAllMotorBikes([FromQuery] MotorbikeFindCreterias creterias,
+                                                        [FromQuery] MotorbikeSortBy sortBy = MotorbikeSortBy.NameAscending)
         {
             // get from service
-            var resultDomain = await _motorService.GetAll();
+            var resultDomain = await _motorService.GetAll(creterias, sortBy);
 
             // convert Domain to DTO
             _response.StatusCode = HttpStatusCode.OK;
@@ -121,7 +124,7 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             var userId = HttpContext.GetUserId();
 
             // get from service
-            var resultDomain = await _motorService.GetAll(userId: userId);
+            var resultDomain = await _motorService.GetAll(MotorbikeFindCreterias.Empty ,userId: userId);
 
             // convert Domain to DTO
             _response.StatusCode = HttpStatusCode.OK;
