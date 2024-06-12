@@ -33,15 +33,14 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<ApiResponse>> CreateAppoinment([FromForm] AppoinmentDTO request)
+        public async Task<ActionResult<ApiResponse>> CreateAppoinment([FromForm] CreateAppoinmentDTO request)
         {
             // comvert DTO to domain
             var domain = _mapper.Map<Appointment>(request);
             domain.CustomerId = HttpContext.GetUserId();
             
-
             // call service
-            var res = _appointmentService.CreateAppoitment(domain);
+            var res = await _appointmentService.CreateAppoitment(domain);
 
             if (res.isSucess == false)
             {
@@ -54,6 +53,35 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             {
                 _response.StatusCode = HttpStatusCode.Created;
                 _response.IsSuccess = true;
+                return Ok(_response);
+            }
+        }
+
+        [HttpGet("GetAppointment")]
+        [Authorize(Roles = "Owner,Visitor")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<ApiResponse>> GetAllAppointments()
+        {
+            var userId = HttpContext.GetUserId();
+            var role = HttpContext.GetRole();
+
+            var res = await _appointmentService.GetAllApointment(userId, role);
+            if (res == null)
+            {
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string>() { "Please try again" };
+                return BadRequest(_response);
+            }
+            else
+            {
+                _response.StatusCode = HttpStatusCode.OK;
+                _response.IsSuccess = true;
+                _response.Result = res;
                 return Ok(_response);
             }
         }

@@ -1,6 +1,6 @@
 ﻿namespace MotorRental.Infrastructure.Presentation.Models.DTO
 {
-    public class AppoinmentDTO
+    public class CreateAppoinmentDTO
     {
         public Guid MotorbikeId { get; set; }
         public Guid OwnerId { get; set; }

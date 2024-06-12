@@ -1,6 +1,7 @@
 ﻿using MotorRental.Application.IRepository;
 using MotorRental.Entities;
 using MotorRental.UseCase.IRepository;
+using MotorRental.UseCase.UnitOfWork;
 using MotorRental.Utilities;
 using System;
 using System.Collections.Generic;
@@ -13,46 +14,69 @@ namespace MotorRental.UseCase
 {
     public class AppointmentService : IAppointmentService
     {
-        public IUserRepository _useRepository { get; }
-        public IMotorRepository _motorRepository { get; }
-        public IAppointmentRepository _appointmentRepository { get; }
+        private readonly IAppointmentUnitOfWork _appointmentUnitOfWork;
 
-        public AppointmentService(IMotorRepository motorRepository,
-                                   IUserRepository useRepository,
-                                   IAppointmentRepository appointmentRepository)
+        public AppointmentService(IAppointmentUnitOfWork appointmentUnitOfWork)
         {
-            _motorRepository = motorRepository;
-            _useRepository = useRepository;
-            _appointmentRepository = appointmentRepository;
+            _appointmentUnitOfWork = appointmentUnitOfWork;
         }
 
-        public TransactionResult CreateAppoitment(Appointment appointment)
+        public async Task<TransactionResult> CreateAppoitment(Appointment appointment)
         {
-            //check information user is valid
-           var existingUser = _useRepository.GetByIdNoAsync(appointment.CustomerId);
-            if (!CheckIformationInvalid(existingUser))
+            try
             {
-                return TransactionResult.InforUserInvalid;
+                // begin transaction
+                await _appointmentUnitOfWork.BeginTransaction();
+
+                //check information user is valid
+                var existingUser = await _appointmentUnitOfWork.UserRepository.GetById(appointment.CustomerId);
+                if (!CheckIformationInvalid(existingUser))
+                {
+                    return TransactionResult.InforUserInvalid;
+                }
+
+                // check motorbike is free
+                var existingMobike = await _appointmentUnitOfWork
+                    .MotorRepository
+                    .GetByIdAndUserId(appointment.MotorbikeId, appointment.OwnerId);
+
+                if (!CheckMotorbikeFree(existingMobike))
+                {
+                    return TransactionResult.MotorbikeCanNotUseNow;
+                }
+
+                // create appoinment
+                appointment.StatusAppointment = SD.Status_Payment_Not;
+                appointment.StatusAppointment = SD.Status_Appointment_Process;
+                var res = await _appointmentUnitOfWork.AppointmentRepository
+                                                .CreateAppoinment(appointment);
+
+                // update status motorbike
+                existingMobike.status = SD.Status_Busy;
+                var motorUpdate = _appointmentUnitOfWork.MotorRepository
+                                                .UpdateStatusNotSave(existingMobike);
+
+                // end transaction
+                await _appointmentUnitOfWork.SaveChanges();
+
+                return TransactionResult.Success;
             }
-
-            // check motorbike is free
-            var existingMobike = _motorRepository.GetStatus(appointment.MotorbikeId, appointment.OwnerId);
-            if (!CheckMotorbikeFree(existingMobike))
-            {
-                return TransactionResult.MotorbikeCanNotUseNow;
+            catch(Exception ex) {
+                return TransactionResult.Error;
             }
-
-            // create appoinment
-            appointment.StatusAppointment = SD.Status_Payment_Not;
-            appointment.StatusAppointment = SD.Status_Appointment_Process;
-            var res = _appointmentRepository.CreateAppoinment(appointment);
-
-            return TransactionResult.Success;
         }
 
-        private bool CheckMotorbikeFree(int existingMobike)
+        public async Task<IEnumerable<Appointment>> GetAllApointment(string userId, string role)
         {
-            return existingMobike == SD.Status_Enable;
+            var res = await _appointmentUnitOfWork.AppointmentRepository.GetAllAsync(userId, role);
+
+            return res;
+        }
+
+        private bool CheckMotorbikeFree(Motorbike existingMobike)
+        {
+            if(existingMobike == null) return false;
+            return existingMobike.status == SD.Status_Enable;
         }
 
         private bool CheckIformationInvalid(User existingUser)
@@ -84,5 +108,7 @@ namespace MotorRental.UseCase
             }
             return true;
         }
+
+        
     }
 }

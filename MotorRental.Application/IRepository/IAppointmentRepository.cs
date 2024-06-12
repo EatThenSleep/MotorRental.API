@@ -9,6 +9,8 @@ namespace MotorRental.UseCase.IRepository
 {
     public interface IAppointmentRepository
     {
-        Appointment CreateAppoinment(Appointment appointment);
+        Task<Appointment> CreateAppoinment(Appointment appointment);
+
+        Task<IEnumerable<Appointment>> GetAllAsync(string userId, string role);
     }
 }

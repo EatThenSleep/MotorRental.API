@@ -13,6 +13,7 @@ using MotorRental.Infrastructure.Data.Repository;
 using MotorRental.Infrastructure.SqlServer.Repository;
 using MotorRental.UseCase;
 using MotorRental.UseCase.IRepository;
+using MotorRental.UseCase.UnitOfWork;
 
 namespace MotorRental.Infrastructure.Presentation
 {
@@ -46,6 +47,9 @@ namespace MotorRental.Infrastructure.Presentation
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
             builder.Services.AddScoped<IAppointmentService, AppointmentService>();
+
+            builder.Services.AddTransient<IAppointmentUnitOfWork>(services =>
+            new AppointmentUnitOfWork(services.GetRequiredService<ApplicationDbContext>()));
 
             builder.Services.AddIdentityCore<User>()
                         .AddRoles<IdentityRole>()

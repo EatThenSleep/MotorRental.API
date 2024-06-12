@@ -19,6 +19,7 @@ namespace MotorRental.Utilities
         public static int Status_Appointment_Process = 0;
         public static int Status_Appointment_Accepted = 1;
         public static int Status_Appointment_Cancel = 2;
+        public static int Status_Appointment_Done = 3;
 
         public static int Status_Payment_Not = 0;
         public static int Status_Payment_Payed = 1;

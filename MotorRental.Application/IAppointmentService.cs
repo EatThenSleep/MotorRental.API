@@ -9,6 +9,7 @@ namespace MotorRental.UseCase
 {
     public interface IAppointmentService
     {
-        TransactionResult CreateAppoitment(Appointment appointment);
+        Task<TransactionResult> CreateAppoitment(Appointment appointment);
+        Task<IEnumerable<Appointment>> GetAllApointment(string userId, string role);
     }
 }
