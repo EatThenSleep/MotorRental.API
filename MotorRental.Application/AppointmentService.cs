@@ -55,16 +55,23 @@ namespace MotorRental.UseCase
 
                 // update status motorbike
                 existingMobike.status = SD.Status_Busy;
-                var motorUpdate = _appointmentUnitOfWork.MotorRepository
-                                                .UpdateStatusNotSave(existingMobike);
+                var motorUpdate =  _appointmentUnitOfWork.MotorRepository
+                                                .UpdateNotSave(existingMobike);
 
-                // end transaction
-                await _appointmentUnitOfWork.SaveChanges();
+                if(motorUpdate.status != SD.Status_Busy)
+                {
+                    await _appointmentUnitOfWork.Cancel();
+                    throw new Exception(message: "Error happening, Please try again");
+                }
+                else
+                {
+                    await _appointmentUnitOfWork.SaveChanges();
+                }
 
                 return TransactionResult.Success;
             }
             catch(Exception ex) {
-                return TransactionResult.Error;
+                return new TransactionResult() { isSucess = false, ErrorMessage = ex.Message};
             }
         }
 

@@ -20,6 +20,6 @@ namespace MotorRental.UseCase.IRepository
         Task<Motorbike> DeleteByIdAsync(Guid Id);
         Task<Motorbike> GetByIdAndUserId(Guid Id, string UserId);
 
-        Motorbike UpdateStatusNotSave(Motorbike motorbike);
+        Motorbike UpdateNotSave(Motorbike motorbike);
     }
 }

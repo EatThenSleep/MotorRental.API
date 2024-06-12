@@ -244,9 +244,10 @@ namespace MotorRental.Infrastructure.Data.Repository
             
         }
 
-        public Motorbike UpdateStatusNotSave(Motorbike motorbike)
+        public Motorbike UpdateNotSave(Motorbike motorbike)
         {
-            if(motorbike != null) _db.Motorbikes.Update(motorbike);
+            _db.Motorbikes.Update(motorbike);
+
             return motorbike;
         }
     }
