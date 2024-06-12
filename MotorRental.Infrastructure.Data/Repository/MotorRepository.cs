@@ -83,12 +83,32 @@ namespace MotorRental.Infrastructure.Data.Repository
         {
             var motorbikes = _db.Motorbikes.AsQueryable();
 
-            if(userId != null)
+            motorbikes = from a in _db.Motorbikes
+                         join b in _db.Users on a.User.Id equals b.Id
+                         join c in _db.Companies on a.Company.Id equals c.Id
+                         select new Motorbike()
+                         {
+                             Id = a.Id,
+                             Name = a.Name,
+                             Type = a.Type,
+                             Color = a.Color,
+                             status = a.status,
+                             PriceDay = a.PriceDay,
+                             PriceWeek = a.PriceWeek,
+                             PriceMonth = a.PriceMonth,
+                             LicensePlate = a.LicensePlate,
+                             MotorbikeAvatar = a.MotorbikeAvatar,
+                             User = new User { Id = b.Id, Name = b.Name, PhoneNumber = b.PhoneNumber },
+                             Company = new Company { Id = c.Id, Name = c.Name },
+                         };
+
+
+            if (userId != null)
             {
                 motorbikes = motorbikes.Where(a => a.User.Id == userId);
             }
 
-            if(creterias.FilterStatus > 0)
+            if (creterias.FilterStatus > 0)
             {
                 motorbikes = motorbikes.Where(a => a.status == creterias.FilterStatus);
             }
@@ -112,26 +132,7 @@ namespace MotorRental.Infrastructure.Data.Repository
                                         .Contains(creterias.LicensePlate.ToLower()));
             }
 
-
-            motorbikes = motorbikes
-                        .Join(_db.Companies.AsNoTracking(),
-                                a => a.Company.Id,
-                                b => b.Id,
-                                (a, b) => new Motorbike
-                                {
-                                    Id = a.Id,
-                                    Name = a.Name,
-                                    Type = a.Type,
-                                    Color = a.Color,
-                                    status = a.status,
-                                    PriceDay = a.PriceDay,
-                                    PriceWeek = a.PriceWeek,
-                                    PriceMonth = a.PriceMonth,
-                                    LicensePlate = a.LicensePlate,
-                                    MotorbikeAvatar = a.MotorbikeAvatar,
-                                    Company = new Company { Id = b.Id, Name = b.Name },
-                                });
-            if(sortBy == MotorbikeSortBy.NameDescending)
+            if (sortBy == MotorbikeSortBy.NameDescending)
             {
                 motorbikes = motorbikes.OrderByDescending(motorbikes => motorbikes.Name);
             }
