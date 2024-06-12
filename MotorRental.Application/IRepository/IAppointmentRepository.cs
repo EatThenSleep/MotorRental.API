@@ -11,6 +11,6 @@ namespace MotorRental.UseCase.IRepository
     {
         Task<Appointment> CreateAppoinment(Appointment appointment);
 
-        Task<IEnumerable<Appointment>> GetAllAsync(string userId, string role);
+        Task<IEnumerable<Appointment>> GetAllAsync(string userId, string role, AppointmentFindCreterias creterias, AppointmentSortBy sortBy);
     }
 }

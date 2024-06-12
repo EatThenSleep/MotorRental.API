@@ -153,7 +153,11 @@ namespace MotorRental.Infrastructure.Data.Repository
                 motorbikes = motorbikes.OrderBy(motorbikes => motorbikes.Name);
             }
 
-            motorbikes = motorbikes.Skip(creterias.Skip).Take(creterias.Take);
+            if(creterias.Skip >= 0 && creterias.Take > 0)
+            {
+                motorbikes = motorbikes.Skip(creterias.Skip).Take(creterias.Take);
+            }
+
 
 
             var res = await motorbikes.ToListAsync();

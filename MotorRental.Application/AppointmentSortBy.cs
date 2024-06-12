@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MotorRental.UseCase
 {
-    public class PagingMotorbikes
+    public enum AppointmentSortBy
     {
-        public int Skip { get; set; } = 0;
-        public int Take { get; set; } = int.MaxValue;
+        DateAscending,
+        DateDescending,
     }
 }

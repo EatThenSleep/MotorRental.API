@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace MotorRental.UseCase
 {
@@ -48,6 +49,7 @@ namespace MotorRental.UseCase
                 // create appoinment
                 appointment.StatusAppointment = SD.Status_Payment_Not;
                 appointment.StatusAppointment = SD.Status_Appointment_Process;
+                appointment.CreatedAt = DateTime.Now;
                 var res = await _appointmentUnitOfWork.AppointmentRepository
                                                 .CreateAppoinment(appointment);
 
@@ -66,11 +68,48 @@ namespace MotorRental.UseCase
             }
         }
 
-        public async Task<IEnumerable<Appointment>> GetAllApointment(string userId, string role)
+        public async Task<IEnumerable<Appointment>> GetAllApointment(string userId, string role, AppointmentFindCreterias creterias, AppointmentSortBy sortBy)
         {
-            var res = await _appointmentUnitOfWork.AppointmentRepository.GetAllAsync(userId, role);
+            var creteriasProcessed = ProcessCreterias(creterias);
+
+            // get appointment
+            var res = await _appointmentUnitOfWork.AppointmentRepository.GetAllAsync(userId, role, creteriasProcessed, sortBy);
+
+            // get surcharge
 
             return res;
+        }
+
+        private static AppointmentFindCreterias ProcessCreterias(AppointmentFindCreterias creterias)
+        {
+            if(creterias.FilterStatusPayment == -1 &&
+                creterias.FilterStatusAppointment == -1 &&
+                creterias.Skip == 0 &&
+                creterias.Take == int.MaxValue)
+            {
+                return AppointmentFindCreterias.Empty;
+            }
+
+            if (creterias.FilterStatusAppointment != SD.Status_Appointment_Process &&
+                 creterias.FilterStatusAppointment != SD.Status_Appointment_Accepted &&
+                 creterias.FilterStatusAppointment != SD.Status_Appointment_Cancel &&
+                 creterias.FilterStatusAppointment != SD.Status_Appointment_Done)
+            {
+                creterias.FilterStatusAppointment = -1;
+            }
+
+            if (creterias.FilterStatusPayment != SD.Status_Payment_Not &&
+                creterias.FilterStatusPayment != SD.Status_Payment_Payed)
+            {
+                creterias.FilterStatusPayment = -1;
+            }
+
+            if(creterias.FilterStatusPayment == -1 && creterias.FilterStatusAppointment == -1)
+            {
+                return AppointmentFindCreterias.Empty;
+            }
+
+             return creterias;
         }
 
         private bool CheckMotorbikeFree(Motorbike existingMobike)

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MotorRental.UseCase
 {
-    public class MotorbikeFindCreterias : PagingMotorbikes
+    public class MotorbikeFindCreterias : Paging
     {
         public int FilterStatus { get; set; } = 0;
         public int FilterType { get; set; } = 0;

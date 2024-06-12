@@ -10,6 +10,9 @@ namespace MotorRental.UseCase
     public interface IAppointmentService
     {
         Task<TransactionResult> CreateAppoitment(Appointment appointment);
-        Task<IEnumerable<Appointment>> GetAllApointment(string userId, string role);
+        Task<IEnumerable<Appointment>> GetAllApointment(string userId,
+                                                        string role,
+                                                        AppointmentFindCreterias creterias,
+                                                        AppointmentSortBy sortBy);
     }
 }

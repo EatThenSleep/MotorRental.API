@@ -6,6 +6,7 @@ using MotorRental.Entities;
 using MotorRental.Infrastructure.Presentation.Extension;
 using MotorRental.Infrastructure.Presentation.Models;
 using MotorRental.Infrastructure.Presentation.Models.DTO;
+using MotorRental.MotorRental.UseCase;
 using MotorRental.UseCase;
 using MotorRental.Utilities;
 using System.Net;
@@ -64,12 +65,13 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<ApiResponse>> GetAllAppointments()
+        public async Task<ActionResult<ApiResponse>> GetAllAppointments([FromQuery] AppointmentFindCreterias creterias,
+                                                                        [FromQuery] AppointmentSortBy sortBy = AppointmentSortBy.DateAscending)
         {
             var userId = HttpContext.GetUserId();
             var role = HttpContext.GetRole();
 
-            var res = await _appointmentService.GetAllApointment(userId, role);
+            var res = await _appointmentService.GetAllApointment(userId, role, creterias, sortBy);
             if (res == null)
             {
                 _response.StatusCode = HttpStatusCode.BadRequest;

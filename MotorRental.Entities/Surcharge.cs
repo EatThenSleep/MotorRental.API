@@ -14,6 +14,6 @@ namespace MotorRental.Entities
         public int StatusPayment { get; set; }
         public DateTime CreatedAt { get; set; }
 
-        Appointment Appointment { get; set; }
+        public Appointment Appointment { get; set; }
     }
 }

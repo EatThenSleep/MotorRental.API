@@ -31,8 +31,9 @@ namespace MotorRental.Entities
         public int StatusAppointment {  get; set; }
         public int StatusPayment {  get; set; }
         public int RentalPrice {  get; set; }
+        public DateTime CreatedAt {  get; set; }
         public DateTime UpdateAt {  get; set; }
 
-        public ICollection<Surcharge> Surcharges { get; set;}
+        public ICollection<Surcharge>? Surcharges { get; set;}
     }
 }
