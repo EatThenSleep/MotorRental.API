@@ -63,7 +63,7 @@ namespace MotorRental.UseCase
             var user = new User
             {
                 Name = name,
-                UserName = name,
+                UserName = email,
                 Email = email,
             };
 
