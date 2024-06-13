@@ -1,4 +1,4 @@
-﻿using MotorRental.UseCase.IRepository;
+﻿using MotorRental.UseCase.Repository;
 using MotorRental.Entities;
 using System;
 using System.Collections.Generic;

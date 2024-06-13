@@ -1,6 +1,6 @@
 ﻿using MotorRental.Entities;
-using MotorRental.Application.IRepository;
 using Microsoft.EntityFrameworkCore;
+using MotorRental.UseCase.Repository;
 
 namespace MotorRental.Infrastructure.Data.Repository
 {

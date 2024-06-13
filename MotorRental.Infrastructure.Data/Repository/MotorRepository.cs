@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MotorRental.Application.IRepository;
 using MotorRental.Entities;
 using MotorRental.MotorRental.UseCase;
 using MotorRental.UseCase;
-using MotorRental.UseCase.IRepository;
+using MotorRental.UseCase.Repository;
 using MotorRental.Utilities;
 using System.Linq;
 

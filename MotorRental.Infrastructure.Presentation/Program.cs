@@ -5,14 +5,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MotorRental.Application;
-using MotorRental.Application.IRepository;
 using MotorRental.Entities;
 using MotorRental.Infrastructure.Data;
-using MotorRental.Infrastructure.Data.IRepository;
+using MotorRental.Infrastructure.Data.Repository;
 using MotorRental.Infrastructure.Data.Repository;
 using MotorRental.Infrastructure.SqlServer.Repository;
 using MotorRental.UseCase;
-using MotorRental.UseCase.IRepository;
+using MotorRental.UseCase.Repository;
 using MotorRental.UseCase.UnitOfWork;
 
 namespace MotorRental.Infrastructure.Presentation

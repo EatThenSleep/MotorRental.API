@@ -1,6 +1,5 @@
-﻿using MotorRental.Application.IRepository;
+﻿using MotorRental.UseCase.Repository;
 using MotorRental.Entities;
-using MotorRental.UseCase.IRepository;
 using MotorRental.UseCase.UnitOfWork;
 using MotorRental.Utilities;
 using System;

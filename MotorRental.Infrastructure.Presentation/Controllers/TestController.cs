@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MotorRental.Application.IRepository;
 using MotorRental.Entities;
+using MotorRental.UseCase.Repository;
 
 namespace MotorRental.Infrastructure.Presentation.Controllers
 {

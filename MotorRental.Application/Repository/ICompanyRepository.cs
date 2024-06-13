@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MotorRental.Infrastructure.Data.IRepository
+namespace MotorRental.UseCase.Repository
 {
     public interface ICompanyRepository
     {

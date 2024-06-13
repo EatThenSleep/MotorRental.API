@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
-using MotorRental.Application.IRepository;
 using MotorRental.Entities;
 using MotorRental.Utilities;
 using System;

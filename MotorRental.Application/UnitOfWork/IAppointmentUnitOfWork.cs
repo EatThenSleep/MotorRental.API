@@ -1,5 +1,4 @@
-﻿using MotorRental.Application.IRepository;
-using MotorRental.UseCase.IRepository;
+﻿using MotorRental.UseCase.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;

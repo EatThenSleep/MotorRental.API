@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MotorRental.Entities;
-using MotorRental.Infrastructure.Data.IRepository;
+using MotorRental.UseCase.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
