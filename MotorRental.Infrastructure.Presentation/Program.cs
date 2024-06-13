@@ -49,6 +49,12 @@ namespace MotorRental.Infrastructure.Presentation
             builder.Services.AddTransient<ICompanyRepository>(services =>
           new CompanyRepository(services.GetRequiredService<ApplicationDbContext>()));
 
+            builder.Services.AddTransient<IAppointmentUnitOfWork>(services =>
+            new AppointmentUnitOfWork(services.GetRequiredService<ApplicationDbContext>()));
+
+            builder.Services.AddTransient<IAppointmentRepository>(services =>
+            new AppointmentRepository(services.GetRequiredService<ApplicationDbContext>()));
+
             //
 
             builder.Services.AddTransient<IMotorbikeStateManager>(services =>
@@ -59,13 +65,17 @@ namespace MotorRental.Infrastructure.Presentation
             builder.Services.AddTransient<IMotorbikeFinder>(services =>
             new RepositoryMotorbikeFinder(services.GetRequiredService<IMotorRepository>()));
 
+            builder.Services.AddTransient<IAppointmentStateManager>(services =>
+            new AppointmentStateManager(services.GetRequiredService<IAppointmentUnitOfWork>()));
+
+            builder.Services.AddTransient<IAppointmentFinder>(services =>
+            new RepositoryAppointmentFinder(services.GetRequiredService<IAppointmentRepository>()));
+
+            //
 
             builder.Services.AddScoped<IAuthService, AuthService>();
-            builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
-            builder.Services.AddScoped<IAppointmentService, AppointmentService>();
 
-            builder.Services.AddTransient<IAppointmentUnitOfWork>(services =>
-            new AppointmentUnitOfWork(services.GetRequiredService<ApplicationDbContext>()));
+            
 
             builder.Services.AddIdentityCore<User>()
                         .AddRoles<IdentityRole>()

@@ -12,9 +12,5 @@ namespace MotorRental.UseCase
         public int FilterStatusAppointment { get; set; } = -1;
         public int FilterStatusPayment { get; set; } = -1;
 
-        public static AppointmentFindCreterias Empty => new()
-        {
-
-        };
     }
 }

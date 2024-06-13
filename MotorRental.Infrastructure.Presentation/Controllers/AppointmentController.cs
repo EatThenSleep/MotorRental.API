@@ -8,6 +8,7 @@ using MotorRental.Infrastructure.Presentation.Models;
 using MotorRental.Infrastructure.Presentation.Models.DTO;
 using MotorRental.MotorRental.UseCase;
 using MotorRental.UseCase;
+using MotorRental.UseCase.Feature;
 using MotorRental.Utilities;
 using System.Net;
 
@@ -17,14 +18,17 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
     [ApiController]
     public class AppointmentController : ControllerBase
     {
-        private readonly IAppointmentService _appointmentService;
+        private readonly IAppointmentStateManager _appointmentStateManager;
+        private readonly IAppointmentFinder _appointmentFinder;
         private readonly IMapper _mapper;
         private ApiResponse _response;
 
-        public AppointmentController(IAppointmentService appointmentService,
+        public AppointmentController(IAppointmentStateManager appointmentStateManager,
+                                     IAppointmentFinder appointmentFinder,
                                      IMapper mapper)
         {
-            _appointmentService = appointmentService;
+            _appointmentStateManager = appointmentStateManager;
+            _appointmentFinder = appointmentFinder;
             _mapper = mapper;
             _response = new ApiResponse();
         }
@@ -41,7 +45,7 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             domain.CustomerId = HttpContext.GetUserId();
             
             // call service
-            var res = await _appointmentService.CreateAppoitment(domain);
+            var res = await _appointmentStateManager.CreateAppoitment(domain);
 
             if (res.isSucess == false)
             {
@@ -71,7 +75,7 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             var userId = HttpContext.GetUserId();
             var role = HttpContext.GetRole();
 
-            var res = await _appointmentService.GetAllApointment(userId, role, creterias, sortBy);
+            var res = await _appointmentFinder.GetAllApointment(userId, role, creterias, sortBy);
             if (res == null)
             {
                 _response.StatusCode = HttpStatusCode.BadRequest;

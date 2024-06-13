@@ -5,11 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MotorRental.UseCase
+namespace MotorRental.UseCase.Feature
 {
-    public interface IAppointmentService
+    public interface IAppointmentFinder
     {
-        Task<TransactionResult> CreateAppoitment(Appointment appointment);
         Task<IEnumerable<Appointment>> GetAllApointment(string userId,
                                                         string role,
                                                         AppointmentFindCreterias creterias,
