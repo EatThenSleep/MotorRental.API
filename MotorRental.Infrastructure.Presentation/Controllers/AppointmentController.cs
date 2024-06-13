@@ -6,7 +6,7 @@ using MotorRental.Entities;
 using MotorRental.Infrastructure.Presentation.Extension;
 using MotorRental.Infrastructure.Presentation.Models;
 using MotorRental.Infrastructure.Presentation.Models.DTO;
-using MotorRental.MotorRental.UseCase;
+using MotorRental.UseCase;
 using MotorRental.UseCase;
 using MotorRental.UseCase.Feature;
 using MotorRental.Utilities;

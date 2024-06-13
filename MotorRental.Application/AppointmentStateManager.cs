@@ -1,11 +1,7 @@
 ﻿using MotorRental.Entities;
 using MotorRental.UseCase.UnitOfWork;
 using MotorRental.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MotorRental.UseCase.Helper;
 
 namespace MotorRental.UseCase
 {
@@ -27,7 +23,7 @@ namespace MotorRental.UseCase
 
                 //check information user is valid
                 var existingUser = await _appointmentUnitOfWork.UserRepository.GetById(appointment.CustomerId);
-                if (!CheckIformationInvalid(existingUser))
+                if (!ValidationOptionMotorbike.CheckIformationInvalid(existingUser))
                 {
                     return TransactionResult.InforUserInvalid;
                 }
@@ -37,7 +33,7 @@ namespace MotorRental.UseCase
                     .MotorRepository
                     .GetByIdAndUserId(appointment.MotorbikeId, appointment.OwnerId);
 
-                if (!CheckMotorbikeFree(existingMobike))
+                if (!ValidationOptionMotorbike.CheckMotorbikeFree(existingMobike))
                 {
                     return TransactionResult.MotorbikeCanNotUseNow;
                 }
@@ -72,39 +68,6 @@ namespace MotorRental.UseCase
             }
         }
 
-        private bool CheckMotorbikeFree(Motorbike existingMobike)
-        {
-            if (existingMobike == null) return false;
-            return existingMobike.status == SD.Status_Enable;
-        }
-        private bool CheckIformationInvalid(User existingUser)
-        {
-            if (existingUser == null) return false;
-            if (string.IsNullOrEmpty(existingUser.Name))
-            {
-                return false;
-            }
-            if (string.IsNullOrEmpty(existingUser.Email))
-            {
-                return false;
-            }
-            if (string.IsNullOrEmpty(existingUser.PhoneNumber))
-            {
-                return false;
-            }
-            if (string.IsNullOrEmpty(existingUser.IdentityNumber))
-            {
-                return false;
-            }
-            if (string.IsNullOrEmpty(existingUser.IdentityImagePre))
-            {
-                return false;
-            }
-            if (string.IsNullOrEmpty(existingUser.IdentityImageBack))
-            {
-                return false;
-            }
-            return true;
-        }
+        
     }
 }

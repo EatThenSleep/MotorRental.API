@@ -9,7 +9,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MotorRental.UseCase
+namespace MotorRental.UseCase.Helper
 {
     public class ManageToken
     {
