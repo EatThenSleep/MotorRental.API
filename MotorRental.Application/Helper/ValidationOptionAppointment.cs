@@ -18,14 +18,25 @@ namespace MotorRental.UseCase.Helper
                  creterias.FilterStatusAppointment != SD.Status_Appointment_Done)
             {
                 creterias.FilterStatusAppointment = -1;
-            }
-
-            if (creterias.FilterStatusPayment != SD.Status_Payment_Not &&
-                creterias.FilterStatusPayment != SD.Status_Payment_Payed)
-            {
                 creterias.FilterStatusPayment = -1;
             }
-
+            else
+            {
+                if(creterias.FilterStatusAppointment == SD.Status_Appointment_Process ||
+                    creterias.FilterStatusAppointment == SD.Status_Appointment_Accepted ||
+                    creterias.FilterStatusAppointment == SD.Status_Appointment_Cancel)
+                {
+                    creterias.FilterStatusPayment = SD.Status_Payment_Not;
+                }
+                else if(creterias.FilterStatusAppointment == SD.Status_Appointment_Done)
+                {
+                    creterias.FilterStatusPayment = SD.Status_Payment_Payed;
+                }
+                else
+                {
+                    creterias.FilterStatusPayment = -1;
+                }
+            }
             if (creterias.Skip < 0)
             {
                 creterias.Skip = 0;
