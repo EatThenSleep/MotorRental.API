@@ -2,15 +2,16 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using MotorRental.Application;
 using MotorRental.Entities;
 using MotorRental.Infrastructure.Data;
 using MotorRental.Infrastructure.Data.Repository;
 using MotorRental.Infrastructure.Data.Repository;
 using MotorRental.Infrastructure.SqlServer.Repository;
 using MotorRental.UseCase;
+using MotorRental.UseCase.Feature;
 using MotorRental.UseCase.Repository;
 using MotorRental.UseCase.UnitOfWork;
 
@@ -39,10 +40,26 @@ namespace MotorRental.Infrastructure.Presentation
             builder.Services.AddAutoMapper(typeof(MappingConfig));
 
             // add repository
-            builder.Services.AddScoped<IMotorService, MotorService>();
-            builder.Services.AddScoped<IMotorRepository, MotorRepository>();
-            builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
-            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddTransient<IMotorRepository>(services =>
+            new MotorRepository(services.GetRequiredService<ApplicationDbContext>()));
+
+            builder.Services.AddTransient<IUserRepository>(services =>
+           new UserRepository(services.GetRequiredService<ApplicationDbContext>()));
+
+            builder.Services.AddTransient<ICompanyRepository>(services =>
+          new CompanyRepository(services.GetRequiredService<ApplicationDbContext>()));
+
+            //
+
+            builder.Services.AddTransient<IMotorbikeStateManager>(services =>
+            new MotorbikeStateManager(services.GetRequiredService<IMotorRepository>(),
+            services.GetRequiredService<IUserRepository>(),
+            services.GetRequiredService<ICompanyRepository>()));
+
+            builder.Services.AddTransient<IMotorbikeFinder>(services =>
+            new RepositoryMotorbikeFinder(services.GetRequiredService<IMotorRepository>()));
+
+
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
             builder.Services.AddScoped<IAppointmentService, AppointmentService>();

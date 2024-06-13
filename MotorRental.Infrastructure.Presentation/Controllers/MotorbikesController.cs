@@ -2,7 +2,6 @@
 using Azure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MotorRental.Application;
 using MotorRental.Entities;
 using MotorRental.Infrastructure.Presentation.Extension;
 using MotorRental.Infrastructure.Presentation.Helper;
@@ -10,6 +9,7 @@ using MotorRental.Infrastructure.Presentation.Models;
 using MotorRental.Infrastructure.Presentation.Models.DTO;
 using MotorRental.MotorRental.UseCase;
 using MotorRental.UseCase;
+using MotorRental.UseCase.Feature;
 using System.Net;
 using System.Security.Claims;
 
@@ -19,13 +19,17 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
     [ApiController]
     public class MotorbikesController : ControllerBase
     {
-        private readonly IMotorService _motorService;
+        private readonly IMotorbikeStateManager _motorbikeManager;
+        private readonly IMotorbikeFinder _motorbikeFinder;
         private readonly IMapper _mapper;
         private ApiResponse _response;
 
-        public MotorbikesController(IMotorService motorService, IMapper mapper)
+        public MotorbikesController(IMotorbikeStateManager motorbikeManager,
+            IMotorbikeFinder motorbikeFinder,
+            IMapper mapper)
         {
-            _motorService = motorService;
+            _motorbikeManager = motorbikeManager;
+            _motorbikeFinder = motorbikeFinder;
             _mapper = mapper;
             _response = new();
         }
@@ -37,7 +41,7 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
                                                         [FromQuery] MotorbikeSortBy sortBy = MotorbikeSortBy.NameAscending)
         {
             // get from service
-            var resultDomain = await _motorService.GetAll(creterias, sortBy);
+            var resultDomain = await _motorbikeFinder.GetAll(creterias, sortBy);
 
             // convert Domain to DTO
             _response.StatusCode = HttpStatusCode.OK;
@@ -50,7 +54,7 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
         [Route("{id:Guid}")]
         public async Task<ApiResponse> GetMotorBikeById([FromRoute] Guid id)
         {
-            var motorbike = await _motorService.GetById(id);
+            var motorbike = await _motorbikeFinder.GetById(id);
 
             if (motorbike == null)
             {
@@ -81,7 +85,7 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             var model = _mapper.Map<Motorbike>(request);
 
             // call Service add (model, userId from authen
-            var resultDomain = await _motorService.Add(model, userId);
+            var resultDomain = await _motorbikeManager.Add(model, userId);
 
             if(resultDomain == null)
             {
@@ -99,7 +103,7 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
 
                 // update result with ImageURL
                 resultDomain.MotorbikeAvatar = stringUrl;
-                resultDomain = await _motorService.Update(resultDomain);
+                resultDomain = await _motorbikeManager.Update(resultDomain);
 
                 // Convert Domain to DTO
                 var response = _mapper.Map<MotorDTO>(resultDomain);
@@ -124,7 +128,7 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             var userId = HttpContext.GetUserId();
 
             // get from service
-            var resultDomain = await _motorService.GetAll(MotorbikeFindCreterias.Empty ,userId: userId);
+            var resultDomain = await _motorbikeFinder.GetAll(MotorbikeFindCreterias.Empty ,userId: userId);
 
             // convert Domain to DTO
             _response.StatusCode = HttpStatusCode.OK;
@@ -152,7 +156,7 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             var model = _mapper.Map<Motorbike>(request);
 
             // call service update(motorId, userId from Authen)
-            var resultDomain = await _motorService.Update(model, afterSuccess: false, userId: userId);
+            var resultDomain = await _motorbikeManager.Update(model, afterSuccess: false, userId: userId);
 
             // process image
             if (resultDomain == null)
@@ -173,7 +177,7 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
 
                     // update result with ImageURL
                     resultDomain.MotorbikeAvatar = stringUrl;
-                    resultDomain = await _motorService.Update(resultDomain);
+                    resultDomain = await _motorbikeManager.Update(resultDomain);
                 }
 
                 // Convert Domain to DTO
@@ -198,7 +202,7 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             var userId = HttpContext.GetUserId();
 
             // call delete from service
-            var resultDomain = await _motorService.DeleteMotorbike(id, userId);
+            var resultDomain = await _motorbikeManager.DeleteMotorbike(id, userId);
 
             if (resultDomain == null)
             {

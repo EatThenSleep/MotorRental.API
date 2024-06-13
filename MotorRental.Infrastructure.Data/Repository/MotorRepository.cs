@@ -19,37 +19,12 @@ namespace MotorRental.Infrastructure.Data.Repository
         }
         public async Task<Motorbike> Add(Motorbike motorbike, string userId)
         {
-            // process user
-            var existingUser = await _db.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == userId);
-            motorbike.User = existingUser;
-            if (existingUser == null)
-            {
-                return null;
-            }
-
-            // process company
-            var existingCompany = await _db.Companies.AsNoTracking().FirstOrDefaultAsync(u => u.Name.ToLower() == motorbike.Company.Name.ToLower());
-            motorbike.Company = existingCompany != null ? existingCompany : motorbike.Company;
-
-            if (existingCompany == null)
-            {
-                Company obj = new Company() { Name = motorbike.Company.Name };
-                var objCreated = await _db.Companies.AddAsync(obj);
-                _db.SaveChanges();
-                motorbike.Company = obj;
-            }
-
-
             // avoid insert parent when insert child
             _db.Entry(motorbike.Company).State = EntityState.Unchanged;
             _db.Entry(motorbike.User).State = EntityState.Unchanged;
 
-
             await _db.Motorbikes.AddAsync(motorbike);
             await _db.SaveChangesAsync();
-
-            //motorbike.User.Motorbikes = [];
-            //motorbike.Company.Motorbikes = [];
 
             return motorbike;
         }
@@ -61,9 +36,10 @@ namespace MotorRental.Infrastructure.Data.Repository
             return existingMotor;
         }
 
-        public async Task<Motorbike> DeleteByIdAsync(Guid Id)
+        public async Task<Motorbike> DeleteByIdAsync(Guid Id, string userId)
         {
-            var existingMotor = _db.Motorbikes.FirstOrDefault(u => u.Id == Id);
+            var existingMotor = _db.Motorbikes.FirstOrDefault(u => u.Id == Id 
+                                                              && u.User.Id == userId);
 
             if(existingMotor == null)
             {

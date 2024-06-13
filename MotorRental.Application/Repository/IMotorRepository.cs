@@ -17,7 +17,7 @@ namespace MotorRental.UseCase.Repository
                                             string? userId = null);
         Task<Motorbike> GetByIdAsync(Guid Id);
         Task<Motorbike> CheckOfOwner(Guid Id, string userId);
-        Task<Motorbike> DeleteByIdAsync(Guid Id);
+        Task<Motorbike> DeleteByIdAsync(Guid Id, string userId);
         Task<Motorbike> GetByIdAndUserId(Guid Id, string UserId);
 
         Motorbike UpdateNotSave(Motorbike motorbike);
