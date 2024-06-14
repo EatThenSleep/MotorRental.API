@@ -13,5 +13,6 @@ namespace MotorRental.UseCase
 
         Task<TransactionResult> Accept(Guid appointmentId, string userId);
         Task<TransactionResult> Reject(Guid appointmentId, string userId);
+        Task<TransactionResult> ReturnWithoutPayment(Guid appointmentId);
     }
 }

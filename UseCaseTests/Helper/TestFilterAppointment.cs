@@ -23,7 +23,7 @@ namespace MotorRental.UseCase.Helper.Tests
             creterias.Skip = 5;
             creterias.Take = 5;
 
-            var res = ValidationOptionAppointment.ProcessCreterias(creterias);
+            var res = ValidationAppointment.ProcessCreterias(creterias);
 
             Assert.AreEqual(res.FilterStatusAppointment, SD.Status_Appointment_Process);
             Assert.AreEqual(res.FilterStatusPayment, SD.Status_Payment_Not);
@@ -42,7 +42,7 @@ namespace MotorRental.UseCase.Helper.Tests
             creterias.Skip = 0;
             creterias.Take = 2;
 
-            var res = ValidationOptionAppointment.ProcessCreterias(creterias);
+            var res = ValidationAppointment.ProcessCreterias(creterias);
 
             Assert.AreEqual(res.FilterStatusAppointment, -1);
             Assert.AreEqual(res.FilterStatusPayment, -1);
@@ -61,7 +61,7 @@ namespace MotorRental.UseCase.Helper.Tests
             creterias.Skip = 0;
             creterias.Take = 2;
 
-            var res = ValidationOptionAppointment.ProcessCreterias(creterias);
+            var res = ValidationAppointment.ProcessCreterias(creterias);
 
             Assert.AreEqual(res.FilterStatusAppointment, SD.Status_Appointment_Process);
             Assert.AreEqual(res.FilterStatusPayment, SD.Status_Payment_Not);
@@ -80,7 +80,7 @@ namespace MotorRental.UseCase.Helper.Tests
             creterias.Skip = 0;
             creterias.Take = 2;
 
-            var res = ValidationOptionAppointment.ProcessCreterias(creterias);
+            var res = ValidationAppointment.ProcessCreterias(creterias);
 
             Assert.AreEqual(res.FilterStatusAppointment, SD.Status_Appointment_Accepted);
             Assert.AreEqual(res.FilterStatusPayment, SD.Status_Payment_Not);
@@ -99,7 +99,7 @@ namespace MotorRental.UseCase.Helper.Tests
             creterias.Skip = 0;
             creterias.Take = 2;
 
-            var res = ValidationOptionAppointment.ProcessCreterias(creterias);
+            var res = ValidationAppointment.ProcessCreterias(creterias);
 
             Assert.AreEqual(res.FilterStatusAppointment, SD.Status_Appointment_Cancel);
             Assert.AreEqual(res.FilterStatusPayment, SD.Status_Payment_Not);

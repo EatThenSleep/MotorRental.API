@@ -14,26 +14,6 @@ namespace MotorRental.UseCase
             _appointmentUnitOfWork = appointmentUnitOfWork;
         }
 
-        public async Task<TransactionResult> Accept(Guid appointmentId, string userId)
-        {
-            // get appointment of owner
-            var appointment = await _appointmentUnitOfWork
-                                        .AppointmentRepository
-                                        .GetById(appointmentId, userId);
-
-            if (checkAppointmentIsProcess(appointment) != TransactionResult.Success)
-            {
-                return checkAppointmentIsProcess(appointment);
-            }
-
-            // update appointment to accepted
-            var res = _appointmentUnitOfWork.AppointmentRepository
-                                .UpdateAppointmentStatus(appointment, SD.Status_Appointment_Accepted);
-
-            return TransactionResult.Success;
-            
-        }
-
         public async Task<TransactionResult> CreateAppoitment(Appointment appointment)
         {
             try
@@ -43,7 +23,7 @@ namespace MotorRental.UseCase
 
                 //check information user is valid
                 var existingUser = await _appointmentUnitOfWork.UserRepository.GetById(appointment.CustomerId);
-                if (!ValidationOptionMotorbike.CheckIformationInvalid(existingUser))
+                if (!ValidationMotorbike.CheckIformationInvalid(existingUser))
                 {
                     return TransactionResult.InforUserInvalid;
                 }
@@ -53,7 +33,7 @@ namespace MotorRental.UseCase
                     .MotorRepository
                     .GetByIdAndUserId(appointment.MotorbikeId, appointment.OwnerId);
 
-                if (!ValidationOptionMotorbike.CheckMotorbikeFree(existingMobike))
+                if (!ValidationMotorbike.CheckMotorbikeFree(existingMobike))
                 {
                     return TransactionResult.MotorbikeCanNotUseNow;
                 }
@@ -88,6 +68,26 @@ namespace MotorRental.UseCase
             }
         }
 
+        public async Task<TransactionResult> Accept(Guid appointmentId, string userId)
+        {
+            // get appointment of owner
+            var appointment = await _appointmentUnitOfWork
+                                        .AppointmentRepository
+                                        .GetById(appointmentId, userId);
+
+            if (ValidationAppointment.checkAppointmentIsProcess(appointment) != TransactionResult.Success)
+            {
+                return ValidationAppointment.checkAppointmentIsProcess(appointment);
+            }
+
+            // update appointment to accepted
+            var res = _appointmentUnitOfWork.AppointmentRepository
+                                .UpdateAppointmentStatus(appointment, SD.Status_Appointment_Accepted);
+
+            return TransactionResult.Success;
+
+        }
+
         public async Task<TransactionResult> Reject(Guid appointmentId, string userId)
         {
             await _appointmentUnitOfWork.BeginTransaction();
@@ -97,9 +97,9 @@ namespace MotorRental.UseCase
                                         .AppointmentRepository
                                         .GetById(appointmentId, userId);
 
-           if(checkAppointmentIsProcess(appointment) != TransactionResult.Success)
+           if(ValidationAppointment.checkAppointmentIsProcess(appointment) != TransactionResult.Success)
            {
-                return checkAppointmentIsProcess(appointment);
+                return ValidationAppointment.checkAppointmentIsProcess(appointment);
            }
 
             // update appointment to reject
@@ -129,20 +129,9 @@ namespace MotorRental.UseCase
             return TransactionResult.Success;
         }
 
-        private TransactionResult checkAppointmentIsProcess(Appointment appointment)
+        public Task<TransactionResult> ReturnWithoutPayment(Guid appointmentId)
         {
-            if (appointment == null)
-            {
-                return TransactionResult.NotBelong;
-            }
-
-            // check apointment is process
-            if (appointment.StatusAppointment != SD.Status_Appointment_Process)
-            {
-                return TransactionResult.Error;
-            }
-
-            return TransactionResult.Success;
+            throw new NotImplementedException();
         }
     }
 }

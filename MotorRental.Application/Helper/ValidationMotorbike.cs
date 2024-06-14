@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MotorRental.UseCase.Helper
 {
-    public static class ValidationOptionMotorbike
+    public static class ValidationMotorbike
     {
         public static bool CheckMotorbikeFree(Motorbike existingMobike)
         {

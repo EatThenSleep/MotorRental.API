@@ -23,7 +23,7 @@ namespace MotorRental.UseCase.Feature
                                                         string? userId = null)
         {
             // process creterias
-            var creteriasProcessed = ValidationOptionMotorbike.ProcessCreterias(creterias);
+            var creteriasProcessed = ValidationMotorbike.ProcessCreterias(creterias);
 
             var res = await _motorRepository.GetAllAsync(creteriasProcessed, sortBy, userId: userId);
 

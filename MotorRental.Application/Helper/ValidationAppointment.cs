@@ -1,4 +1,5 @@
-﻿using MotorRental.UseCase.Feature;
+﻿using MotorRental.Entities;
+using MotorRental.UseCase.Feature;
 using MotorRental.Utilities;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MotorRental.UseCase.Helper
 {
-    public static class ValidationOptionAppointment
+    public static class ValidationAppointment
     {
         public static AppointmentFindCreterias ProcessCreterias(AppointmentFindCreterias creterias)
         {
@@ -47,6 +48,22 @@ namespace MotorRental.UseCase.Helper
             }
 
             return creterias;
+        }
+
+        public static TransactionResult checkAppointmentIsProcess(Appointment appointment)
+        {
+            if (appointment == null)
+            {
+                return TransactionResult.NotBelong;
+            }
+
+            // check apointment is process
+            if (appointment.StatusAppointment != SD.Status_Appointment_Process)
+            {
+                return TransactionResult.Error;
+            }
+
+            return TransactionResult.Success;
         }
     }
 }

@@ -25,7 +25,7 @@ namespace MotorRental.UseCase.Feature
                                                         AppointmentSortBy sortBy
         )
         {
-            var creteriasProcessed = Helper.ValidationOptionAppointment.ProcessCreterias(creterias);
+            var creteriasProcessed = Helper.ValidationAppointment.ProcessCreterias(creterias);
 
             // get appointment
             var res = await _appointmentRepository.GetAllAsync(userId, role, creteriasProcessed, sortBy);
