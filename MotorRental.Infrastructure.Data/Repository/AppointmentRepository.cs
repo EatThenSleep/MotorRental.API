@@ -84,7 +84,8 @@ namespace MotorRental.Infrastructure.SqlServer.Repository
 
             if(creterias.FilterStatusPayment != -1)
             {
-                query = query.Where(u => u.StatusPayment == creterias.FilterStatusPayment);
+                query = query.Where(u => u.StatusPayment == creterias.FilterStatusPayment &&
+                                        u.StatusAppointment != SD.Status_Appointment_Process);
             }
 
             if(creterias.FilterStatusAppointment != -1)
