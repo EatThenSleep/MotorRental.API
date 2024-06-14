@@ -25,6 +25,12 @@ namespace MotorRental.UseCase
                 return TransactionResult.NotBelong;
             }
 
+            // check apointment is process
+            if(appointment.StatusAppointment != SD.Status_Appointment_Process)
+            {
+                return TransactionResult.Error;
+            }
+
             // update appointment to accepted
             var res = _appointmentUnitOfWork.AppointmentRepository
                                 .UpdateAppointmentStatus(appointment, SD.Status_Appointment_Accepted);
@@ -87,6 +93,29 @@ namespace MotorRental.UseCase
             }
         }
 
-        
+        public async Task<TransactionResult> Reject(Guid appointmentId, string userId)
+        {
+            // get appointment of owner
+            var appointment = await _appointmentUnitOfWork
+                                        .AppointmentRepository
+                                        .GetById(appointmentId, userId);
+
+            if (appointment == null)
+            {
+                return TransactionResult.NotBelong;
+            }
+
+            // check apointment is process
+            if (appointment.StatusAppointment != SD.Status_Appointment_Process)
+            {
+                return TransactionResult.Error;
+            }
+
+            // update appointment to accepted
+            var res = _appointmentUnitOfWork.AppointmentRepository
+                                .UpdateAppointmentStatus(appointment, SD.Status_Appointment_Cancel);
+
+            return TransactionResult.Success;
+        }
     }
 }

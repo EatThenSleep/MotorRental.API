@@ -12,5 +12,6 @@ namespace MotorRental.UseCase
         Task<TransactionResult> CreateAppoitment(Appointment appointment);
 
         Task<TransactionResult> Accept(Guid appointmentId, string userId);
+        Task<TransactionResult> Reject(Guid appointmentId, string userId);
     }
 }

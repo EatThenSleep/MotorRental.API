@@ -95,13 +95,13 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             }
         }
 
-        [HttpPatch]
-        [Route("{id:Guid}")]
+        [HttpPatch("Aceept")]
         [Authorize(Roles = "Owner")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<ApiResponse>> AcceptAppointment([FromRoute] Guid id)
+        public async Task<ActionResult<ApiResponse>> AcceptAppointment(Guid id)
         {
             var ownerId = HttpContext.GetUserId();
 
@@ -120,9 +120,33 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
                 _response.IsSuccess = true;
                 return Ok(_response);
             }
+        }
 
+        [HttpPatch("Reject")]
+        [Authorize(Roles = "Owner")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<ApiResponse>> RejectAppointment(Guid id)
+        {
+            var ownerId = HttpContext.GetUserId();
 
-            return Ok();
+            var res = await _appointmentStateManager.Reject(id, ownerId);
+
+            if (res.isSucess == false)
+            {
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string> { res.ErrorMessage };
+                return BadRequest(_response);
+            }
+            else
+            {
+                _response.StatusCode = HttpStatusCode.Created;
+                _response.IsSuccess = true;
+                return Ok(_response);
+            }
         }
         #endregion
 
