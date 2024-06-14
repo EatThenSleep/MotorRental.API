@@ -64,7 +64,45 @@ namespace MotorRental.UseCase.Helper.Tests
             var res = ValidationOptionAppointment.ProcessCreterias(creterias);
 
             Assert.AreEqual(res.FilterStatusAppointment, SD.Status_Appointment_Process);
-            Assert.AreEqual(res.FilterStatusPayment, S);
+            Assert.AreEqual(res.FilterStatusPayment, SD.Status_Payment_Not);
+            Assert.AreEqual(res.Skip, 0);
+            Assert.AreEqual(res.Take, 2);
+
+        }
+
+        [TestMethod()]
+        public void ProcessCreteriasTest4()
+        {
+            AppointmentFindCreterias creterias = new AppointmentFindCreterias();
+
+            creterias.FilterStatusAppointment = SD.Status_Appointment_Accepted;
+            creterias.FilterStatusPayment = 4;
+            creterias.Skip = 0;
+            creterias.Take = 2;
+
+            var res = ValidationOptionAppointment.ProcessCreterias(creterias);
+
+            Assert.AreEqual(res.FilterStatusAppointment, SD.Status_Appointment_Accepted);
+            Assert.AreEqual(res.FilterStatusPayment, SD.Status_Payment_Not);
+            Assert.AreEqual(res.Skip, 0);
+            Assert.AreEqual(res.Take, 2);
+
+        }
+
+        [TestMethod()]
+        public void ProcessCreteriasTest5()
+        {
+            AppointmentFindCreterias creterias = new AppointmentFindCreterias();
+
+            creterias.FilterStatusAppointment = SD.Status_Appointment_Cancel;
+            creterias.FilterStatusPayment = -1;
+            creterias.Skip = 0;
+            creterias.Take = 2;
+
+            var res = ValidationOptionAppointment.ProcessCreterias(creterias);
+
+            Assert.AreEqual(res.FilterStatusAppointment, SD.Status_Appointment_Cancel);
+            Assert.AreEqual(res.FilterStatusPayment, SD.Status_Payment_Not);
             Assert.AreEqual(res.Skip, 0);
             Assert.AreEqual(res.Take, 2);
 
