@@ -20,15 +20,10 @@ namespace MotorRental.UseCase
             var appointment = await _appointmentUnitOfWork
                                         .AppointmentRepository
                                         .GetById(appointmentId, userId);
-            if(appointment == null)
-            {
-                return TransactionResult.NotBelong;
-            }
 
-            // check apointment is process
-            if(appointment.StatusAppointment != SD.Status_Appointment_Process)
+            if (checkAppointmentIsProcess(appointment) != TransactionResult.Success)
             {
-                return TransactionResult.Error;
+                return checkAppointmentIsProcess(appointment);
             }
 
             // update appointment to accepted
@@ -95,11 +90,47 @@ namespace MotorRental.UseCase
 
         public async Task<TransactionResult> Reject(Guid appointmentId, string userId)
         {
+            await _appointmentUnitOfWork.BeginTransaction();
+
             // get appointment of owner
             var appointment = await _appointmentUnitOfWork
                                         .AppointmentRepository
                                         .GetById(appointmentId, userId);
 
+           if(checkAppointmentIsProcess(appointment) != TransactionResult.Success)
+           {
+                return checkAppointmentIsProcess(appointment);
+           }
+
+            // update appointment to reject
+            var res = _appointmentUnitOfWork.AppointmentRepository
+                                .UpdateAppointmentStatus(appointment, SD.Status_Appointment_Cancel, notSave: true);
+
+            // var existing motorbike
+            var existingMobike = await _appointmentUnitOfWork
+                    .MotorRepository
+                    .GetByIdAndUserId(appointment.MotorbikeId, userId);
+
+            // update status motorbike
+            existingMobike.status = SD.Status_Enable;
+            var motorUpdate = _appointmentUnitOfWork.MotorRepository
+                                            .UpdateNotSave(existingMobike);
+
+            if (motorUpdate.status != SD.Status_Enable)
+            {
+                await _appointmentUnitOfWork.Cancel();
+                throw new Exception(message: "Error happening, Please try again");
+            }
+            else
+            {
+                await _appointmentUnitOfWork.SaveChanges();
+            }
+
+            return TransactionResult.Success;
+        }
+
+        private TransactionResult checkAppointmentIsProcess(Appointment appointment)
+        {
             if (appointment == null)
             {
                 return TransactionResult.NotBelong;
@@ -110,10 +141,6 @@ namespace MotorRental.UseCase
             {
                 return TransactionResult.Error;
             }
-
-            // update appointment to accepted
-            var res = _appointmentUnitOfWork.AppointmentRepository
-                                .UpdateAppointmentStatus(appointment, SD.Status_Appointment_Cancel);
 
             return TransactionResult.Success;
         }

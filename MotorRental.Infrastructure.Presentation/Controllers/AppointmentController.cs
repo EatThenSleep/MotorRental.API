@@ -116,7 +116,7 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             }
             else
             {
-                _response.StatusCode = HttpStatusCode.Created;
+                _response.StatusCode = HttpStatusCode.OK;
                 _response.IsSuccess = true;
                 return Ok(_response);
             }
@@ -143,7 +143,7 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             }
             else
             {
-                _response.StatusCode = HttpStatusCode.Created;
+                _response.StatusCode = HttpStatusCode.OK;
                 _response.IsSuccess = true;
                 return Ok(_response);
             }

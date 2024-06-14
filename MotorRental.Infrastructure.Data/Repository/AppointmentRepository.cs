@@ -124,13 +124,14 @@ namespace MotorRental.Infrastructure.SqlServer.Repository
         }
 
         public async Task<Appointment> UpdateAppointmentStatus(Appointment appointment,
-                                                                int statusAppointment
+                                                                int statusAppointment,
+                                                                bool notSave = false
             )
         {
             appointment.StatusAppointment = statusAppointment;
             _db.Appointments.Attach(appointment);
             _db.Entry(appointment).Property(x => x.StatusAppointment).IsModified = true;
-            await _db.SaveChangesAsync();
+            if(!notSave ) await _db.SaveChangesAsync();
 
             return appointment;
         }
