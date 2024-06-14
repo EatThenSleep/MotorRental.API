@@ -14,6 +14,25 @@ namespace MotorRental.UseCase
             _appointmentUnitOfWork = appointmentUnitOfWork;
         }
 
+        public async Task<TransactionResult> Accept(Guid appointmentId, string userId)
+        {
+            // get appointment of owner
+            var appointment = await _appointmentUnitOfWork
+                                        .AppointmentRepository
+                                        .GetById(appointmentId, userId);
+            if(appointment == null)
+            {
+                return TransactionResult.NotBelong;
+            }
+
+            // update appointment to accepted
+            var res = _appointmentUnitOfWork.AppointmentRepository
+                                .UpdateAppointmentStatus(appointment, SD.Status_Appointment_Accepted);
+
+            return TransactionResult.Success;
+            
+        }
+
         public async Task<TransactionResult> CreateAppoitment(Appointment appointment)
         {
             try

@@ -6,7 +6,6 @@ using MotorRental.UseCase.Feature;
 using MotorRental.UseCase.Repository;
 using MotorRental.Utilities;
 
-
 namespace MotorRental.Infrastructure.SqlServer.Repository
 {
     public class AppointmentRepository : IAppointmentRepository
@@ -114,6 +113,26 @@ namespace MotorRental.Infrastructure.SqlServer.Repository
 
 
             return await query.ToListAsync();
+        }
+
+        public async Task<Appointment> GetById(Guid appointmentId, string userId)
+        {
+            var res =   await _db.Appointments
+                                    .FirstOrDefaultAsync(u => u.Id == appointmentId &&
+                                                        u.OwnerId == userId);
+            return res;
+        }
+
+        public async Task<Appointment> UpdateAppointmentStatus(Appointment appointment,
+                                                                int statusAppointment
+            )
+        {
+            appointment.StatusAppointment = statusAppointment;
+            _db.Appointments.Attach(appointment);
+            _db.Entry(appointment).Property(x => x.StatusAppointment).IsModified = true;
+            await _db.SaveChangesAsync();
+
+            return appointment;
         }
     }
 }

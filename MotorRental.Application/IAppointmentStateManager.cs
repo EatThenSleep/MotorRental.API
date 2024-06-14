@@ -10,5 +10,7 @@ namespace MotorRental.UseCase
     public interface IAppointmentStateManager
     {
         Task<TransactionResult> CreateAppoitment(Appointment appointment);
+
+        Task<TransactionResult> Accept(Guid appointmentId, string userId);
     }
 }

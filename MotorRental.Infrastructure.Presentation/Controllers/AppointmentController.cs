@@ -33,34 +33,7 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             _response = new ApiResponse();
         }
 
-        [HttpPost]
-        [Authorize(Roles = "Visitor")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<ApiResponse>> CreateAppoinment([FromForm] CreateAppoinmentDTO request)
-        {
-            // comvert DTO to domain
-            var domain = _mapper.Map<Appointment>(request);
-            domain.CustomerId = HttpContext.GetUserId();
-            
-            // call service
-            var res = await _appointmentStateManager.CreateAppoitment(domain);
-
-            if (res.isSucess == false)
-            {
-                _response.StatusCode = HttpStatusCode.BadRequest;
-                _response.IsSuccess = false;
-                _response.ErrorMessages = new List<string> { res.ErrorMessage };
-                return BadRequest(_response);
-            }
-            else
-            {
-                _response.StatusCode = HttpStatusCode.Created;
-                _response.IsSuccess = true;
-                return Ok(_response);
-            }
-        }
+       
 
         [HttpGet("GetAppointment")]
         [Authorize(Roles = "Owner,Visitor")]
@@ -91,5 +64,68 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
                 return Ok(_response);
             }
         }
+
+        #region state
+        [HttpPost]
+        [Authorize(Roles = "Visitor")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<ApiResponse>> CreateAppoinment([FromForm] CreateAppoinmentDTO request)
+        {
+            // comvert DTO to domain
+            var domain = _mapper.Map<Appointment>(request);
+            domain.CustomerId = HttpContext.GetUserId();
+
+            // call service
+            var res = await _appointmentStateManager.CreateAppoitment(domain);
+
+            if (res.isSucess == false)
+            {
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string> { res.ErrorMessage };
+                return BadRequest(_response);
+            }
+            else
+            {
+                _response.StatusCode = HttpStatusCode.Created;
+                _response.IsSuccess = true;
+                return Ok(_response);
+            }
+        }
+
+        [HttpPatch]
+        [Route("{id:Guid}")]
+        [Authorize(Roles = "Owner")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<ApiResponse>> AcceptAppointment([FromRoute] Guid id)
+        {
+            var ownerId = HttpContext.GetUserId();
+
+            var res = await _appointmentStateManager.Accept(id, ownerId);
+
+            if (res.isSucess == false)
+            {
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string> { res.ErrorMessage };
+                return BadRequest(_response);
+            }
+            else
+            {
+                _response.StatusCode = HttpStatusCode.Created;
+                _response.IsSuccess = true;
+                return Ok(_response);
+            }
+
+
+            return Ok();
+        }
+        #endregion
+
+
     }
 }
