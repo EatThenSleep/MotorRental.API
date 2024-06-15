@@ -58,8 +58,8 @@ namespace MotorRental.UseCase.Helper
                 return MotorbikeFindCreterias.Empty;
             }
 
-            if (creterias.FilterStatus > 3 && creterias.FilterStatus < 1) creterias.FilterStatus = 0;
-            if (creterias.FilterType > 3 && creterias.FilterType < 1) creterias.FilterType = 0;
+            if (creterias.FilterStatus > 3 || creterias.FilterStatus < 1) creterias.FilterStatus = 0;
+            if (creterias.FilterType > 3 || creterias.FilterType < 1) creterias.FilterType = 0;
 
             return creterias;
         }
