@@ -17,5 +17,7 @@ namespace MotorRental.UseCase.Repository
         Task<Appointment> UpdateAppointmentStatus(Appointment appointment,
                                                     int statusAppointment,
                                                     bool notSave = false);
+
+        Task<Appointment> UpdateAsync(Appointment appointment, Surcharge[] surcharges);
     }
 }

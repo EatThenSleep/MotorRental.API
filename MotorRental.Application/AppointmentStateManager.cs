@@ -75,9 +75,9 @@ namespace MotorRental.UseCase
                                         .AppointmentRepository
                                         .GetById(appointmentId, userId);
 
-            if (ValidationAppointment.checkAppointmentIsProcess(appointment) != TransactionResult.Success)
+            if (ValidationAppointment.checkAppointmentIsProcess(appointment, SD.Status_Appointment_Process) != TransactionResult.Success)
             {
-                return ValidationAppointment.checkAppointmentIsProcess(appointment);
+                return ValidationAppointment.checkAppointmentIsProcess(appointment, SD.Status_Appointment_Process);
             }
 
             // update appointment to accepted
@@ -97,9 +97,9 @@ namespace MotorRental.UseCase
                                         .AppointmentRepository
                                         .GetById(appointmentId, userId);
 
-           if(ValidationAppointment.checkAppointmentIsProcess(appointment) != TransactionResult.Success)
+           if(ValidationAppointment.checkAppointmentIsProcess(appointment, SD.Status_Appointment_Process) != TransactionResult.Success)
            {
-                return ValidationAppointment.checkAppointmentIsProcess(appointment);
+                return ValidationAppointment.checkAppointmentIsProcess(appointment, SD.Status_Appointment_Process);
            }
 
             // update appointment to reject
@@ -129,9 +129,33 @@ namespace MotorRental.UseCase
             return TransactionResult.Success;
         }
 
-        public Task<TransactionResult> ReturnWithoutPayment(Guid appointmentId)
+        public async Task<TransactionResult> ReturnWithoutPayment(Guid appointmentId,
+                                                                    string userId,
+                                                                    Surcharge[] surcharges)
         {
-            throw new NotImplementedException();
+            // get appointment of owner
+            var appointment = await _appointmentUnitOfWork
+                                        .AppointmentRepository
+                                        .GetById(appointmentId, userId);
+
+            if (ValidationAppointment.checkAppointmentIsProcess(appointment, SD.Status_Appointment_Accepted) != TransactionResult.Success)
+            {
+                return ValidationAppointment.checkAppointmentIsProcess(appointment, SD.Status_Appointment_Accepted);
+            }
+
+            // update appointment: status, rentalReturn, UpdatedAt
+            appointment.StatusAppointment = SD.Status_Appointment_Done;
+            appointment.RentalReturn = DateTime.Now;
+            appointment.UpdateAt = DateTime.Now;
+
+
+            // do it atomic
+            var newAppointment = await _appointmentUnitOfWork
+                            .AppointmentRepository
+                            .UpdateAsync(appointment, surcharges);
+            
+            
+            return TransactionResult.Success;
         }
     }
 }

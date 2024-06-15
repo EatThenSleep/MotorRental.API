@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MotorRental.Entities;
 using MotorRental.Infrastructure.Presentation.Extension;
 using MotorRental.Infrastructure.Presentation.Models;
 using MotorRental.Infrastructure.Presentation.Models.DTO;
 using MotorRental.UseCase;
-using MotorRental.UseCase;
 using MotorRental.UseCase.Feature;
 using MotorRental.Utilities;
+using System.ComponentModel.DataAnnotations;
 using System.Net;
 
 namespace MotorRental.Infrastructure.Presentation.Controllers
@@ -122,7 +122,7 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             }
         }
 
-        [HttpPatch("Reject")]
+        [HttpPut("Reject")]
         [Authorize(Roles = "Owner")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -144,6 +144,38 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             else
             {
                 _response.StatusCode = HttpStatusCode.OK;
+                _response.IsSuccess = true;
+                return Ok(_response);
+            }
+        }
+
+
+        [HttpPut("Return without payment")]
+        [Authorize(Roles = "Owner")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<ApiResponse>> ReturnWithoutPayment([Required] Guid id,
+                                                    [FromBody] CreateSurchargeDTO[] surcharges)
+        {
+            // convert DTO to model 
+            Surcharge[] domain = _mapper.Map<Surcharge[]>(surcharges);
+
+            var ownerId = HttpContext.GetUserId();
+
+            var res = await _appointmentStateManager.ReturnWithoutPayment(id, ownerId, domain);
+
+            if (res.isSucess == false)
+            {
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string> { res.ErrorMessage };
+                return BadRequest(_response);
+            }
+            else
+            {
+                _response.StatusCode = HttpStatusCode.Created;
                 _response.IsSuccess = true;
                 return Ok(_response);
             }

@@ -50,7 +50,7 @@ namespace MotorRental.UseCase.Helper
             return creterias;
         }
 
-        public static TransactionResult checkAppointmentIsProcess(Appointment appointment)
+        public static TransactionResult checkAppointmentIsProcess(Appointment appointment, int statusNeed)
         {
             if (appointment == null)
             {
@@ -58,7 +58,7 @@ namespace MotorRental.UseCase.Helper
             }
 
             // check apointment is process
-            if (appointment.StatusAppointment != SD.Status_Appointment_Process)
+            if (appointment.StatusAppointment != statusNeed)
             {
                 return TransactionResult.Error;
             }

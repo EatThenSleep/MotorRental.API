@@ -126,13 +126,31 @@ namespace MotorRental.Infrastructure.SqlServer.Repository
 
         public async Task<Appointment> UpdateAppointmentStatus(Appointment appointment,
                                                                 int statusAppointment,
-                                                                bool notSave = false
-            )
+                                                                bool notSave = false)
         {
             appointment.StatusAppointment = statusAppointment;
             _db.Appointments.Attach(appointment);
             _db.Entry(appointment).Property(x => x.StatusAppointment).IsModified = true;
             if(!notSave ) await _db.SaveChangesAsync();
+
+            return appointment;
+        }
+
+        public async Task<Appointment> UpdateAsync(Appointment appointment, Surcharge[] surcharges)
+        {
+            // update appointment
+            _db.Entry(appointment).CurrentValues.SetValues(appointment);
+           
+
+            // create surcharges
+            foreach(var surcharge in surcharges)
+            {
+                surcharge.CreatedAt = DateTime.Now;
+                surcharge.Appointment = appointment;
+                await _db.AddAsync(surcharge);
+            }
+
+            await _db.SaveChangesAsync();
 
             return appointment;
         }
