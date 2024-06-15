@@ -42,7 +42,7 @@ namespace MotorRental.UseCase.Helper
             {
                 creterias.Skip = 0;
             }
-            if (creterias.Take < 0 && creterias.Take > int.MaxValue)
+            if (creterias.Take < 0 || creterias.Take > int.MaxValue)
             {
                 creterias.Take = int.MaxValue;
             }
