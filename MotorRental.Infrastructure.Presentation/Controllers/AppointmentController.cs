@@ -180,6 +180,35 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
                 return Ok(_response);
             }
         }
+
+        [HttpPut("Finish Payment")]
+        [Authorize(Roles = "Owner,Visitor")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<ApiResponse>> FinishPayment([Required] Guid id,
+                                                                    [FromForm] string typePayment = "")
+        {
+            var userId = HttpContext.GetUserId();
+            var role = HttpContext.GetRole();
+
+            var res = await _appointmentStateManager.FinishAppointment(id, userId, role, typePayment);
+
+            if (res.isSucess == false)
+            {
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string> { res.ErrorMessage };
+                return BadRequest(_response);
+            }
+            else
+            {
+                _response.StatusCode = HttpStatusCode.Created;
+                _response.IsSuccess = true;
+                return Ok(_response);
+            }
+        }
         #endregion
 
 

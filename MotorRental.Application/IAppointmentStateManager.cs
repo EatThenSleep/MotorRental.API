@@ -16,5 +16,9 @@ namespace MotorRental.UseCase
         Task<TransactionResult> ReturnWithoutPayment(Guid appointmentId,
                                                         string userId,
                                                         Surcharge[] surcharges);
+        Task<TransactionResult> FinishAppointment(Guid appointmentId,
+                                                    string userId,
+                                                    string role,
+                                                    string typePayment = "");
     }
 }

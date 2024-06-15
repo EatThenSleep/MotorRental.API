@@ -35,5 +35,18 @@ namespace MotorRental.Entities
         public DateTime UpdateAt {  get; set; }
 
         public ICollection<Surcharge>? Surcharges { get; set;}
+
+        public int GetTotalPrice()
+        {
+            int res = RentalPrice;
+            if(Surcharges != null)
+            {
+                for (int i = 0; i < Surcharges.Count(); i++)
+                {
+                    res += Surcharges.ElementAt(i).Amount;
+                }
+            }
+            return res;
+        }
     }
 }

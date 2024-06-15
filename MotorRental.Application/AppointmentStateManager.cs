@@ -2,6 +2,7 @@
 using MotorRental.UseCase.UnitOfWork;
 using MotorRental.Utilities;
 using MotorRental.UseCase.Helper;
+using MotorRental.UseCase.Payments;
 
 namespace MotorRental.UseCase
 {
@@ -152,10 +153,73 @@ namespace MotorRental.UseCase
             // do it atomic
             var newAppointment = await _appointmentUnitOfWork
                             .AppointmentRepository
-                            .UpdateAsync(appointment, surcharges);
+                            .UpdateNotPay(appointment, surcharges);
             
             
             return TransactionResult.Success;
+        }
+
+        public async Task<TransactionResult> FinishAppointment(Guid appointmentId,
+                                                                    string userId,
+                                                                    string role,
+                                                                    string typePayment = "")
+        {
+
+            // get appointment
+            var appointment = await _appointmentUnitOfWork
+                                        .AppointmentRepository
+                                        .GetByIdInclude(appointmentId, userId, role);
+
+            if (ValidationAppointment.checkAppointmentIsProcess(appointment, SD.Status_Appointment_Done) != TransactionResult.Success)
+            {
+                return ValidationAppointment.checkAppointmentIsProcess(appointment, SD.Status_Appointment_Done);
+            }
+
+            int amountDue = appointment.GetTotalPrice();
+            
+            // payment in cash, stripe payment, ... using factory pattern
+            var payment = PaymentFactory.CreateInstance(role, typePayment);
+            var res = payment.Pay(amountDue);
+
+            // if payment success doing next step
+            if (!res)
+            {
+                return TransactionResult.TransferError;
+            }
+
+            try
+            {
+                await _appointmentUnitOfWork.BeginTransaction();
+
+                // update appointment: payment = payed, update surcharges payment = payed => atomic
+                var newAppointment = await _appointmentUnitOfWork.AppointmentRepository.UpdatePayed(appointment);
+
+                // update mortorbike = maintain
+                var existingMobike = await _appointmentUnitOfWork
+                        .MotorRepository
+                        .GetByIdAndUserId(appointment.MotorbikeId, appointment.OwnerId);
+
+                existingMobike.status = SD.Status_Maintain;
+                var motorUpdate = _appointmentUnitOfWork.MotorRepository
+                                                .UpdateNotSave(existingMobike);
+
+                if (motorUpdate.status != SD.Status_Maintain &&
+                    newAppointment.StatusAppointment != SD.Status_Payment_Payed)
+                {
+                    await _appointmentUnitOfWork.Cancel();
+                    throw new Exception(message: "Error happening, Please try again");
+                }
+                else
+                {
+                    await _appointmentUnitOfWork.SaveChanges();
+                }
+
+                return TransactionResult.Success;
+            }
+            catch (Exception ex)
+            {
+                return new TransactionResult() { isSucess = false, ErrorMessage = ex.Message };
+            }
         }
     }
 }

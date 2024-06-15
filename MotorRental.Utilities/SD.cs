@@ -14,7 +14,7 @@ namespace MotorRental.Utilities
 
         public static int Status_Enable = 1;
         public static int Status_Busy = 2;
-        public static int Status_Maintaint = 3;
+        public static int Status_Maintain = 3;
 
         public static int Status_Appointment_Process = 0;
         public static int Status_Appointment_Accepted = 1;
@@ -29,6 +29,9 @@ namespace MotorRental.Utilities
         public static readonly string VISTOR = "Visitor";
         public static readonly string ADMIN = "Admin";
         public static readonly string OWNER = "Owner";
+
+        public static readonly string Payment_Stripe = "Stripe";
+
 
         public enum ApiType
         {

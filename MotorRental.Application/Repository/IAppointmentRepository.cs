@@ -14,10 +14,12 @@ namespace MotorRental.UseCase.Repository
 
         Task<IEnumerable<Appointment>> GetAllAsync(string userId, string role, AppointmentFindCreterias creterias, AppointmentSortBy sortBy);
         Task<Appointment> GetById(Guid appointmentId, string userId);
+        Task<Appointment?> GetByIdInclude(Guid appointmentId, string userId, string role);
         Task<Appointment> UpdateAppointmentStatus(Appointment appointment,
                                                     int statusAppointment,
                                                     bool notSave = false);
+        Task<Appointment> UpdateNotPay(Appointment appointment, Surcharge[] surcharges);
 
-        Task<Appointment> UpdateAsync(Appointment appointment, Surcharge[] surcharges);
+        Task<Appointment> UpdatePayed(Appointment appointment);
     }
 }

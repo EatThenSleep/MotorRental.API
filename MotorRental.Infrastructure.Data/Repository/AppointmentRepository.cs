@@ -124,6 +124,50 @@ namespace MotorRental.Infrastructure.SqlServer.Repository
             return res;
         }
 
+        public async Task<Appointment?> GetByIdInclude(Guid appointmentId,
+                                                        string userId,
+                                                        string role)
+        {
+            if(role == SD.VISTOR)
+            {
+                
+                var res = await _db.Appointments
+                                    .AsNoTracking()
+                                    .Include(u => u.Surcharges)
+                                    .FirstOrDefaultAsync(u => u.Id == appointmentId &&
+                                                        u.CustomerId == userId);
+
+                if (res.Surcharges.Any())
+                {
+                    foreach (var surcharge in res.Surcharges)
+                    {
+                        surcharge.Appointment = null;
+                    }
+                }
+
+                return res;
+            }
+            else if(role == SD.OWNER)
+            {
+                var res = await _db.Appointments
+                                    .AsNoTracking()
+                                    .Include(u => u.Surcharges)
+                                    .FirstOrDefaultAsync(u => u.Id == appointmentId &&
+                                                        u.OwnerId == userId);
+
+                if (res != null && res.Surcharges != null)
+                {
+                    foreach (var surcharge in res.Surcharges)
+                    {
+                        surcharge.Appointment = null;
+                    }
+                }
+
+                return res;
+            }
+            return null;
+        }
+
         public async Task<Appointment> UpdateAppointmentStatus(Appointment appointment,
                                                                 int statusAppointment,
                                                                 bool notSave = false)
@@ -136,7 +180,7 @@ namespace MotorRental.Infrastructure.SqlServer.Repository
             return appointment;
         }
 
-        public async Task<Appointment> UpdateAsync(Appointment appointment, Surcharge[] surcharges)
+        public async Task<Appointment> UpdateNotPay(Appointment appointment, Surcharge[] surcharges)
         {
             // update appointment
             _db.Entry(appointment).CurrentValues.SetValues(appointment);
@@ -151,6 +195,19 @@ namespace MotorRental.Infrastructure.SqlServer.Repository
             }
 
             await _db.SaveChangesAsync();
+
+            return appointment;
+        }
+
+        public async Task<Appointment> UpdatePayed(Appointment appointment)
+        {
+            var existingAppointment = await _db.Appointments
+                                                .FirstOrDefaultAsync(u => u.Id == appointment.Id);
+
+            existingAppointment.StatusPayment = SD.Status_Payment_Payed;
+            existingAppointment.UpdateAt = DateTime.Now;
+
+            _db.Update(existingAppointment);
 
             return appointment;
         }

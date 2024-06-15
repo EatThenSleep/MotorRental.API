@@ -11,7 +11,6 @@ namespace MotorRental.Entities
         public Guid Id { get; set; }
         public int Amount { get; set; }
         public string Reason { get; set; } = string.Empty;
-        public int StatusPayment { get; set; }
         public DateTime CreatedAt { get; set; }
 
         public Appointment Appointment { get; set; }
