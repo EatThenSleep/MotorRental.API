@@ -74,7 +74,7 @@ namespace MotorRental.UseCase
                 {
                     // send email
                     IEmailSender emailSender = new SendgridEmailSennder(_configuration);
-                    emailSender.SendEmailAsync(email, "Welcome",CreatMessageWelcome(name));
+                    await emailSender.SendEmailAsync(email, "Welcome",CreatMessageWelcome(name));
 
                     // create token
                     var token = new ManageToken().CreateJwtToken(user,

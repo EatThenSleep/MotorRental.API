@@ -8,9 +8,14 @@ namespace MotorRental.UseCase.Payments
 {
     public class PayInCash : IPayment
     {
-        public bool Pay(int amountDue)
+        public bool CheckIfPay(Guid appointmentId)
         {
             return true;
+        }
+
+        public PaymentObject ExecuteTransaction(Guid appointmentId, string item, int total)
+        {
+            return null;
         }
     }
 }

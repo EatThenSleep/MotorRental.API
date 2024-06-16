@@ -181,14 +181,14 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             }
         }
 
-        [HttpPut("Finish Payment")]
+        [HttpGet("FinishPayment")]
         [Authorize(Roles = "Owner,Visitor")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<ApiResponse>> FinishPayment([Required] Guid id,
-                                                                    [FromForm] string typePayment = "")
+        public async Task<ActionResult<ApiResponse>> FinishPayment([FromQuery] Guid id,
+                                                                    [FromQuery] string typePayment = "")
         {
             var userId = HttpContext.GetUserId();
             var role = HttpContext.GetRole();
@@ -208,6 +208,22 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
                 _response.IsSuccess = true;
                 return Ok(_response);
             }
+        }
+
+        [HttpPut("Payment by party")]
+        [Authorize(Roles = "Visitor")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<ApiResponse>> PaymentByParty([Required] Guid id,
+                                                                    [FromForm] string typePayment = "")
+        {
+            var userId = HttpContext.GetUserId();
+
+            var res = await _appointmentStateManager.ExcutePaymentParty(id, userId, typePayment);
+
+            return Ok(res);
         }
         #endregion
 

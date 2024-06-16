@@ -20,5 +20,9 @@ namespace MotorRental.UseCase
                                                     string userId,
                                                     string role,
                                                     string typePayment = "");
+
+        Task<string> ExcutePaymentParty(Guid appointmentId,
+                                                    string userId,
+                                                    string typePayment = "");
     }
 }

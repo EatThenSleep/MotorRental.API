@@ -3,6 +3,7 @@ using MotorRental.UseCase.UnitOfWork;
 using MotorRental.Utilities;
 using MotorRental.UseCase.Helper;
 using MotorRental.UseCase.Payments;
+using System.Data;
 
 namespace MotorRental.UseCase
 {
@@ -179,7 +180,7 @@ namespace MotorRental.UseCase
             
             // payment in cash, stripe payment, ... using factory pattern
             var payment = PaymentFactory.CreateInstance(role, typePayment);
-            var res = payment.Pay(amountDue);
+            var res = payment.CheckIfPay(appointment.Id);
 
             // if payment success doing next step
             if (!res)
@@ -220,6 +221,29 @@ namespace MotorRental.UseCase
             {
                 return new TransactionResult() { isSucess = false, ErrorMessage = ex.Message };
             }
+        }
+
+        public async Task<string> ExcutePaymentParty(Guid appointmentId, string userId, string typePayment = "")
+        {
+            // get appointment
+            var appointment = await _appointmentUnitOfWork
+                                        .AppointmentRepository
+                                        .GetByIdInclude(appointmentId, userId, SD.VISTOR);
+
+            int amountDue = appointment.GetTotalPrice();
+
+            var payment = PaymentFactory.CreateInstance(SD.VISTOR, typePayment);
+            var paymentObject = payment
+                    .ExecuteTransaction(appointment.Id,
+                    $"Rental Motorbike from {appointment.RentalBegin} to {appointment.RentalEnd}",
+                    amountDue);
+
+            await _appointmentUnitOfWork
+                    .AppointmentRepository
+                    .addSessionId(appointment.Id, paymentObject.sessionId);
+
+
+            return paymentObject.redirectUrl;
         }
     }
 }

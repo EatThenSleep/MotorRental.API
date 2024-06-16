@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MotorRental.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using MotorRental.Infrastructure.Data;
 namespace MotorRental.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240616144708_add transactionPayment table")]
+    partial class addtransactionPaymenttable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,22 +54,22 @@ namespace MotorRental.Infrastructure.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "da2124b9-2276-46ba-8ab5-c2e6796edceb",
-                            ConcurrencyStamp = "da2124b9-2276-46ba-8ab5-c2e6796edceb",
+                            Id = "d7aebb93-7a98-4f73-a74c-8c4719ef7332",
+                            ConcurrencyStamp = "d7aebb93-7a98-4f73-a74c-8c4719ef7332",
                             Name = "Admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "7082bab3-0c88-4ea2-b0e6-bbf4fd93e84e",
-                            ConcurrencyStamp = "7082bab3-0c88-4ea2-b0e6-bbf4fd93e84e",
+                            Id = "4387b65d-b022-41e4-8948-bb3865f44516",
+                            ConcurrencyStamp = "4387b65d-b022-41e4-8948-bb3865f44516",
                             Name = "Owner",
                             NormalizedName = "owner"
                         },
                         new
                         {
-                            Id = "ef9c59d9-853e-4c2c-8930-f13bda95709d",
-                            ConcurrencyStamp = "ef9c59d9-853e-4c2c-8930-f13bda95709d",
+                            Id = "5c095a43-2029-4aae-97ff-d4fd13dca17a",
+                            ConcurrencyStamp = "5c095a43-2029-4aae-97ff-d4fd13dca17a",
                             Name = "Visitor",
                             NormalizedName = "visitor"
                         });
@@ -161,18 +164,18 @@ namespace MotorRental.Infrastructure.Data.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "d3275652-8e4e-4243-89b3-db5d0146e1aa",
-                            RoleId = "da2124b9-2276-46ba-8ab5-c2e6796edceb"
+                            UserId = "d7790f70-1734-4602-ac05-4e40d7b1d8f7",
+                            RoleId = "d7aebb93-7a98-4f73-a74c-8c4719ef7332"
                         },
                         new
                         {
-                            UserId = "1bea3351-53fa-4dae-96b6-436edbd115f5",
-                            RoleId = "7082bab3-0c88-4ea2-b0e6-bbf4fd93e84e"
+                            UserId = "fca408a0-a633-46a9-a21f-55fc127416a8",
+                            RoleId = "4387b65d-b022-41e4-8948-bb3865f44516"
                         },
                         new
                         {
-                            UserId = "0529355a-2f31-4d73-ad9d-84dae994ca73",
-                            RoleId = "ef9c59d9-853e-4c2c-8930-f13bda95709d"
+                            UserId = "f49eb898-d491-4b73-9172-e58b4d4fe728",
+                            RoleId = "5c095a43-2029-4aae-97ff-d4fd13dca17a"
                         });
                 });
 
@@ -239,9 +242,6 @@ namespace MotorRental.Infrastructure.Data.Migrations
 
                     b.Property<DateTime>("UpdateAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("sessionId")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -370,6 +370,26 @@ namespace MotorRental.Infrastructure.Data.Migrations
                     b.ToTable("Surcharges");
                 });
 
+            modelBuilder.Entity("MotorRental.Entities.TransactionPayment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AppointmentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("sessionId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppointmentId");
+
+                    b.ToTable("TransactionPayments");
+                });
+
             modelBuilder.Entity("MotorRental.Entities.User", b =>
                 {
                     b.Property<string>("Id")
@@ -456,9 +476,9 @@ namespace MotorRental.Infrastructure.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "d3275652-8e4e-4243-89b3-db5d0146e1aa",
+                            Id = "d7790f70-1734-4602-ac05-4e40d7b1d8f7",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d3e99208-d8ad-4c93-b1e6-9976807e5f0e",
+                            ConcurrencyStamp = "dbbc3ebb-fad7-4f89-886e-2439c270748e",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
@@ -469,18 +489,18 @@ namespace MotorRental.Infrastructure.Data.Migrations
                             Name = "Admin 1",
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN 1",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMiZmTtp3aia/9mnnE+G8gePQGKEMrVItB32M1R3KpPN/gpEFCnBpwV+2adBJDhUrQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIc/BYFuhL2RGqxXj106CHUPhoMORXVlAA9JVJUN3tyg0pJS9H4zF02gUPbzSfZfPA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5712f18f-ff04-4b5e-9467-4d8c4bd1233d",
+                            SecurityStamp = "edbaa43f-f79b-48c1-a6ac-73bd7d5343d3",
                             TwoFactorEnabled = false,
                             UrlAvatar = "",
                             UserName = "admin@gmail.com"
                         },
                         new
                         {
-                            Id = "1bea3351-53fa-4dae-96b6-436edbd115f5",
+                            Id = "fca408a0-a633-46a9-a21f-55fc127416a8",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9433d245-260d-4e8f-b4f8-7d6aca85dab5",
+                            ConcurrencyStamp = "a33bc405-b213-44f4-85c3-ab699a284ab3",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "owner@gmail.com",
                             EmailConfirmed = false,
@@ -491,18 +511,18 @@ namespace MotorRental.Infrastructure.Data.Migrations
                             Name = "Owner 1",
                             NormalizedEmail = "OWNER@GMAIL.COM",
                             NormalizedUserName = "OWNER 1",
-                            PasswordHash = "AQAAAAIAAYagAAAAENDkverasK9fr5PKjtHaern8hmizWX7hE17s/TF5fmBtjSpexUAKpYm9MK01fXDiwA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEB/fKY9p6Vo5tmUResgj140CCPwmMrt0KsMHPx7LbxjzE7fMHO7QpbHPm3P/wT1DQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c68919ed-245a-4cdb-97cb-85084a92886f",
+                            SecurityStamp = "1d1db2b6-e774-4ca5-8895-4093c815987b",
                             TwoFactorEnabled = false,
                             UrlAvatar = "",
                             UserName = "owner@gmail.com"
                         },
                         new
                         {
-                            Id = "0529355a-2f31-4d73-ad9d-84dae994ca73",
+                            Id = "f49eb898-d491-4b73-9172-e58b4d4fe728",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "dd41562f-3d63-4b72-a4b5-1e7458ada234",
+                            ConcurrencyStamp = "7a25d795-f643-4e2b-ae09-bd9a5d860169",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "visitor@gmail.com",
                             EmailConfirmed = false,
@@ -513,9 +533,9 @@ namespace MotorRental.Infrastructure.Data.Migrations
                             Name = "Visitor 1",
                             NormalizedEmail = "VISITOR@GMAIL.COM",
                             NormalizedUserName = "VISITOR 1",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDzrQAD0gxhbadi+oaZiVwghWlWDvBfKWgwIQZXd/B5JVkBbpacPuQQIxYqx0kiULg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIZzqCFwKJLWQBTZUAt15aDSVBqMFPm2paAgmBSUkdUaVqOUQqsZ/1AYj+zq/Ifqvw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d7829e28-9df4-4d7a-9cb4-b092e3bc006e",
+                            SecurityStamp = "da189703-411c-40ff-bd55-dcdcfc9b005d",
                             TwoFactorEnabled = false,
                             UrlAvatar = "",
                             UserName = "visitor@gmail.com"
@@ -621,6 +641,17 @@ namespace MotorRental.Infrastructure.Data.Migrations
                 {
                     b.HasOne("MotorRental.Entities.Appointment", "Appointment")
                         .WithMany("Surcharges")
+                        .HasForeignKey("AppointmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Appointment");
+                });
+
+            modelBuilder.Entity("MotorRental.Entities.TransactionPayment", b =>
+                {
+                    b.HasOne("MotorRental.Entities.Appointment", "Appointment")
+                        .WithMany()
                         .HasForeignKey("AppointmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

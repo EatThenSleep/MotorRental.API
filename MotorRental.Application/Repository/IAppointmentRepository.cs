@@ -19,7 +19,7 @@ namespace MotorRental.UseCase.Repository
                                                     int statusAppointment,
                                                     bool notSave = false);
         Task<Appointment> UpdateNotPay(Appointment appointment, Surcharge[] surcharges);
-
         Task<Appointment> UpdatePayed(Appointment appointment);
+        Task<Appointment> addSessionId(Guid id, string sessionId);
     }
 }

@@ -31,6 +31,8 @@ namespace MotorRental.Entities
         public int StatusAppointment {  get; set; }
         public int StatusPayment {  get; set; }
         public int RentalPrice {  get; set; }
+        public string? sessionId {  get; set; }
+
         public DateTime CreatedAt {  get; set; }
         public DateTime UpdateAt {  get; set; }
 

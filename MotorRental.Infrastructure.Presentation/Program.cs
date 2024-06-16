@@ -8,12 +8,12 @@ using Microsoft.OpenApi.Models;
 using MotorRental.Entities;
 using MotorRental.Infrastructure.Data;
 using MotorRental.Infrastructure.Data.Repository;
-using MotorRental.Infrastructure.Data.Repository;
 using MotorRental.Infrastructure.SqlServer.Repository;
 using MotorRental.UseCase;
 using MotorRental.UseCase.Feature;
 using MotorRental.UseCase.Repository;
 using MotorRental.UseCase.UnitOfWork;
+using Stripe;
 
 namespace MotorRental.Infrastructure.Presentation
 {
@@ -160,6 +160,7 @@ namespace MotorRental.Infrastructure.Presentation
             app.UseAuthentication();
             app.UseAuthorization();
 
+            StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
 
             app.MapControllers();
 

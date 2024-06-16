@@ -211,5 +211,19 @@ namespace MotorRental.Infrastructure.SqlServer.Repository
 
             return appointment;
         }
+
+        public async Task<Appointment> addSessionId(Guid id, string sessionId)
+        {
+            var existingAppointment = await _db.Appointments
+                                                .FirstOrDefaultAsync(u => u.Id == id);
+
+            existingAppointment.sessionId = sessionId;
+
+            _db.Update(existingAppointment);
+
+            await _db.SaveChangesAsync();
+
+            return existingAppointment;
+        }
     }
 }

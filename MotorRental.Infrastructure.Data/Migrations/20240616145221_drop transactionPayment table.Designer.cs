@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MotorRental.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using MotorRental.Infrastructure.Data;
 namespace MotorRental.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240616145221_drop transactionPayment table")]
+    partial class droptransactionPaymenttable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,22 +54,22 @@ namespace MotorRental.Infrastructure.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "da2124b9-2276-46ba-8ab5-c2e6796edceb",
-                            ConcurrencyStamp = "da2124b9-2276-46ba-8ab5-c2e6796edceb",
+                            Id = "2b76258f-633f-451c-9c2e-e8e7c6855cac",
+                            ConcurrencyStamp = "2b76258f-633f-451c-9c2e-e8e7c6855cac",
                             Name = "Admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "7082bab3-0c88-4ea2-b0e6-bbf4fd93e84e",
-                            ConcurrencyStamp = "7082bab3-0c88-4ea2-b0e6-bbf4fd93e84e",
+                            Id = "2b5fba2d-ca9e-46fc-8a17-d0b6978e927d",
+                            ConcurrencyStamp = "2b5fba2d-ca9e-46fc-8a17-d0b6978e927d",
                             Name = "Owner",
                             NormalizedName = "owner"
                         },
                         new
                         {
-                            Id = "ef9c59d9-853e-4c2c-8930-f13bda95709d",
-                            ConcurrencyStamp = "ef9c59d9-853e-4c2c-8930-f13bda95709d",
+                            Id = "450c4296-6622-4ba5-a681-562cfc4643f0",
+                            ConcurrencyStamp = "450c4296-6622-4ba5-a681-562cfc4643f0",
                             Name = "Visitor",
                             NormalizedName = "visitor"
                         });
@@ -161,18 +164,18 @@ namespace MotorRental.Infrastructure.Data.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "d3275652-8e4e-4243-89b3-db5d0146e1aa",
-                            RoleId = "da2124b9-2276-46ba-8ab5-c2e6796edceb"
+                            UserId = "c5685238-30a9-46d7-850e-7d55f96267f9",
+                            RoleId = "2b76258f-633f-451c-9c2e-e8e7c6855cac"
                         },
                         new
                         {
-                            UserId = "1bea3351-53fa-4dae-96b6-436edbd115f5",
-                            RoleId = "7082bab3-0c88-4ea2-b0e6-bbf4fd93e84e"
+                            UserId = "0caf88cc-d9fb-4410-86b3-059112ee2908",
+                            RoleId = "2b5fba2d-ca9e-46fc-8a17-d0b6978e927d"
                         },
                         new
                         {
-                            UserId = "0529355a-2f31-4d73-ad9d-84dae994ca73",
-                            RoleId = "ef9c59d9-853e-4c2c-8930-f13bda95709d"
+                            UserId = "7c1c325d-4924-484f-b120-7d0cc0c93c2c",
+                            RoleId = "450c4296-6622-4ba5-a681-562cfc4643f0"
                         });
                 });
 
@@ -239,9 +242,6 @@ namespace MotorRental.Infrastructure.Data.Migrations
 
                     b.Property<DateTime>("UpdateAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("sessionId")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -456,9 +456,9 @@ namespace MotorRental.Infrastructure.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "d3275652-8e4e-4243-89b3-db5d0146e1aa",
+                            Id = "c5685238-30a9-46d7-850e-7d55f96267f9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d3e99208-d8ad-4c93-b1e6-9976807e5f0e",
+                            ConcurrencyStamp = "55129953-104e-4244-894d-a229f2630db1",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
@@ -469,18 +469,18 @@ namespace MotorRental.Infrastructure.Data.Migrations
                             Name = "Admin 1",
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN 1",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMiZmTtp3aia/9mnnE+G8gePQGKEMrVItB32M1R3KpPN/gpEFCnBpwV+2adBJDhUrQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJY6MhKGV0k0r+baHH+KNgOeSMuJWaCZnY9UiDfa+fKQe1iCr2wDg0v0eo6CODClbQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5712f18f-ff04-4b5e-9467-4d8c4bd1233d",
+                            SecurityStamp = "63c13a35-f73d-4faf-8470-6dded3784d81",
                             TwoFactorEnabled = false,
                             UrlAvatar = "",
                             UserName = "admin@gmail.com"
                         },
                         new
                         {
-                            Id = "1bea3351-53fa-4dae-96b6-436edbd115f5",
+                            Id = "0caf88cc-d9fb-4410-86b3-059112ee2908",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9433d245-260d-4e8f-b4f8-7d6aca85dab5",
+                            ConcurrencyStamp = "1d041dde-655a-419d-a731-beded9e27d5f",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "owner@gmail.com",
                             EmailConfirmed = false,
@@ -491,18 +491,18 @@ namespace MotorRental.Infrastructure.Data.Migrations
                             Name = "Owner 1",
                             NormalizedEmail = "OWNER@GMAIL.COM",
                             NormalizedUserName = "OWNER 1",
-                            PasswordHash = "AQAAAAIAAYagAAAAENDkverasK9fr5PKjtHaern8hmizWX7hE17s/TF5fmBtjSpexUAKpYm9MK01fXDiwA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJORxOqEW1S1AJ1k6ti59aK1d7RuzIcTE7VEl/uX1WvrKzfSIa1XVvH37WSQO9M/WA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c68919ed-245a-4cdb-97cb-85084a92886f",
+                            SecurityStamp = "a717cf82-245b-4a06-990c-3184e9a529db",
                             TwoFactorEnabled = false,
                             UrlAvatar = "",
                             UserName = "owner@gmail.com"
                         },
                         new
                         {
-                            Id = "0529355a-2f31-4d73-ad9d-84dae994ca73",
+                            Id = "7c1c325d-4924-484f-b120-7d0cc0c93c2c",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "dd41562f-3d63-4b72-a4b5-1e7458ada234",
+                            ConcurrencyStamp = "96517925-c7b8-4ee3-abdf-969aeafc9d46",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "visitor@gmail.com",
                             EmailConfirmed = false,
@@ -513,9 +513,9 @@ namespace MotorRental.Infrastructure.Data.Migrations
                             Name = "Visitor 1",
                             NormalizedEmail = "VISITOR@GMAIL.COM",
                             NormalizedUserName = "VISITOR 1",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDzrQAD0gxhbadi+oaZiVwghWlWDvBfKWgwIQZXd/B5JVkBbpacPuQQIxYqx0kiULg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMk8cLJUsyW13q/Xn7plgcYYF9vgEHG78EfG+X5omYM2Hmap+QDl+q8KXgMC/WjeSg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d7829e28-9df4-4d7a-9cb4-b092e3bc006e",
+                            SecurityStamp = "80656ccc-9436-4bb1-9bba-410cbfecf997",
                             TwoFactorEnabled = false,
                             UrlAvatar = "",
                             UserName = "visitor@gmail.com"
