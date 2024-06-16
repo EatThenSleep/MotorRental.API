@@ -33,11 +33,12 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             _response = new();
         }
 
+        #region public
         [HttpGet("GetALlMotorbikes")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ApiResponse> GetAllMotorBikes([FromQuery] MotorbikeFindCreterias creterias,
-                                                        [FromQuery] MotorbikeSortBy sortBy = MotorbikeSortBy.NameAscending)
+                                                       [FromQuery] MotorbikeSortBy sortBy = MotorbikeSortBy.NameAscending)
         {
             // get from service
             var resultDomain = await _motorbikeFinder.GetAll(creterias, sortBy);
@@ -69,7 +70,9 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
 
             return _response;
         }
+        #endregion
 
+        #region private
         [Authorize(Roles = "Owner")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -86,7 +89,7 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             // call Service add (model, userId from authen
             var resultDomain = await _motorbikeManager.Add(model, userId);
 
-            if(resultDomain == null)
+            if (resultDomain == null)
             {
                 _response.StatusCode = HttpStatusCode.BadRequest;
                 _response.IsSuccess = false;
@@ -96,7 +99,7 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             else
             {
                 // process file image
-                    // save image to server
+                // save image to server
                 var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.Value}{HttpContext.Request.PathBase.Value}";
                 var stringUrl = request.Image.SaveImage(resultDomain.Id.ToString(), baseUrl);
 
@@ -109,12 +112,10 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
                 _response.StatusCode = HttpStatusCode.Created;
                 _response.Result = response;
             }
-            
+
             // Return APi Response
             return _response;
         }
-
-        
 
         [Authorize(Roles = "Owner")]
         [HttpGet("GetALlMotorbikesOfOwner")]
@@ -127,7 +128,7 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             var userId = HttpContext.GetUserId();
 
             // get from service
-            var resultDomain = await _motorbikeFinder.GetAll(MotorbikeFindCreterias.Empty ,userId: userId);
+            var resultDomain = await _motorbikeFinder.GetAll(MotorbikeFindCreterias.Empty, userId: userId);
 
             // convert Domain to DTO
             _response.StatusCode = HttpStatusCode.OK;
@@ -167,7 +168,7 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             }
             else
             {
-                if(request.Image != null)
+                if (request.Image != null)
                 {
                     // process file image
                     // save image to server
@@ -219,6 +220,8 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
 
             return _response;
         }
+        #endregion
+
 
     }
 }
