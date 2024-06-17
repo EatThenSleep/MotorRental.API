@@ -65,5 +65,6 @@ namespace MotorRental.UseCase.Helper
 
             return TransactionResult.Success;
         }
+
     }
 }
