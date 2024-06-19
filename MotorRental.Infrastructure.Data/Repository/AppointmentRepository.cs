@@ -23,6 +23,7 @@ namespace MotorRental.Infrastructure.SqlServer.Repository
             return appointment;
         }
 
+        #region find
         public async Task<IEnumerable<Appointment>> GetAllAsync(string userId,
                                         string role,
                                         AppointmentFindCreterias creterias,
@@ -167,7 +168,9 @@ namespace MotorRental.Infrastructure.SqlServer.Repository
             }
             return null;
         }
+        #endregion
 
+        #region update
         public async Task<Appointment> UpdateAppointmentStatus(Appointment appointment,
                                                                 int statusAppointment,
                                                                 bool notSave = false)
@@ -211,7 +214,9 @@ namespace MotorRental.Infrastructure.SqlServer.Repository
 
             return appointment;
         }
+        #endregion
 
+        #region payment
         public async Task<Appointment> addSessionId(Guid id, string sessionId)
         {
             var existingAppointment = await _db.Appointments
@@ -225,5 +230,6 @@ namespace MotorRental.Infrastructure.SqlServer.Repository
 
             return existingAppointment;
         }
+        #endregion
     }
 }

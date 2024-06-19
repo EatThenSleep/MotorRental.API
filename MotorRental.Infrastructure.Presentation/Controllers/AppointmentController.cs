@@ -181,7 +181,7 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             }
         }
 
-        [HttpGet("FinishPayment")]
+        [HttpPut("FinishPayment")]
         [Authorize(Roles = "Owner,Visitor")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

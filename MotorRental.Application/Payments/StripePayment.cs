@@ -22,7 +22,7 @@ namespace MotorRental.UseCase.Payments
                 },
                 LineItems = new List<SessionLineItemOptions>(),
                 Mode = "payment",
-                SuccessUrl = $"https://localhost:7225/api/Appointment/FinishPayment?id={appointmentId}",
+                SuccessUrl = $"https://localhost:7225/api/Appointment/FinishPayment?id={appointmentId}&typePayment=Stripe",
                 CancelUrl = "https://example.com/cancel",
             };
 

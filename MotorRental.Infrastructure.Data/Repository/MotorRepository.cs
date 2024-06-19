@@ -27,13 +27,14 @@ namespace MotorRental.Infrastructure.Data.Repository
 
             return motorbike;
         }
-
+        #region henlper
         public async Task<Motorbike> CheckOfOwner(Guid Id, string userId)
         {
             var existingMotor = await _db.Motorbikes.FirstOrDefaultAsync(u => u.Id == Id
                                         && u.User.Id == userId);
             return existingMotor;
         }
+        #endregion
 
         public async Task<Motorbike> DeleteByIdAsync(Guid Id, string userId)
         {
@@ -51,6 +52,7 @@ namespace MotorRental.Infrastructure.Data.Repository
             return existingMotor;
         }
 
+        #region find
         public async Task<IEnumerable<Motorbike>> GetAllAsync(MotorbikeFindCreterias creterias,
                                                         MotorbikeSortBy sortBy = MotorbikeSortBy.NameAscending,
                                                         string? userId = null)
@@ -178,7 +180,9 @@ namespace MotorRental.Infrastructure.Data.Repository
 
             return res;
         }
+        #endregion
 
+        #region update
         public async Task<Motorbike?> UpdateAsync(Motorbike motorbike, bool afterSuccess = true)
         {
             if (!afterSuccess)
@@ -224,5 +228,6 @@ namespace MotorRental.Infrastructure.Data.Repository
 
             return motorbike;
         }
+        #endregion
     }
 }
