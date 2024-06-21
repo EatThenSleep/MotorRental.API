@@ -121,14 +121,15 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
         [HttpGet("GetALlMotorbikesOfOwner")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ApiResponse> GetAllMotorBikesOfOwner()
+        public async Task<ApiResponse> GetAllMotorBikesOfOwner([FromQuery] MotorbikeFindCreterias creterias,
+                                                       [FromQuery] MotorbikeSortBy sortBy = MotorbikeSortBy.NameAscending)
         {
             // get userId from claim (will code)
             // https://trello.com/c/Tx7kEOGF/14-get-claims-from-a-webapi-controller-jwt-token
             var userId = HttpContext.GetUserId();
 
             // get from service
-            var resultDomain = await _motorbikeFinder.GetAll(MotorbikeFindCreterias.Empty, userId: userId);
+            var resultDomain = await _motorbikeFinder.GetAll(creterias: creterias, sortBy: sortBy, userId: userId);
 
             // convert Domain to DTO
             _response.StatusCode = HttpStatusCode.OK;
