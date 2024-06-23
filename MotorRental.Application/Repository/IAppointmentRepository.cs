@@ -21,5 +21,7 @@ namespace MotorRental.UseCase.Repository
         Task<Appointment> UpdateNotPay(Appointment appointment, Surcharge[] surcharges);
         Task<Appointment> UpdatePayed(Appointment appointment);
         Task<Appointment> addSessionId(Guid id, string sessionId);
+
+        Task<IEnumerable<Surcharge>> getSurcharges(Guid appointmentId);
     }
 }

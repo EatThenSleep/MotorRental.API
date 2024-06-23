@@ -168,6 +168,12 @@ namespace MotorRental.Infrastructure.SqlServer.Repository
             }
             return null;
         }
+
+
+        public async Task<IEnumerable<Surcharge>> getSurcharges(Guid appointmentId)
+        {
+            return await _db.Surcharges.Where(u =>  u.Appointment.Id == appointmentId).ToListAsync();
+        }
         #endregion
 
         #region update
@@ -230,6 +236,7 @@ namespace MotorRental.Infrastructure.SqlServer.Repository
 
             return existingAppointment;
         }
+
         #endregion
     }
 }
