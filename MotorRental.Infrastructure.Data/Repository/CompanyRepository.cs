@@ -26,6 +26,11 @@ namespace MotorRental.Infrastructure.Data.Repository
             return company;
         }
 
+        public async Task<IEnumerable<Company>> GetAll()
+        {
+           return await _db.Companies.ToListAsync();
+        }
+
         public async Task<Company?> GetByName(string name)
         {
                return await _db.Companies.AsNoTracking().FirstOrDefaultAsync(x => x.Name.ToLower() == name.ToLower());

@@ -71,9 +71,11 @@ namespace MotorRental.Infrastructure.Presentation
             builder.Services.AddTransient<IAppointmentFinder>(services =>
             new RepositoryAppointmentFinder(services.GetRequiredService<IAppointmentRepository>()));
 
+            builder.Services.AddTransient<ICompanyFinder>(services =>
+           new RepositoryCompanyFinder(services.GetRequiredService<ICompanyRepository>()));
             //
 
-            builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddTransient<IAuthService, AuthService>();
 
             
 

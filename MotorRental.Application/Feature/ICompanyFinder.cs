@@ -5,13 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MotorRental.UseCase.Repository
+namespace MotorRental.UseCase.Feature
 {
-    public interface ICompanyRepository
+    public interface ICompanyFinder
     {
-        Task<Company> Add(Company company);
-        Task<Company> GetByName(string name);
-
         Task<IEnumerable<Company>> GetAll();
     }
 }
