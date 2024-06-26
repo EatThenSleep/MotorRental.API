@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MotorRental.Infrastructure.Presentation.Extension;
 using MotorRental.Infrastructure.Presentation.Models;
 using MotorRental.UseCase.Feature;
 using MotorRental.UseCase.Statistical;
@@ -20,15 +22,18 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             _response = new();
         }
 
+        [Authorize(Roles = "Owner")]
         [HttpGet("StatisticAmountAndCount")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ApiResponse> StatisticAmountAndCount([FromQuery] string OwnerId,
+        public async Task<ApiResponse> StatisticAmountAndCount(
                                                         [FromQuery] DateTime begin,
                                                         [FromQuery] DateTime end)
         {
+            var ownerId = HttpContext.GetUserId();
+
             // get from service
-            var resultDomain = await _orderStatistics.StatisticAmountAndCount(OwnerId, begin, end);
+            var resultDomain = await _orderStatistics.StatisticAmountAndCount(ownerId, begin, end);
 
             // convert Domain to DTO
             _response.StatusCode = HttpStatusCode.OK;
@@ -37,15 +42,18 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             return _response;
         }
 
+        [Authorize(Roles = "Owner")]
         [HttpGet("CalculateRentalsAndTotalAmount")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ApiResponse> StatisticCalculateRentalsAndTotalAmount([FromQuery] string OwnerId,
+        public async Task<ApiResponse> StatisticCalculateRentalsAndTotalAmount(
                                                        [FromQuery] DateTime begin,
                                                        [FromQuery] DateTime end)
         {
+            var ownerId = HttpContext.GetUserId();
+
             // get from service
-            var resultDomain = await _orderStatistics.CalculateRentalsAndTotalAmount(OwnerId, begin, end);
+            var resultDomain = await _orderStatistics.CalculateRentalsAndTotalAmount(ownerId, begin, end);
 
             // convert Domain to DTO
             _response.StatusCode = HttpStatusCode.OK;
