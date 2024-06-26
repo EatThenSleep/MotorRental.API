@@ -22,20 +22,21 @@ namespace MotorRental.Infrastructure.SqlServer.Repository
         }
 
         public async Task<object> CalculateRentalsAndTotalAmount(string OwnerId, DateTime beginDate, DateTime endDate)
-        {
+       {
             using var conn = new SqlConnection("Server=.;Database=MotorRental;Trusted_Connection=yes;MultipleActiveResultSets=true;TrustServerCertificate=Yes");
             conn.Open();
 
             var cmd = conn.CreateCommand();
-            cmd.CommandText = @"SELECT name,
-                            LicensePlate,
+            cmd.CommandText = @"SELECT name + ' - '
+                            + LicensePlate AS name,
                             COUNT(MotorbikeId) AS count,
                             COALESCE(SUM(Appointments.RentalPrice), 0) AS amount
                             FROM Motorbikes
                             LEFT JOIN Appointments
                             ON Motorbikes.Id = Appointments.MotorbikeId
-                            WHERE UserId = '5585864b-7c6c-4a63-a98d-95dbea318ddb'
-                            AND (RentalBegin BETWEEN '2024-05-10' AND '2024-06-20' OR RentalBegin IS NULL)
+                            WHERE UserId = '" +  OwnerId +
+                            @"' AND (RentalBegin BETWEEN '" + beginDate.ToString("yyyy-MM-dd") +
+                            @"' AND '" + endDate.ToString("yyyy-MM-dd") + @"' OR RentalBegin IS NULL)
                             AND (Appointments.StatusAppointment != 2 OR Appointments.StatusAppointment IS NULL)
                             GROUP BY MotorbikeId, name, LicensePlate
                             ORDER BY count DESC";
@@ -47,17 +48,13 @@ namespace MotorRental.Infrastructure.SqlServer.Repository
                 while (reader.Read())
                 {
                     string name = reader.GetString(0);
-                    string LicensePlate = reader.GetString(1);
-                    int count = reader.GetInt32(2);
-                    int amount = reader.GetInt32(3);
-
-                 
+                    int count = reader.GetInt32(1);
+                    int amount = reader.GetInt32(2);
 
                     resultList.Add(
                         new
                         {
                             Name = name,
-                            LicensePlate = LicensePlate,
                             count = count,
                             amount = amount,
                         }
