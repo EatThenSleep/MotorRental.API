@@ -1,16 +1,31 @@
-﻿using Stripe.Checkout;
+﻿using MotorRental.Entities;
+using Stripe.Checkout;
 
 
 namespace MotorRental.UseCase.Payments
 {
     public class StripePayment : IPayment
     {
-        public bool CheckIfPay(Guid appointmentId)
+        public bool CheckIfPay(Appointment appointment)
         {
             // will code here
+            var service = new SessionService();
 
-            return true;
+            if (string.IsNullOrEmpty(appointment.sessionId))
+            {
+                return false;
+            }
+
+            Session session = service.Get(appointment.sessionId);
+
+            if (session.PaymentStatus.ToLower() == "paid")
+            {
+                return true;
+            }
+
+            return false;
         }
+
 
         public PaymentObject ExecuteTransaction(Guid appointmentId, string item, int total)
         {
@@ -22,7 +37,7 @@ namespace MotorRental.UseCase.Payments
                 },
                 LineItems = new List<SessionLineItemOptions>(),
                 Mode = "payment",
-                SuccessUrl = $"https://localhost:7225/api/Appointment/FinishPayment?id={appointmentId}&typePayment=Stripe",
+                SuccessUrl = $"http://localhost:4200/confirm-payment/{appointmentId}",
                 CancelUrl = "https://example.com/cancel",
             };
 

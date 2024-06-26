@@ -180,7 +180,7 @@ namespace MotorRental.UseCase
             
             // payment in cash, stripe payment, ... using factory pattern
             var payment = PaymentFactory.CreateInstance(role, typePayment);
-            var res = payment.CheckIfPay(appointment.Id);
+            var res = payment.CheckIfPay(appointment);
 
             // if payment success doing next step
             if (!res)

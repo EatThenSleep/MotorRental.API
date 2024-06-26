@@ -223,7 +223,10 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
 
             var res = await _appointmentStateManager.ExcutePaymentParty(id, userId, typePayment);
 
-            return Ok(res);
+            _response.Result = res;
+            _response.StatusCode = HttpStatusCode.OK;
+
+            return Ok(_response);
         }
         #endregion
 

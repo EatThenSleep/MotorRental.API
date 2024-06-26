@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MotorRental.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace MotorRental.UseCase.Payments
 {
     public class PayInCash : IPayment
     {
-        public bool CheckIfPay(Guid appointmentId)
+        public bool CheckIfPay(Appointment appointment)
         {
             return true;
         }

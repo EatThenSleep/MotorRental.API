@@ -1,4 +1,5 @@
-﻿using MotorRental.UseCase.Payments;
+﻿using MotorRental.Entities;
+using MotorRental.UseCase.Payments;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace MotorRental.UseCase
 {
     public interface IPayment
     {
-        bool CheckIfPay(Guid appointmentId);
+        bool CheckIfPay(Appointment appointment);
         PaymentObject ExecuteTransaction(Guid appointmentId, string item, int total);
     }
 }
