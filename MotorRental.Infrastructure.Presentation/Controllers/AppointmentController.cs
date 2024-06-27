@@ -10,6 +10,7 @@ using MotorRental.UseCase;
 using MotorRental.UseCase.Feature;
 using MotorRental.Utilities;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Net;
 
 namespace MotorRental.Infrastructure.Presentation.Controllers
@@ -33,8 +34,7 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
             _response = new ApiResponse();
         }
 
-       
-
+        #region find
         [HttpGet("GetAppointment")]
         [Authorize(Roles = "Owner,Visitor")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -64,6 +64,35 @@ namespace MotorRental.Infrastructure.Presentation.Controllers
                 return Ok(_response);
             }
         }
+
+        [HttpGet("GetSpecificAppointment")]
+        [Authorize(Roles = "Owner")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<ApiResponse>> GetSpecificAppointment([FromQuery] Guid appointmentId)
+        {
+
+            var res = await _appointmentFinder.GetSpecificAppointment(appointmentId);
+            if (res == null)
+            {
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string>() { "Please try again" };
+                return BadRequest(_response);
+            }
+            else
+            {
+                _response.StatusCode = HttpStatusCode.OK;
+                _response.IsSuccess = true;
+                _response.Result = res;
+                return Ok(_response);
+            }
+        }
+        #endregion
+
 
         #region state
         [HttpPost]

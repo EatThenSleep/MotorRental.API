@@ -40,7 +40,11 @@ namespace MotorRental.UseCase.Feature
             return res;
         }
 
-        
+        public async Task<object> GetSpecificAppointment(Guid appointmentId)
+        {
+            var res = await _appointmentRepository.GetInformation(appointmentId);
 
+            return res;
+        }
     }
 }

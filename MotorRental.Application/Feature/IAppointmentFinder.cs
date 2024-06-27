@@ -13,5 +13,6 @@ namespace MotorRental.UseCase.Feature
                                                         string role,
                                                         AppointmentFindCreterias creterias,
                                                         AppointmentSortBy sortBy);
+        Task<object> GetSpecificAppointment(Guid appointmentId);
     }
 }
