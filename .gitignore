@@ -362,5 +362,8 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
+# private configuration 
 MotorRental.Infrastructure.Presentation/appsettings.Development.json
-MotorRental.Infrastructure.Presentation/appsettings.json
+D:\finalDOTnet\API\MotorRental.API\MotorRental.Infrastructure.Presentation\appsettings.json
+
+hello.txt
