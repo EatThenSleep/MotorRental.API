@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using LinqKit;
+using Microsoft.EntityFrameworkCore;
 using MotorRental.Entities;
 using MotorRental.UseCase.Feature;
 using MotorRental.UseCase.Repository;
 using MotorRental.Utilities;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace MotorRental.Infrastructure.Data.Repository
 {
@@ -57,86 +59,72 @@ namespace MotorRental.Infrastructure.Data.Repository
                                                         MotorbikeSortBy sortBy = MotorbikeSortBy.NameAscending,
                                                         string? userId = null)
         {
-            var motorbikes = _db.Motorbikes.AsQueryable();
+            Expression<Func<Motorbike, bool>> predicate = m => true; 
 
-            motorbikes = from a in _db.Motorbikes
-                         join b in _db.Users on a.User.Id equals b.Id
-                         join c in _db.Companies on a.Company.Id equals c.Id
-                         select new Motorbike()
-                         {
-                             Id = a.Id,
-                             Name = a.Name,
-                             Type = a.Type,
-                             Color = a.Color,
-                             status = a.status,
-                             PriceDay = a.PriceDay,
-                             PriceWeek = a.PriceWeek,
-                             PriceMonth = a.PriceMonth,
-                             LicensePlate = a.LicensePlate,
-                             MotorbikeAvatar = a.MotorbikeAvatar,
-                             User = new User { Id = b.Id, Name = b.Name, PhoneNumber = b.PhoneNumber },
-                             Company = new Company { Id = c.Id, Name = c.Name },
-                         };
-
-
-            if (userId != null)
+            if (!string.IsNullOrEmpty(creterias.Name))
             {
-                motorbikes = motorbikes.Where(a => a.User.Id == userId);
+                predicate = predicate.And(m => m.Name.ToLower().Contains(creterias.Name.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(userId))
+            {
+                predicate = predicate.And(m => m.User.Id == userId);
             }
 
             if (creterias.FilterStatus > 0)
             {
-                motorbikes = motorbikes.Where(a => a.status == creterias.FilterStatus);
+                predicate = predicate.And(m => m.status == creterias.FilterStatus);
             }
 
             if (creterias.FilterType > 0)
             {
-                motorbikes = motorbikes.Where(a => a.Type == creterias.FilterType);
-            }
-
-            if (!string.IsNullOrEmpty(creterias.Name))
-            {
-                motorbikes = motorbikes.Where(a => a.Name
-                                        .ToLower()
-                                        .Contains(creterias.Name.ToLower()));
+                predicate = predicate.And(m => m.Type == creterias.FilterType);
             }
 
             if (!string.IsNullOrEmpty(creterias.LicensePlate))
             {
-                motorbikes = motorbikes.Where(a => a.LicensePlate
-                                        .ToLower()
-                                        .Contains(creterias.LicensePlate.ToLower()));
+                predicate = predicate.And(m => m.LicensePlate.ToLower().Contains(creterias.LicensePlate.ToLower()));
             }
 
-            if (sortBy == MotorbikeSortBy.NameDescending)
-            {
-                motorbikes = motorbikes.OrderByDescending(motorbikes => motorbikes.Name);
-            }
-            else if(sortBy == MotorbikeSortBy.PriceAscending)
-            {
-                motorbikes = motorbikes.OrderBy(motorbikes => motorbikes.PriceDay +
-                                                                motorbikes.PriceWeek +
-                                                                motorbikes.PriceMonth);
-            }
-            else if (sortBy == MotorbikeSortBy.PriceDescending)
-            {
-                motorbikes = motorbikes.OrderByDescending(motorbikes => motorbikes.PriceDay +
-                                                                motorbikes.PriceWeek +
-                                                                motorbikes.PriceMonth);
-            }
-            else
-            {
-                motorbikes = motorbikes.OrderBy(motorbikes => motorbikes.Name);
-            }
+            var motorbikes = from a in _db.Motorbikes
+                             join b in _db.Users on a.User.Id equals b.Id
+                             join c in _db.Companies on a.Company.Id equals c.Id
+                             select new Motorbike()
+                             {
+                                 Id = a.Id,
+                                 Name = a.Name,
+                                 Type = a.Type,
+                                 Color = a.Color,
+                                 status = a.status,
+                                 PriceDay = a.PriceDay,
+                                 PriceWeek = a.PriceWeek,
+                                 PriceMonth = a.PriceMonth,
+                                 LicensePlate = a.LicensePlate,
+                                 MotorbikeAvatar = a.MotorbikeAvatar,
+                                 User = new User { Id = b.Id, Name = b.Name, PhoneNumber = b.PhoneNumber },
+                                 Company = new Company { Id = c.Id, Name = c.Name },
+                             };
 
-            if(creterias.Skip >= 0 && creterias.Take > 0)
+            motorbikes = sortBy switch
             {
-                motorbikes = motorbikes.Skip(creterias.Skip).Take(creterias.Take);
-            }
+                MotorbikeSortBy.NameDescending => motorbikes.OrderByDescending(m => m.Name),
+                MotorbikeSortBy.PriceAscending => motorbikes.OrderBy(m => m.PriceDay + m.PriceWeek + m.PriceMonth),
+                MotorbikeSortBy.PriceDescending => motorbikes.OrderByDescending(m => m.PriceDay + m.PriceWeek + m.PriceMonth),
+                _ => motorbikes.OrderBy(m => m.Name) // Default case
+            };
 
 
+            var query =    motorbikes
+                            .Where(predicate)
+                            .Skip(creterias.Skip)
+                            .Take(creterias.Take)
+                            .ToQueryString();
 
-            var res = await motorbikes.ToListAsync();
+            var res = await motorbikes
+                            .Where(predicate)
+                            .Skip(creterias.Skip)
+                            .Take(creterias.Take)
+                            .ToListAsync();
 
             return res;
         }
